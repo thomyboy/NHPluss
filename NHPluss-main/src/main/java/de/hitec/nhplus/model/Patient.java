@@ -104,6 +104,7 @@ public class Patient extends Person {
         return roomNumber;
     }
 
+
     public void setRoomNumber(String roomNumber) {
         this.roomNumber.set(roomNumber);
     }
