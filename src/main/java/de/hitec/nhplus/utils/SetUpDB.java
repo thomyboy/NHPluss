@@ -29,8 +29,10 @@ public class SetUpDB {
     public static void setUpDb() {
         Connection connection = ConnectionBuilder.getConnection();
         SetUpDB.wipeDb(connection);
+        SetUpDB.setUpTableRoom(connection);
         SetUpDB.setUpTablePatient(connection);
-        SetUpDB.setUpTableTreatment(connection);
+        SetUpDB.setUpTableEmployee(connection);
+        SetUpDB.setUpTableUser(connection);
         SetUpDB.setUpPatients();
         SetUpDB.setUpTreatments();
     }
@@ -40,22 +42,37 @@ public class SetUpDB {
      */
     public static void wipeDb(Connection connection) {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("DROP TABLE patient");
-            statement.execute("DROP TABLE treatment");
+            statement.execute("DROP TABLE IF EXISTS patient");
+            statement.execute("DROP TABLE IF EXISTS treatment");
+            statement.execute("DROP TABLE IF EXISTS room");
+            statement.execute("DROP TABLE IF EXISTS employee");
         } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         }
     }
 
+    private static void setUpTableRoom(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS room (" +
+                "   roomID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   roomName TEXT NOT NULL " +
+                " " +
+                ");";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
     private static void setUpTablePatient(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS patient (" +
-                "   pid INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   patientID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   roomID INTEGER NOT NULL, " +
                 "   firstname TEXT NOT NULL, " +
                 "   surname TEXT NOT NULL, " +
                 "   dateOfBirth TEXT NOT NULL, " +
                 "   carelevel TEXT NOT NULL, " +
-                "   roomnumber TEXT NOT NULL, " +
-                "   assets TEXt NOT NULL" +
+                "   FOREIGN KEY (roomID) REFERENCES room (roomID) " +
+                " " +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(SQL);
@@ -66,14 +83,17 @@ public class SetUpDB {
 
     private static void setUpTableTreatment(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS treatment (" +
-                "   tid INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "   pid INTEGER NOT NULL, " +
-                "   treatment_date TEXT NOT NULL, " +
+                "   treatmentID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   patientID INTEGER NOT NULL, " +
+                "   employeeID INTEGER NOT NULL, " +
+                "   treatment_date DATE NOT NULL, " +
                 "   begin TEXT NOT NULL, " +
                 "   end TEXT NOT NULL, " +
                 "   description TEXT NOT NULL, " +
-                "   remark TEXT NOT NULL," +
-                "   FOREIGN KEY (pid) REFERENCES patient (pid) ON DELETE CASCADE" +
+                "   remark TEXT NOT NULL, " +
+                "   state TEXT NOT NULL, " +
+                "   FOREIGN KEY (patientID) REFERENCES patient (patientID) ON DELETE CASCADE, " +
+                "   FOREIGN KEY (employeeID) REFERENCES employee (employeeID) ON DELETE CASCADE " +
                 " " +
                 ");";
 
@@ -84,16 +104,47 @@ public class SetUpDB {
         }
     }
 
+    private static void setUpTableEmployee(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS employee (" +
+                "   employeeID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   firstname TEXT NOT NULL, " +
+                "   surname TEXT NOT NULL, " +
+                "   role TEXT NOT NULL, " +
+                "   status TEXT NOT NULL" +
+                " " +
+                ");";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private static void setUpTableUser(Connection connection) {
+        final String SQL = "CREATE TABLE IF NOT EXISTS user (" +
+                "   userID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "   employeeID INTEGER NOT NULL, " +
+                "   userName TEXT NOT NULL, " +
+                "   userPassword TEXT NOT NULL, " +
+                "   FOREIGN KEY (employeeID) REFERENCES employee (employeeID) ON DELETE CASCADE " +
+                " " +
+                ");";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(SQL);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
 
     private static void setUpPatients() {
         try {
             PatientDao dao = DaoFactory.getDaoFactory().createPatientDAO();
-            dao.create(new Patient("Seppl", "Herberger", convertStringToLocalDate("1945-12-01"), "4", "202", "vermögend"));
-            dao.create(new Patient("Martina", "Gerdsen", convertStringToLocalDate("1954-08-12"), "5", "010", "arm"));
-            dao.create(new Patient("Gertrud", "Franzen", convertStringToLocalDate("1949-04-16"), "3", "002", "normal"));
-            dao.create(new Patient("Ahmet", "Yilmaz", convertStringToLocalDate("1941-02-22"), "3", "013", "normal"));
-            dao.create(new Patient("Hans", "Neumann", convertStringToLocalDate("1955-12-12"), "2", "001", "sehr vermögend"));
-            dao.create(new Patient("Elisabeth", "Müller", convertStringToLocalDate("1958-03-07"), "5", "110", "arm"));
+            dao.create(new Patient("Seppl", "Herberger", convertStringToLocalDate("1945-12-01"), "4", "202"));
+            dao.create(new Patient("Martina", "Gerdsen", convertStringToLocalDate("1954-08-12"), "5", "010"));
+            dao.create(new Patient("Gertrud", "Franzen", convertStringToLocalDate("1949-04-16"), "3", "002"));
+            dao.create(new Patient("Ahmet", "Yilmaz", convertStringToLocalDate("1941-02-22"), "3", "013"));
+            dao.create(new Patient("Hans", "Neumann", convertStringToLocalDate("1955-12-12"), "2", "001"));
+            dao.create(new Patient("Elisabeth", "Müller", convertStringToLocalDate("1958-03-07"), "5", "110"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
