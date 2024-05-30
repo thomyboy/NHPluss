@@ -2,6 +2,8 @@ package de.hitec.nhplus.model;
 
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.List;
+
 public class Employee extends Person{
     private int employeeID;
     private SimpleStringProperty role;
@@ -48,7 +50,5 @@ public class Employee extends Person{
     public void setStatus(String roomNumber) {
         this.status.set(roomNumber);
     }
-
-
 
 }

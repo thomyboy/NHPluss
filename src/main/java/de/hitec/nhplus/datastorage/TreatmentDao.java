@@ -34,8 +34,8 @@ public class TreatmentDao extends DaoImp<Treatment> {
     protected PreparedStatement getCreateStatement(Treatment treatment) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "INSERT INTO treatment (pid, treatment_date, begin, end, description, remark) " +
-                    "VALUES (?, ?, ?, ?, ?, ?)";
+            final String SQL = "INSERT INTO treatment (patientID, treatment_date, begin, end, description, remark,treatmentID, employeeID, state ) " +
+                    "VALUES (?, ?, ?, ?, ?, ?,?,?,? )";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setLong(1, treatment.getPid());
             preparedStatement.setString(2, treatment.getDate());
@@ -43,6 +43,10 @@ public class TreatmentDao extends DaoImp<Treatment> {
             preparedStatement.setString(4, treatment.getEnd());
             preparedStatement.setString(5, treatment.getDescription());
             preparedStatement.setString(6, treatment.getRemarks());
+            preparedStatement.setLong(7, treatment.getTid());
+            preparedStatement.setLong(8, treatment.getEmployeeID());
+            preparedStatement.setString(9, treatment.getState());
+
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -76,11 +80,17 @@ public class TreatmentDao extends DaoImp<Treatment> {
      */
     @Override
     protected Treatment getInstanceFromResultSet(ResultSet result) throws SQLException {
-        LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
-        LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
-        LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
-        return new Treatment(result.getLong(1), result.getLong(2),
-                date, begin, end, result.getString(6), result.getString(7));
+        LocalDate date = DateConverter.convertStringToLocalDate(result.getString("treatment_date"));
+        LocalTime begin = DateConverter.convertStringToLocalTime(result.getString("begin"));
+        LocalTime end = DateConverter.convertStringToLocalTime(result.getString("end"));
+        return new Treatment(
+                result.getLong("treatmentID"),
+                result.getLong("patientID"),
+                date, begin, end,
+                result.getString("description"),
+                result.getString("remark"),
+                result.getLong("employeeID"),
+                result.getString("state"));
     }
 
     /**
@@ -112,11 +122,7 @@ public class TreatmentDao extends DaoImp<Treatment> {
     protected ArrayList<Treatment> getListFromResultSet(ResultSet result) throws SQLException {
         ArrayList<Treatment> list = new ArrayList<Treatment>();
         while (result.next()) {
-            LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
-            LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
-            LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
-            Treatment treatment = new Treatment(result.getLong(1), result.getLong(2),
-                    date, begin, end, result.getString(6), result.getString(7));
+            Treatment treatment = getInstanceFromResultSet(result);
             list.add(treatment);
         }
         return list;
@@ -131,7 +137,7 @@ public class TreatmentDao extends DaoImp<Treatment> {
     private PreparedStatement getReadAllTreatmentsOfOnePatientByPid(long pid) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "SELECT * FROM treatment WHERE pid = ?";
+            final String SQL = "SELECT * FROM treatment WHERE patientID = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setLong(1, pid);
         } catch (SQLException exception) {
@@ -166,7 +172,7 @@ public class TreatmentDao extends DaoImp<Treatment> {
         try {
             final String SQL =
                     "UPDATE treatment SET " +
-                            "pid = ?, " +
+                            "patientID = ?, " +
                             "treatment_date = ?, " +
                             "begin = ?, " +
                             "end = ?, " +
@@ -198,7 +204,7 @@ public class TreatmentDao extends DaoImp<Treatment> {
         PreparedStatement preparedStatement = null;
         try {
             final String SQL =
-                    "DELETE FROM treatment WHERE tid = ?";
+                    "DELETE FROM treatment WHERE treatmentID = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setLong(1, tid);
         } catch (SQLException exception) {

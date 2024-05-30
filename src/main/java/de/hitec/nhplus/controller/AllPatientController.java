@@ -2,15 +2,13 @@ package de.hitec.nhplus.controller;
 
 import de.hitec.nhplus.datastorage.DaoFactory;
 import de.hitec.nhplus.datastorage.PatientDao;
+import de.hitec.nhplus.model.Room;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import de.hitec.nhplus.model.Patient;
@@ -44,7 +42,7 @@ public class AllPatientController {
     private TableColumn<Patient, String> columnCareLevel;
 
     @FXML
-    private TableColumn<Patient, String> columnRoomNumber;
+    private TableColumn<Patient, String> columnRoomName;
 
 //    @FXML
 //    private TableColumn<Patient, String> columnAssets;
@@ -68,7 +66,7 @@ public class AllPatientController {
     private TextField textFieldCareLevel;
 
     @FXML
-    private TextField textFieldRoomNumber;
+    private ChoiceBox<Room> choiceBoxRoom;
 
     @FXML
     private TextField textFieldAssets;
@@ -100,8 +98,8 @@ public class AllPatientController {
         this.columnCareLevel.setCellValueFactory(new PropertyValueFactory<>("careLevel"));
         this.columnCareLevel.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.columnRoomNumber.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
-        this.columnRoomNumber.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.columnRoomName.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
+        this.columnRoomName.setCellFactory(TextFieldTableCell.forTableColumn());
 
 //        this.columnAssets.setCellValueFactory(new PropertyValueFactory<>("assets"));
 //        this.columnAssets.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -118,13 +116,13 @@ public class AllPatientController {
         });
 
         this.buttonAdd.setDisable(true);
-        ChangeListener<String> inputNewPatientListener = (observableValue, oldText, newText) ->
+        ChangeListener<Object> inputNewPatientListener = (observableValue, oldText, newText) ->
                 AllPatientController.this.buttonAdd.setDisable(!AllPatientController.this.areInputDataValid());
         this.textFieldSurname.textProperty().addListener(inputNewPatientListener);
         this.textFieldFirstName.textProperty().addListener(inputNewPatientListener);
         this.textFieldDateOfBirth.textProperty().addListener(inputNewPatientListener);
         this.textFieldCareLevel.textProperty().addListener(inputNewPatientListener);
-        this.textFieldRoomNumber.textProperty().addListener(inputNewPatientListener);
+        this.choiceBoxRoom.valueProperty().addListener(inputNewPatientListener);
     }
 
     /**
@@ -170,29 +168,6 @@ public class AllPatientController {
         event.getRowValue().setCareLevel(event.getNewValue());
         this.doUpdate(event);
     }
-
-    /**
-     * When a cell of the column with room numbers was changed, this method will be called, to persist the change.
-     *
-     * @param event Event including the changed object and the change.
-     */
-    @FXML
-    public void handleOnEditRoomNumber(TableColumn.CellEditEvent<Patient, String> event){
-        event.getRowValue().setRoomNumber(event.getNewValue());
-        this.doUpdate(event);
-    }
-
-    /**
-     * When a cell of the column with assets was changed, this method will be called, to persist the change.
-     *
-     * @param event Event including the changed object and the change.
-     */
-    @FXML
-//    public void handleOnEditAssets(TableColumn.CellEditEvent<Patient, String> event){
-//        event.getRowValue().setAssets(event.getNewValue());
-//        this.doUpdate(event);
-//    }
-
     /**
      * Updates a patient by calling the method <code>update()</code> of {@link PatientDao}.
      *
@@ -250,9 +225,9 @@ public class AllPatientController {
         String birthday = this.textFieldDateOfBirth.getText();
         LocalDate date = DateConverter.convertStringToLocalDate(birthday);
         String careLevel = this.textFieldCareLevel.getText();
-        String roomNumber = this.textFieldRoomNumber.getText();
+        Room room = this.choiceBoxRoom.getValue();
         try {
-            this.dao.create(new Patient(firstName, surname, date, careLevel, roomNumber));
+            this.dao.create(new Patient(firstName, surname, date, careLevel, room));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -268,7 +243,7 @@ public class AllPatientController {
         this.textFieldSurname.clear();
         this.textFieldDateOfBirth.clear();
         this.textFieldCareLevel.clear();
-        this.textFieldRoomNumber.clear();
+        this.choiceBoxRoom.setValue(null);
     }
 
     private boolean areInputDataValid() {
@@ -282,6 +257,6 @@ public class AllPatientController {
 
         return !this.textFieldFirstName.getText().isBlank() && !this.textFieldSurname.getText().isBlank() &&
                 !this.textFieldDateOfBirth.getText().isBlank() && !this.textFieldCareLevel.getText().isBlank() &&
-                !this.textFieldRoomNumber.getText().isBlank();
+                this.choiceBoxRoom.getValue()!=null;
     }
 }
