@@ -32,4 +32,15 @@ public class MainWindowController {
             exception.printStackTrace();
         }
     }
+
+    //hier soll bei Click auf den pflegekräfte-Button im Main Window auf das Pflegekräfte-Fenster geleitet werden (Inshallah)
+    @FXML
+    public void handleSetUpAllEmployees(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/AllCaregiverView.fxml"));
+        try{
+            mainBorderPane.setCenter(loader.load());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
 }

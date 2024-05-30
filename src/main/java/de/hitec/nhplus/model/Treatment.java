@@ -14,6 +14,9 @@ public class Treatment {
     private String description;
     private String remarks;
 
+    private long employeeID;
+    private String state;
+
     /**
      * Constructor to initiate an object of class <code>Treatment</code> with the given parameter. Use this constructor
      * to initiate objects, which are not persisted yet, because it will not have a treatment id (tid).
@@ -26,13 +29,15 @@ public class Treatment {
      * @param remarks Remarks to the treatment.
      */
     public Treatment(long pid, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks) {
+                     LocalTime end, String description, String remarks, long employeeID, String state) {
         this.pid = pid;
         this.date = date;
         this.begin = begin;
         this.end = end;
         this.description = description;
         this.remarks = remarks;
+        this.employeeID = employeeID;
+        this.state = state;
     }
 
     /**
@@ -48,7 +53,7 @@ public class Treatment {
      * @param remarks Remarks to the treatment.
      */
     public Treatment(long tid, long pid, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks) {
+                     LocalTime end, String description, String remarks, long employeeID, String state) {
         this.tid = tid;
         this.pid = pid;
         this.date = date;
@@ -56,6 +61,9 @@ public class Treatment {
         this.end = end;
         this.description = description;
         this.remarks = remarks;
+        this.employeeID = employeeID;
+
+        this.state = state;
     }
 
     public long getTid() {
@@ -114,5 +122,21 @@ public class Treatment {
                 "\nEnd: " + this.end +
                 "\nDescription: " + this.description +
                 "\nRemarks: " + this.remarks + "\n";
+    }
+
+    public long getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(long employeeID) {
+        this.employeeID = employeeID;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }
