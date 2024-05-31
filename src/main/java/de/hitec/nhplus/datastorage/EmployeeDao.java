@@ -18,7 +18,7 @@ public class EmployeeDao extends DaoImp<Employee> {
      * @param connection Object of <code>Connection</code> to execute the SQL-statements.
      */
     public EmployeeDao(Connection connection) {
-        super(int employeeID,  name,  surname, role, status);
+        super(connection);
     }
 
     /**
@@ -31,7 +31,7 @@ public class EmployeeDao extends DaoImp<Employee> {
     protected PreparedStatement getCreateStatement(Employee employee) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "INSERT INTO Employee (employeeID, name, surname, role, status) VALUES (?, ?, ?, ?, ?)";
+            final String SQL = "INSERT INTO Employee (employeeID, firstname, surname, role, status) VALUES (?, ?, ?, ?, ?)";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setInt(1, employee.getemployeeID());
             preparedStatement.setString(2, employee.getFirstName());
@@ -131,7 +131,7 @@ public class EmployeeDao extends DaoImp<Employee> {
         try {
             final String SQL =
                     "UPDATE employee SET " +
-                            "name = ?, " +
+                            "firstname = ?, " +
                             "surname = ?, " +
                             "role = ?, " +
                             "status = ? " +

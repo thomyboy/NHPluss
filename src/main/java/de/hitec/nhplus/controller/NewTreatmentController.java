@@ -84,7 +84,7 @@ public class NewTreatmentController {
         LocalTime end = DateConverter.convertStringToLocalTime(textFieldEnd.getText());
         String description = textFieldDescription.getText();
         String remarks = textAreaRemarks.getText();
-        Treatment treatment = new Treatment(patient.getPid(), date, begin, end, description, remarks);
+        Treatment treatment = new Treatment(patient.getPid(), date, begin, end, description, remarks,1,"in Bearbeitung");
         createTreatment(treatment);
         controller.readAllAndShowInTableView();
         stage.close();

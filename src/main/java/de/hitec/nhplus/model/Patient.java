@@ -15,9 +15,9 @@ public class Patient extends Person {
     private SimpleLongProperty pid;
     private final SimpleStringProperty dateOfBirth;
     private final SimpleStringProperty careLevel;
-    private final SimpleStringProperty roomNumber;
+    private final Room room;
     private final List<Treatment> allTreatments = new ArrayList<>();
-
+    private boolean locked;
     /**
      * Constructor to initiate an object of class <code>Patient</code> with the given parameter. Use this constructor
      * to initiate objects, which are not persisted yet, because it will not have a patient id (pid).
@@ -26,13 +26,14 @@ public class Patient extends Person {
      * @param surname Last name of the patient.
      * @param dateOfBirth Date of birth of the patient.
      * @param careLevel Care level of the patient.
-     * @param roomNumber Room number of the patient.
+     * @param room Room number of the patient.
      */
-    public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
+    public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, Room room) {
         super(firstName, surname);
         this.dateOfBirth = new SimpleStringProperty(DateConverter.convertLocalDateToString(dateOfBirth));
         this.careLevel = new SimpleStringProperty(careLevel);
-        this.roomNumber = new SimpleStringProperty(roomNumber);
+        this.room = room;
+        this.locked = locked;
     }
 
     /**
@@ -44,14 +45,22 @@ public class Patient extends Person {
      * @param surname Last name of the patient.
      * @param dateOfBirth Date of birth of the patient.
      * @param careLevel Care level of the patient.
-     * @param roomNumber Room number of the patient.
+     * @param room Room number of the patient.
      */
-    public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
+    public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel, Room room) {
         super(firstName, surname);
         this.pid = new SimpleLongProperty(pid);
         this.dateOfBirth = new SimpleStringProperty(DateConverter.convertLocalDateToString(dateOfBirth));
         this.careLevel = new SimpleStringProperty(careLevel);
-        this.roomNumber = new SimpleStringProperty(roomNumber);
+        this.room = room;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     public long getPid() {
@@ -91,16 +100,8 @@ public class Patient extends Person {
         this.careLevel.set(careLevel);
     }
 
-    public String getRoomNumber() {
-        return roomNumber.get();
-    }
-
-    public SimpleStringProperty roomNumberProperty() {
-        return roomNumber;
-    }
-
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber.set(roomNumber);
+    public Room getRoom() {
+        return room;
     }
 
     /**
@@ -123,7 +124,7 @@ public class Patient extends Person {
                 "\nSurname: " + this.getSurname() +
                 "\nBirthday: " + this.dateOfBirth +
                 "\nCarelevel: " + this.careLevel +
-                "\nRoomnumber: " + this.roomNumber +
+                "\nRoom: " + this.room +
                 "\n";
     }
 }
