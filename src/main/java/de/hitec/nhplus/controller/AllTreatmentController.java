@@ -140,7 +140,7 @@ public class AllTreatmentController {
         Treatment t = this.treatments.remove(index);
         TreatmentDao dao = DaoFactory.getDaoFactory().createTreatmentDao();
         try {
-            dao.deleteById(t.getTid());
+            dao.deleteById(t.getTreatmentID());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

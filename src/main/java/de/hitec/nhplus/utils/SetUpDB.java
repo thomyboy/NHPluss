@@ -143,7 +143,11 @@ public class SetUpDB {
     private static void setUpEmployees() {
         try {
             EmployeeDao dao = DaoFactory.getDaoFactory().createEmployeeDAO();
-            dao.create(new Employee(1,"Darius", "Vader","Pfleger","aktiv"));
+            dao.create(new Employee(1,"Darius", "Vader","Pflegekraft","aktiv"));
+            dao.create(new Employee(2,"Marion", "Meier","Ärztin","inaktiv"));
+            dao.create(new Employee(3,"Hannelore", "Ingelore","Pflegekraft","aktiv"));
+            dao.create(new Employee(4,"Donki", "Xote","Pflegekaft","aktiv"));
+            dao.create(new Employee(5,"Evelynn", "Parker","Pflegekraft","Inaktiv"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

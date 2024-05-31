@@ -37,13 +37,13 @@ public class TreatmentDao extends DaoImp<Treatment> {
             final String SQL = "INSERT INTO treatment (patientID, treatment_date, begin, end, description, remark,treatmentID, employeeID, state ) " +
                     "VALUES (?, ?, ?, ?, ?, ?,?,?,? )";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setLong(1, treatment.getPid());
+            preparedStatement.setLong(1, treatment.getPatientID());
             preparedStatement.setString(2, treatment.getDate());
             preparedStatement.setString(3, treatment.getBegin());
             preparedStatement.setString(4, treatment.getEnd());
             preparedStatement.setString(5, treatment.getDescription());
             preparedStatement.setString(6, treatment.getRemarks());
-            preparedStatement.setLong(7, treatment.getTid());
+            preparedStatement.setLong(7, treatment.getTreatmentID());
             preparedStatement.setLong(8, treatment.getEmployeeID());
             preparedStatement.setString(9, treatment.getState());
 
@@ -180,13 +180,13 @@ public class TreatmentDao extends DaoImp<Treatment> {
                             "remark = ? " +
                             "WHERE tid = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setLong(1, treatment.getPid());
+            preparedStatement.setLong(1, treatment.getPatientID());
             preparedStatement.setString(2, treatment.getDate());
             preparedStatement.setString(3, treatment.getBegin());
             preparedStatement.setString(4, treatment.getEnd());
             preparedStatement.setString(5, treatment.getDescription());
             preparedStatement.setString(6, treatment.getRemarks());
-            preparedStatement.setLong(7, treatment.getTid());
+            preparedStatement.setLong(7, treatment.getTreatmentID());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

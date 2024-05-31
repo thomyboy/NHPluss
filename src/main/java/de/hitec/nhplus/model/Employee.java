@@ -10,9 +10,13 @@ public class Employee extends Person{
     private SimpleStringProperty status;
 
 
-    public Employee(int employeeID, String name, String surname, String role, String status) {
-        super(name, surname);
+    public Employee(int employeeID, String firstname, String surname, String role, String status) {
+        super(firstname, surname);
         this.employeeID = employeeID;
+        this.role = new SimpleStringProperty(role);
+        this.status = new SimpleStringProperty(status); }
+    public Employee(String firstname, String surname, String role, String status) {
+        super(firstname, surname);
         this.role = new SimpleStringProperty(role);
         this.status = new SimpleStringProperty(status);
     }
@@ -24,9 +28,6 @@ public class Employee extends Person{
         return employeeID;
     }
 
-    public void employeeID(int employeeID) {
-        this.employeeID = employeeID;
-    }
     public String getrole() {
         return role.get();
     }

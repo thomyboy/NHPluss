@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Treatment {
-    private long tid;
-    private final long pid;
+    private long treatmentID;
+    private final long patientID;
     private LocalDate date;
     private LocalTime begin;
     private LocalTime end;
@@ -21,16 +21,16 @@ public class Treatment {
      * Constructor to initiate an object of class <code>Treatment</code> with the given parameter. Use this constructor
      * to initiate objects, which are not persisted yet, because it will not have a treatment id (tid).
      *
-     * @param pid Id of the treated patient.
+     * @param patientID Id of the treated patient.
      * @param date Date of the Treatment.
      * @param begin Time of the start of the treatment in format "hh:MM"
      * @param end Time of the end of the treatment in format "hh:MM".
      * @param description Description of the treatment.
      * @param remarks Remarks to the treatment.
      */
-    public Treatment(long pid, LocalDate date, LocalTime begin,
+    public Treatment(long patientID, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks, long employeeID, String state) {
-        this.pid = pid;
+        this.patientID = patientID;
         this.date = date;
         this.begin = begin;
         this.end = end;
@@ -44,18 +44,18 @@ public class Treatment {
      * Constructor to initiate an object of class <code>Treatment</code> with the given parameter. Use this constructor
      * to initiate objects, which are already persisted and have a treatment id (tid).
      *
-     * @param tid Id of the treatment.
-     * @param pid Id of the treated patient.
+     * @param treatmentID Id of the treatment.
+     * @param patientID Id of the treated patient.
      * @param date Date of the Treatment.
      * @param begin Time of the start of the treatment in format "hh:MM"
      * @param end Time of the end of the treatment in format "hh:MM".
      * @param description Description of the treatment.
      * @param remarks Remarks to the treatment.
      */
-    public Treatment(long tid, long pid, LocalDate date, LocalTime begin,
+    public Treatment(long treatmentID, long patientID, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks, long employeeID, String state) {
-        this.tid = tid;
-        this.pid = pid;
+        this.treatmentID = treatmentID;
+        this.patientID = patientID;
         this.date = date;
         this.begin = begin;
         this.end = end;
@@ -66,12 +66,12 @@ public class Treatment {
         this.state = state;
     }
 
-    public long getTid() {
-        return tid;
+    public long getTreatmentID() {
+        return treatmentID;
     }
 
-    public long getPid() {
-        return this.pid;
+    public long getPatientID() {
+        return this.patientID;
     }
 
     public String getDate() {
@@ -115,8 +115,8 @@ public class Treatment {
     }
 
     public String toString() {
-        return "\nBehandlung" + "\nTID: " + this.tid +
-                "\nPID: " + this.pid +
+        return "\nBehandlung" + "\nTID: " + this.treatmentID +
+                "\nPID: " + this.patientID +
                 "\nDate: " + this.date +
                 "\nBegin: " + this.begin +
                 "\nEnd: " + this.end +

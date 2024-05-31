@@ -46,7 +46,7 @@ public class TreatmentController {
         this.controller= controller;
         PatientDao pDao = DaoFactory.getDaoFactory().createPatientDAO();
         try {
-            this.patient = pDao.read((int) treatment.getPid());
+            this.patient = pDao.read((int) treatment.getPatientID());
             this.treatment = treatment;
             showData();
         } catch (SQLException exception) {

@@ -5,10 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import java.sql.SQLException;
@@ -33,6 +30,7 @@ public class AllEmployeeController {
     @FXML
     private TableColumn<Employee, String> columnSurname;
 
+    // TODO: IMPLEMENT THESE FUCKING THINGS
 //    @FXML
 //    private TableColumn<Employee, String> columnRole;
 //
@@ -51,6 +49,9 @@ public class AllEmployeeController {
     @FXML
     private TextField textFieldSurname;
 
+    @FXML
+    private ChoiceBox<Employee> choiceBoxEmployee;
+// TODO: IMPLEMENT THESE FUCKING THINGS
 //    @FXML
 //    private TextField textFieldRole;
 //
@@ -64,12 +65,12 @@ public class AllEmployeeController {
         this.readAllAndShowInTableView();
 
         this.columnId.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
-        this.columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        this.columnName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         this.columnName.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.columnSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
         this.columnSurname.setCellFactory(TextFieldTableCell.forTableColumn());
-
+// TODO: IMPLEMENT THESE FUCKING THINGS
 //        this.columnRole.setCellValueFactory(new PropertyValueFactory<>("role"));
 //        this.columnRole.setCellFactory(TextFieldTableCell.forTableColumn());
 //
@@ -87,10 +88,11 @@ public class AllEmployeeController {
         });
 
         this.buttonAdd.setDisable(true);
-        ChangeListener<String> inputNewEmployeeListener = (observableValue, oldText, newText) ->
+        ChangeListener<Object> inputNewEmployeeListener = (observableValue, oldText, newText) ->
                 AllEmployeeController.this.buttonAdd.setDisable(!AllEmployeeController.this.areInputDataValid());
         this.textFieldName.textProperty().addListener(inputNewEmployeeListener);
         this.textFieldSurname.textProperty().addListener(inputNewEmployeeListener);
+        // TODO: IMPLEMENT THESE FUCKING THINGS
 //        this.textFieldRole.textProperty().addListener(inputNewEmployeeListener);
 //        this.textFieldStatus.textProperty().addListener(inputNewEmployeeListener);
     }
@@ -149,15 +151,16 @@ public class AllEmployeeController {
             }
         }
     }
-//MOIN
+
+    //MOIN
     @FXML
     public void handleAdd() {
-        String name = this.textFieldName.getText();
+        String firstName = this.textFieldName.getText();
         String surname = this.textFieldSurname.getText();
 //        String role = this.textFieldRole.getText();
 //        String status = this.textFieldStatus.getText();
         try {
-            this.dao.create(new Employee(0, name, surname, "Sith Lo- I mean DOCTOR", "im Urlaub")); // employeeID is auto-generated
+            this.dao.create(new Employee(firstName, surname, "NOT IMPLEMENTED", "NOT IMPLEMENTED")); // employeeID is auto-generated
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -173,10 +176,20 @@ public class AllEmployeeController {
     }
 
     private boolean areInputDataValid() {
+        if (!this.textFieldSurname.getText().isBlank()){
+            try{
+
+            }catch (Exception exception){
+                return false;
+            }
+        }
+
         return !this.textFieldName.getText().isBlank() &&
-                !this.textFieldSurname.getText().isBlank() ;
-//                !this.textFieldRole.getText().isBlank() &&
-//                !this.textFieldStatus.getText().isBlank();
+                !this.textFieldSurname.getText().isBlank() &&
+                // TODO: IMPLEMENT THE OTHER FUCKING textFields
+                !this.textFieldSurname.getText().isBlank() &&
+                this.choiceBoxEmployee.getValue() != null;
     }
 }
+
 

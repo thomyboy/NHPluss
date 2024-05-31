@@ -53,7 +53,7 @@ public class NewTreatmentController {
     private AllTreatmentController controller;
     private Patient patient;
     private Stage stage;
-    private TreatmentDao dao;
+    private EmployeeDao dao;
     private ArrayList<Employee> employeeList;
     private final ObservableList<String> employeeSelection = FXCollections.observableArrayList();
     private final ObservableList<Treatment> treatments = FXCollections.observableArrayList();
@@ -65,6 +65,8 @@ public class NewTreatmentController {
         this.controller= controller;
         this.patient = patient;
         this.stage = stage;
+        comboBoxEmployeeSelection.setItems(employeeSelection);
+        comboBoxEmployeeSelection.getSelectionModel().select(0);
 
         this.buttonAdd.setDisable(true);
         ChangeListener<String> inputNewPatientListener = (observableValue, oldText, newText) ->
@@ -86,6 +88,7 @@ public class NewTreatmentController {
             }
         });
         this.showPatientData();
+        this.createComboBoxData();
     }
 
     private void showPatientData(){
@@ -115,13 +118,14 @@ public class NewTreatmentController {
         }
     }
 
+
+
     private void createComboBoxData() {
         EmployeeDao dao = DaoFactory.getDaoFactory().createEmployeeDAO();
         try {
             employeeList = (ArrayList<Employee>) dao.readAll();
-            this.employeeSelection.add("alle");
             for (Employee employee: employeeList) {
-                this.employeeSelection.add(patient.getSurname());
+                this.employeeSelection.add(employee.getSurname());
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -131,31 +135,30 @@ public class NewTreatmentController {
 
     @FXML
     public void handleComboBox() {
-        String selectedPatient = this.comboBoxEmployeeSelection.getSelectionModel().getSelectedItem();
-        this.treatments.clear();
-        this.dao = DaoFactory.getDaoFactory().createTreatmentDao();
-
-        if (selectedPatient.equals("alle")) {
-            try {
-                this.treatments.addAll(this.dao.readAll());
-            } catch (SQLException exception) {
-                exception.printStackTrace();
-            }
-        }
-
-        Employee employee = searchInList(selectedPatient);
-        if (patient !=null) {
-            try {
-                this.treatments.addAll(this.dao.readTreatmentsByPid(patient.getPid()));
-            } catch (SQLException exception) {
-                exception.printStackTrace();
-            }
-        }
+        String selectedEmployee = this.comboBoxEmployeeSelection.getSelectionModel().getSelectedItem();
+        this.dao = DaoFactory.getDaoFactory().createEmployeeDAO();
+//
+//        if (selectedEmployee.equals("alle")) {
+//            try {
+//                this.treatments.addAll(this.dao.readAll());
+//            } catch (SQLException exception) {
+//                exception.printStackTrace();
+//            }
+//        }
+//
+        Employee employee = searchInList(selectedEmployee);
+//        if (employee !=null) {
+//            try {
+//                this.treatments.addAll(this.dao.readTreatmentsByPid(patient.getPid()));
+//            } catch (SQLException exception) {
+//                exception.printStackTrace();
+//            }
+//        }
     }
 
     private Employee searchInList(String surname) {
         for (Employee employee : this.employeeList) {
-            if (patient.getSurname().equals(surname)) {
+            if (employee.getSurname().equals(surname)) {
                 return employee;
             }
         }
