@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="Datenbank Mappings Gefixt. Button für Caregiver/Pflegekräfte/Employees">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90.xml" afterDir="false" />
+    <list default="true" id="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" name="Changes" comment="Set,get und verbindung von EmployeeID repariert.&#10;name ist nicht name sondern firstName, wird auch endlich angezeigt :)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllEmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllEmployeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/AllCaregiverView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/AllCaregiverView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,8 +162,17 @@
       <workItem from="1716960983758" duration="601000" />
       <workItem from="1716969225870" duration="10015000" />
       <workItem from="1717071345603" duration="20599000" />
-      <workItem from="1717165211367" duration="2638000" />
+      <workItem from="1717165211367" duration="5088000" />
     </task>
+    <task id="LOCAL-00001" summary="Set,get und verbindung von EmployeeID repariert.&#10;name ist nicht name sondern firstName, wird auch endlich angezeigt :)">
+      <option name="closed" value="true" />
+      <created>1717168417797</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1717168417797</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,7 +191,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Datenbank Mappings Gefixt&#10;Button für Caregiver/Pflegekräfte/Employees" />
-    <option name="LAST_COMMIT_MESSAGE" value="Datenbank Mappings Gefixt&#10;Button für Caregiver/Pflegekräfte/Employees" />
+    <MESSAGE value="Set,get und verbindung von EmployeeID repariert.&#10;name ist nicht name sondern firstName, wird auch endlich angezeigt :)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set,get und verbindung von EmployeeID repariert.&#10;name ist nicht name sondern firstName, wird auch endlich angezeigt :)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -191,6 +201,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java</url>
           <line>192</line>
           <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllEmployeeController.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="org.sqlite.SQLiteException" package="org.sqlite" />
