@@ -110,7 +110,8 @@ public class AllPatientController {
         this.buttonDelete.setDisable(true);
         this.tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Patient>() {
             @Override
-            public void changed(ObservableValue<? extends Patient> observableValue, Patient oldPatient, Patient newPatient) {;
+            public void changed(ObservableValue<? extends Patient> observableValue, Patient oldPatient, Patient newPatient) {
+                ;
                 AllPatientController.this.buttonDelete.setDisable(newPatient == null);
             }
         });
@@ -168,6 +169,9 @@ public class AllPatientController {
         event.getRowValue().setCareLevel(event.getNewValue());
         this.doUpdate(event);
     }
+
+
+
     /**
      * Updates a patient by calling the method <code>update()</code> of {@link PatientDao}.
      *
@@ -202,6 +206,10 @@ public class AllPatientController {
      */
     @FXML
     public void handleDelete() {
+        if (Patient.isLocked()) {
+            System.out.println("Patientendaten sind gesperrt und können nicht gelöscht werden.");
+            return;
+        }
         Patient selectedItem = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             try {
@@ -211,6 +219,16 @@ public class AllPatientController {
                 exception.printStackTrace();
             }
         }
+    }
+
+    public void handleLock() {
+        Patient.setLocked(true);
+        try {
+            this.dao.update();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        readAllAndShowInTableView();
     }
 
     /**
@@ -257,6 +275,8 @@ public class AllPatientController {
 
         return !this.textFieldFirstName.getText().isBlank() && !this.textFieldSurname.getText().isBlank() &&
                 !this.textFieldDateOfBirth.getText().isBlank() && !this.textFieldCareLevel.getText().isBlank() &&
-                this.choiceBoxRoom.getValue()!=null;
+
+                this.choiceBoxRoom.getValue() != null;
+
     }
 }
