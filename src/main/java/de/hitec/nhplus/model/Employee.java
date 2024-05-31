@@ -14,7 +14,7 @@ public class Employee extends Person{
         this.role = new SimpleStringProperty(role);
         this.status = new SimpleStringProperty(status);
     }
-//MOIN
+    //MOIN
     public int getemployeeID() {
         return employeeID;
     }

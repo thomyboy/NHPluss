@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import de.hitec.nhplus.model.Employee;
 import javafx.beans.property.SimpleStringProperty;
-
+// Hello there
 /**
  * Implements the Interface <code>DaoImp</code>. Overrides methods to generate specific <code>PreparedStatements</code>,
  * to execute the specific SQL Statements.
