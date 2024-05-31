@@ -64,7 +64,7 @@ public class AllEmployeeController {
         this.readAllAndShowInTableView();
 
         this.columnId.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
-        this.columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        this.columnName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         this.columnName.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.columnSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));

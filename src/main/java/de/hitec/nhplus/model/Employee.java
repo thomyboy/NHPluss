@@ -1,32 +1,30 @@
 package de.hitec.nhplus.model;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-import java.util.List;
-
 public class Employee extends Person{
-    private int employeeID;
+    private SimpleIntegerProperty employeeID;
     private SimpleStringProperty role;
     private SimpleStringProperty status;
 
 
     public Employee(int employeeID, String name, String surname, String role, String status) {
         super(name, surname);
-        this.employeeID = employeeID;
+        this.employeeID = new SimpleIntegerProperty(employeeID);
         this.role = new SimpleStringProperty(role);
         this.status = new SimpleStringProperty(status);
+
     }
 //MOIN
     public int getemployeeID() {
-        return employeeID;
+        return employeeID.get();
     }
-    public int employeeIDProperty() {
+    public SimpleIntegerProperty employeeIDProperty() {
         return employeeID;
     }
 
-    public void employeeID(int employeeID) {
-        this.employeeID = employeeID;
-    }
+    public void setEmployeeID(int employeeID) { this.employeeID.set(employeeID);}
     public String getrole() {
         return role.get();
     }
