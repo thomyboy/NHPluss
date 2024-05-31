@@ -170,6 +170,8 @@ public class AllPatientController {
         this.doUpdate(event);
     }
 
+
+
     /**
      * Updates a patient by calling the method <code>update()</code> of {@link PatientDao}.
      *
@@ -273,6 +275,8 @@ public class AllPatientController {
 
         return !this.textFieldFirstName.getText().isBlank() && !this.textFieldSurname.getText().isBlank() &&
                 !this.textFieldDateOfBirth.getText().isBlank() && !this.textFieldCareLevel.getText().isBlank() &&
+
                 this.choiceBoxRoom.getValue() != null;
+
     }
 }

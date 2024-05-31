@@ -33,7 +33,9 @@ public class Patient extends Person {
         this.dateOfBirth = new SimpleStringProperty(DateConverter.convertLocalDateToString(dateOfBirth));
         this.careLevel = new SimpleStringProperty(careLevel);
         this.room = room;
+
         this.locked = locked;
+
     }
 
     /**
@@ -53,6 +55,7 @@ public class Patient extends Person {
         this.dateOfBirth = new SimpleStringProperty(DateConverter.convertLocalDateToString(dateOfBirth));
         this.careLevel = new SimpleStringProperty(careLevel);
         this.room = room;
+
     }
 
     public boolean isLocked() {
@@ -61,6 +64,7 @@ public class Patient extends Person {
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+
     }
 
     public long getPid() {
