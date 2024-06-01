@@ -142,7 +142,7 @@ public class AllEmployeeController {
         Employee selectedItem = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             try {
-                DaoFactory.getDaoFactory().createEmployeeDAO().deleteById(selectedItem.getemployeeID());
+                DaoFactory.getDaoFactory().createEmployeeDAO().deleteById(selectedItem.getEmployeeID());
                 this.tableView.getItems().remove(selectedItem);
             } catch (SQLException exception) {
                 exception.printStackTrace();

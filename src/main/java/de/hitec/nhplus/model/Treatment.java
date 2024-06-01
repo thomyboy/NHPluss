@@ -7,14 +7,15 @@ import java.time.LocalTime;
 
 public class Treatment {
     private long treatmentID;
-    private final long patientID;
     private LocalDate date;
     private LocalTime begin;
     private LocalTime end;
     private String description;
     private String remarks;
+    private Patient patient;
+    private Employee employee;
 
-    private long employeeID;
+
     private String state;
 
     /**
@@ -28,15 +29,15 @@ public class Treatment {
      * @param description Description of the treatment.
      * @param remarks Remarks to the treatment.
      */
-    public Treatment(long patientID, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, long employeeID, String state) {
-        this.patientID = patientID;
+    public Treatment(LocalDate date, LocalTime begin,
+                     LocalTime end, String description, String remarks, Patient patient,Employee employee, String state) {
+        this.patient = patient;
         this.date = date;
         this.begin = begin;
         this.end = end;
         this.description = description;
         this.remarks = remarks;
-        this.employeeID = employeeID;
+        this.employee= employee;
         this.state = state;
     }
 
@@ -52,17 +53,16 @@ public class Treatment {
      * @param description Description of the treatment.
      * @param remarks Remarks to the treatment.
      */
-    public Treatment(long treatmentID, long patientID, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, long employeeID, String state) {
+    public Treatment(long treatmentID, LocalDate date, LocalTime begin,
+                     LocalTime end, String description, String remarks, Patient patient, Employee employee,  String state) {
         this.treatmentID = treatmentID;
-        this.patientID = patientID;
         this.date = date;
         this.begin = begin;
         this.end = end;
         this.description = description;
         this.remarks = remarks;
-        this.employeeID = employeeID;
-
+        this.patient = patient;
+        this.employee = employee;
         this.state = state;
     }
 
@@ -70,8 +70,8 @@ public class Treatment {
         return treatmentID;
     }
 
-    public long getPatientID() {
-        return this.patientID;
+    public Patient getPatient() {
+        return this.patient;
     }
 
     public String getDate() {
@@ -116,7 +116,7 @@ public class Treatment {
 
     public String toString() {
         return "\nBehandlung" + "\nTID: " + this.treatmentID +
-                "\nPID: " + this.patientID +
+                "\nPID: " + this.patient.getPid() +
                 "\nDate: " + this.date +
                 "\nBegin: " + this.begin +
                 "\nEnd: " + this.end +
@@ -124,12 +124,8 @@ public class Treatment {
                 "\nRemarks: " + this.remarks + "\n";
     }
 
-    public long getEmployeeID() {
-        return employeeID;
-    }
-
-    public void setEmployeeID(long employeeID) {
-        this.employeeID = employeeID;
+    public Employee getEmployee() {
+        return employee;
     }
 
     public String getState() {

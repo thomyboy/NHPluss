@@ -2,7 +2,6 @@ package de.hitec.nhplus.controller;
 
 import de.hitec.nhplus.datastorage.DaoFactory;
 import de.hitec.nhplus.datastorage.EmployeeDao;
-import de.hitec.nhplus.datastorage.PatientDao;
 import de.hitec.nhplus.datastorage.TreatmentDao;
 import de.hitec.nhplus.model.Employee;
 import javafx.beans.value.ChangeListener;
@@ -53,7 +52,9 @@ public class NewTreatmentController {
     private AllTreatmentController controller;
     private Patient patient;
     private Stage stage;
+    private Employee assignedEmployee;
     private EmployeeDao dao;
+    private String employeeFullName;
     private ArrayList<Employee> employeeList;
     private final ObservableList<String> employeeSelection = FXCollections.observableArrayList();
     private final ObservableList<Treatment> treatments = FXCollections.observableArrayList();
@@ -61,15 +62,18 @@ public class NewTreatmentController {
 
 
 
-    public void initialize(AllTreatmentController controller, Stage stage, Patient patient) {
+    public void initialize(AllTreatmentController controller, Stage stage, Patient patient, String employeeFullName) {
         this.controller= controller;
         this.patient = patient;
         this.stage = stage;
+        this.employeeFullName = employeeFullName;
         comboBoxEmployeeSelection.setItems(employeeSelection);
         comboBoxEmployeeSelection.getSelectionModel().select(0);
 
         this.buttonAdd.setDisable(true);
         ChangeListener<String> inputNewPatientListener = (observableValue, oldText, newText) ->
+                NewTreatmentController.this.buttonAdd.setDisable(NewTreatmentController.this.areInputDataInvalid());
+        ChangeListener<String> inputNewEmployeeListener = (observableValue, oldText, newText) ->
                 NewTreatmentController.this.buttonAdd.setDisable(NewTreatmentController.this.areInputDataInvalid());
         this.textFieldBegin.textProperty().addListener(inputNewPatientListener);
         this.textFieldEnd.textProperty().addListener(inputNewPatientListener);
@@ -103,7 +107,7 @@ public class NewTreatmentController {
         LocalTime end = DateConverter.convertStringToLocalTime(textFieldEnd.getText());
         String description = textFieldDescription.getText();
         String remarks = textAreaRemarks.getText();
-        Treatment treatment = new Treatment(patient.getPid(), date, begin, end, description, remarks,1,"in Bearbeitung");
+        Treatment treatment = new Treatment(patient.getPid(), date, begin, end, description, remarks, patient, assignedEmployee, "in Bearbeitung");
         createTreatment(treatment);
         controller.readAllAndShowInTableView();
         stage.close();
@@ -125,7 +129,9 @@ public class NewTreatmentController {
         try {
             employeeList = (ArrayList<Employee>) dao.readAll();
             for (Employee employee: employeeList) {
-                this.employeeSelection.add(employee.getSurname());
+                if (employee.getstatus().toLowerCase().equals("aktiv")){
+                    this.employeeSelection.add(employee.getFullName());
+                }
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -147,6 +153,7 @@ public class NewTreatmentController {
 //        }
 //
         Employee employee = searchInList(selectedEmployee);
+        assignedEmployee = employee;
 //        if (employee !=null) {
 //            try {
 //                this.treatments.addAll(this.dao.readTreatmentsByPid(patient.getPid()));
@@ -156,9 +163,9 @@ public class NewTreatmentController {
 //        }
     }
 
-    private Employee searchInList(String surname) {
+    private Employee searchInList(String employeeFullName) {
         for (Employee employee : this.employeeList) {
-            if (employee.getSurname().equals(surname)) {
+            if (employee.getFullName().equals(employeeFullName)) {
                 return employee;
             }
         }

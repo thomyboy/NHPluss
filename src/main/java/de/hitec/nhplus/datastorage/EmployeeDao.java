@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import de.hitec.nhplus.model.Employee;
-import javafx.beans.property.SimpleStringProperty;
 
 /**
  * Implements the Interface <code>DaoImp</code>. Overrides methods to generate specific <code>PreparedStatements</code>,
@@ -71,7 +70,7 @@ public class EmployeeDao extends DaoImp<Employee> {
     @Override
     protected Employee getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new Employee(
-                result.getInt("employeeID"),
+                result.getLong("employeeID"),
                 result.getString("firstname"),
                 result.getString("surname"),
                 result.getString("role"),
@@ -107,7 +106,7 @@ public class EmployeeDao extends DaoImp<Employee> {
         ArrayList<Employee> list = new ArrayList<>();
         while (result.next()) {
             Employee employee = new Employee(
-                    result.getInt("employeeID"),
+                    result.getLong("employeeID"),
                     result.getString("firstname"),
                     result.getString("surname"),
                     result.getString("role"),
@@ -140,7 +139,7 @@ public class EmployeeDao extends DaoImp<Employee> {
             preparedStatement.setString(2, employee.getSurname());
             preparedStatement.setString(3, employee.getrole());
             preparedStatement.setString(4, employee.getstatus());
-            preparedStatement.setInt(5, employee.getemployeeID());
+            preparedStatement.setLong(5, employee.getEmployeeID());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

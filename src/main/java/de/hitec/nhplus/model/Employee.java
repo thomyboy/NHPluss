@@ -1,26 +1,38 @@
 package de.hitec.nhplus.model;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import javax.print.DocFlavor;
+
 public class Employee extends Person{
-    private SimpleIntegerProperty employeeID;
+    private SimpleLongProperty employeeID;
     private SimpleStringProperty role;
     private SimpleStringProperty status;
+    private String fullName = getSurname() + ", " + getFirstName();
 
 
-    public Employee(int employeeID, String name, String surname, String role, String status) {
+    public Employee(long employeeID, String name, String surname, String role, String status) {
         super(name, surname);
-        this.employeeID = new SimpleIntegerProperty(employeeID);
+        this.employeeID = new SimpleLongProperty(employeeID);
         this.role = new SimpleStringProperty(role);
         this.status = new SimpleStringProperty(status);
+        this.fullName = getFullName();
 
     }
+
+    public Employee(String name, String surname, String role, String status) {
+        super(name, surname);
+        this.role = new SimpleStringProperty(role);
+        this.status = new SimpleStringProperty(status);
+        this.fullName = getFullName();
+    }
 //MOIN
-    public int getemployeeID() {
+    public long getEmployeeID() {
         return employeeID.get();
     }
-    public SimpleIntegerProperty employeeIDProperty() {
+    public SimpleLongProperty employeeIDProperty() {
         return employeeID;
     }
 
@@ -48,5 +60,9 @@ public class Employee extends Person{
     public void setStatus(String roomNumber) {
         this.status.set(roomNumber);
     }
+
+   public String getFullName(){
+        return fullName;
+   }
 
 }
