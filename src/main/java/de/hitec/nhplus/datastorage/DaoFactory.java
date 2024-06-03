@@ -28,4 +28,6 @@ public class DaoFactory {
 
     public RoomDao createRoomDAO() { return new RoomDao(ConnectionBuilder.getConnection());
     }
+    public UserDao createUserDAO() { return new UserDao(ConnectionBuilder.getConnection());
+    }
 }

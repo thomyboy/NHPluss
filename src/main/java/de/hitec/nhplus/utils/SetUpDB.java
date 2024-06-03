@@ -1,10 +1,7 @@
 package de.hitec.nhplus.utils;
 
 import de.hitec.nhplus.datastorage.*;
-import de.hitec.nhplus.model.Employee;
-import de.hitec.nhplus.model.Patient;
-import de.hitec.nhplus.model.Room;
-import de.hitec.nhplus.model.Treatment;
+import de.hitec.nhplus.model.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -37,6 +34,7 @@ public class SetUpDB {
         SetUpDB.setUpRooms();
         SetUpDB.setUpPatients();
         SetUpDB.setUpTreatments();
+        SetUpDB.setUpUsers();
 
     }
 
@@ -143,7 +141,9 @@ public class SetUpDB {
     private static void setUpEmployees() {
         try {
             EmployeeDao dao = DaoFactory.getDaoFactory().createEmployeeDAO();
-            dao.create(new Employee(1,"Darius", "Vader","Pfleger","aktiv"));
+            dao.create(new Employee(1,"Darius", "Vader","ChefArtzt","active"));
+            dao.create(new Employee(2,"Darius2", "Vader2","Pflegerin","active"));
+            dao.create(new Employee(3,"Darius5", "Vadder","Pflegerinnnen","notActive"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -157,6 +157,18 @@ public class SetUpDB {
             dao.create(new Room(4, "013"));
             dao.create(new Room(5, "001"));
             dao.create(new Room(6, "110"));
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private static void setUpUsers() {
+        try {
+            UserDao dao = DaoFactory.getDaoFactory().createUserDAO();
+            dao.create(new User(1, 1,"Admin","AdminPasswort"));
+            dao.create(new User(2, 1,"User1","PasswortUser1"));
+            dao.create(new User(3, 2,"User2","PasswortUser2"));
+            dao.create(new User(4, 3,"User3","PasswortUser3"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
