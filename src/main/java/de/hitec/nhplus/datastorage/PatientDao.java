@@ -42,7 +42,7 @@ public class PatientDao extends DaoImp<Patient> {
             preparedStatement.setString(2, patient.getSurname());
             preparedStatement.setString(3, patient.getDateOfBirth());
             preparedStatement.setString(4, patient.getCareLevel());
-            preparedStatement.setInt(5, patient.getRoom().getRoomID());
+            preparedStatement.setLong(5, patient.getRoom().getRoomID());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

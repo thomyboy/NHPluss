@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import de.hitec.nhplus.model.Patient;
@@ -31,7 +30,7 @@ public class AllTreatmentController {
     private TableColumn<Treatment, Integer> columnId;
 
     @FXML
-    private TableColumn<Treatment, Integer> columnPid;
+    private TableColumn<Treatment, Integer> columnPatientName;
 
     @FXML
     private TableColumn<Treatment, String> columnDate;
@@ -46,7 +45,7 @@ public class AllTreatmentController {
     private TableColumn<Treatment, String> columnDescription;
 
     @FXML
-    private TableColumn<Treatment, String> columnAssignedEmployee;
+    private TableColumn<Treatment, String> columnEmployeeName;
 
     @FXML
     private ComboBox<String> comboBoxPatientSelection;
@@ -55,7 +54,7 @@ public class AllTreatmentController {
     private Button buttonDelete;
 
     private final ObservableList<Treatment> treatments = FXCollections.observableArrayList();
-    private TreatmentDao dao;
+    private TreatmentDao treatmentDao;
     private Patient patient;
     private Employee employee;
     private final ObservableList<String> patientSelection = FXCollections.observableArrayList();
@@ -68,12 +67,14 @@ public class AllTreatmentController {
         comboBoxPatientSelection.getSelectionModel().select(0);
 
         this.columnId.setCellValueFactory(new PropertyValueFactory<>("treatmentID"));
-        this.columnPid.setCellValueFactory(new PropertyValueFactory<>("patientID"));
+        this.columnPatientName.setCellValueFactory(new PropertyValueFactory<>("patientID"));
         this.columnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         this.columnBegin.setCellValueFactory(new PropertyValueFactory<>("begin"));
         this.columnEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
         this.columnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        this.columnAssignedEmployee.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
+        this.columnEmployeeName.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
+
+
         this.tableView.setItems(this.treatments);
 
         // Disabling the button to delete treatments as long, as no treatment was selected.
@@ -88,9 +89,9 @@ public class AllTreatmentController {
     public void readAllAndShowInTableView() {
         comboBoxPatientSelection.getSelectionModel().select(0);
         this.treatments.clear();
-        this.dao = DaoFactory.getDaoFactory().createTreatmentDao();
+        this.treatmentDao = DaoFactory.getDaoFactory().createTreatmentDao();
         try {
-            this.treatments.addAll(dao.readAll());
+            this.treatments.addAll(treatmentDao.readAll());
             String yesH="asfdhj";
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -115,11 +116,11 @@ public class AllTreatmentController {
     public void handleComboBox() {
         String selectedPatient = this.comboBoxPatientSelection.getSelectionModel().getSelectedItem();
         this.treatments.clear();
-        this.dao = DaoFactory.getDaoFactory().createTreatmentDao();
+        this.treatmentDao = DaoFactory.getDaoFactory().createTreatmentDao();
 
         if (selectedPatient.equals("alle")) {
             try {
-                this.treatments.addAll(this.dao.readAll());
+                this.treatments.addAll(this.treatmentDao.readAll());
             } catch (SQLException exception) {
                 exception.printStackTrace();
             }
@@ -128,7 +129,7 @@ public class AllTreatmentController {
         Patient patient = searchInList(selectedPatient);
         if (patient !=null) {
             try {
-                this.treatments.addAll(this.dao.readTreatmentsByPid(patient.getPid()));
+                this.treatments.addAll(this.treatmentDao.readTreatmentsByPid(patient.getPid()));
             } catch (SQLException exception) {
                 exception.printStackTrace();
             }
@@ -190,9 +191,8 @@ public class AllTreatmentController {
 
             // the primary stage should stay in the background
             Stage stage = new Stage();
-            String employee = columnAssignedEmployee.toString();
             NewTreatmentController controller = loader.getController();
-            controller.initialize(this, stage, patient, employee);
+            controller.initialize(this, stage, patient);
 
             stage.setScene(scene);
             stage.setResizable(false);

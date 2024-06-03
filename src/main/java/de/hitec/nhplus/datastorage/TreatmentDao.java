@@ -40,15 +40,15 @@ public class TreatmentDao extends DaoImp<Treatment> {
     protected PreparedStatement getCreateStatement(Treatment treatment) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "INSERT INTO treatment (patientID, treatment_date, begin, end, description, remark, employeeID, state ) " +
-                    "VALUES (?, ?, ?, ?, ?,?,?,? )";
+            final String SQL = "INSERT INTO treatment (treatment_date, begin, end, description, remark, patientID, employeeID, state ) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ? )";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setLong(1, treatment.getPatient().getPid());
-            preparedStatement.setString(2, treatment.getDate());
-            preparedStatement.setString(3, treatment.getBegin());
-            preparedStatement.setString(4, treatment.getEnd());
-            preparedStatement.setString(5, treatment.getDescription());
-            preparedStatement.setString(6, treatment.getRemarks());
+            preparedStatement.setString(1, treatment.getDate());
+            preparedStatement.setString(2, treatment.getBegin());
+            preparedStatement.setString(3, treatment.getEnd());
+            preparedStatement.setString(4, treatment.getDescription());
+            preparedStatement.setString(5, treatment.getRemarks());
+            preparedStatement.setLong(6, treatment.getPatient().getPid());
             preparedStatement.setLong(7, treatment.getEmployee().getEmployeeID());
             preparedStatement.setString(8, treatment.getState());
 
@@ -180,22 +180,22 @@ public class TreatmentDao extends DaoImp<Treatment> {
         try {
             final String SQL =
                     "UPDATE treatment SET " +
-                            "patientID = ?, " +
                             "treatment_date = ?, " +
                             "begin = ?, " +
                             "end = ?, " +
                             "description = ?, " +
                             "remark = ?, " +
+                            "patientID = ?, " +
                             "employeeID = ?, " +
                             "state = ?, " +
                             "WHERE treatmentID = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setLong(1, treatment.getPatient().getPid());
-            preparedStatement.setString(2, treatment.getDate());
-            preparedStatement.setString(3, treatment.getBegin());
-            preparedStatement.setString(4, treatment.getEnd());
-            preparedStatement.setString(5, treatment.getDescription());
-            preparedStatement.setString(6, treatment.getRemarks());
+            preparedStatement.setString(1, treatment.getDate());
+            preparedStatement.setString(2, treatment.getBegin());
+            preparedStatement.setString(3, treatment.getEnd());
+            preparedStatement.setString(4, treatment.getDescription());
+            preparedStatement.setString(5, treatment.getRemarks());
+            preparedStatement.setLong(6, treatment.getPatient().getPid());
             preparedStatement.setLong(7, treatment.getEmployee().getEmployeeID());
             preparedStatement.setString(8, treatment.getState());
             preparedStatement.setLong(9, treatment.getTreatmentID());

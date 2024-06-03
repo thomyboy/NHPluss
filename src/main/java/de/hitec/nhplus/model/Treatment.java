@@ -1,5 +1,6 @@
 package de.hitec.nhplus.model;
 
+import de.hitec.nhplus.datastorage.PatientDao;
 import de.hitec.nhplus.utils.DateConverter;
 
 import java.time.LocalDate;
@@ -16,8 +17,12 @@ public class Treatment {
     private Employee employee;
     private long patientID;
     private long employeeID;
+    private PatientDao patientDao;
     private String employeeName;
+    private String patientName;
 
+
+    //TODO: umschreiben, ich bin zu fertig mit dem scheiß hier.
 
     private String state;
 
@@ -42,6 +47,22 @@ public class Treatment {
         this.remarks = remarks;
         this.employee= employee;
         this.state = state;
+        this.employeeID = employee.getEmployeeID();
+        this.patientID = patient.getPid();
+    }
+
+    public Treatment(LocalDate date, LocalTime begin,
+                     LocalTime end, String description, String remarks, String empployeeName, String patientName, String state) {
+        this.patient = patient;
+        this.date = date;
+        this.begin = begin;
+        this.end = end;
+        this.description = description;
+        this.remarks = remarks;
+        this.employee= employee;
+        this.state = state;
+        this.employeeName = empployeeName;
+        this.patientName = patientName;
     }
 
     /**
@@ -67,20 +88,8 @@ public class Treatment {
         this.patient = patient;
         this.employee = employee;
         this.state = state;
-    }
-
-    public Treatment(long treatmentID, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, long patientID, long employeeID, String employeeName,  String state) {
-        this.treatmentID = treatmentID;
-        this.date = date;
-        this.begin = begin;
-        this.end = end;
-        this.description = description;
-        this.remarks = remarks;
-        this.patientID = patient.getPid();
         this.employeeID = employee.getEmployeeID();
-        this.employeeName = employee.getFullName();
-        this.state = state;
+        this.patientID = patient.getPid();
     }
 
     public long getTreatmentID() {

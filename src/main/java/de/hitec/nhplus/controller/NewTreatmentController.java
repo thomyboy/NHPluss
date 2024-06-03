@@ -52,9 +52,8 @@ public class NewTreatmentController {
     private AllTreatmentController controller;
     private Patient patient;
     private Stage stage;
-    private Employee assignedEmployee;
+    private Employee employee;
     private EmployeeDao dao;
-    private String employeeFullName;
     private ArrayList<Employee> employeeList;
     private final ObservableList<String> employeeSelection = FXCollections.observableArrayList();
     private final ObservableList<Treatment> treatments = FXCollections.observableArrayList();
@@ -62,11 +61,10 @@ public class NewTreatmentController {
 
 
 
-    public void initialize(AllTreatmentController controller, Stage stage, Patient patient, String employeeFullName) {
+    public void initialize(AllTreatmentController controller, Stage stage, Patient patient) {
         this.controller= controller;
         this.patient = patient;
         this.stage = stage;
-        this.employeeFullName = employeeFullName;
         comboBoxEmployeeSelection.setItems(employeeSelection);
         comboBoxEmployeeSelection.getSelectionModel().select(0);
 
@@ -102,15 +100,25 @@ public class NewTreatmentController {
 
     @FXML
     public void handleAdd(){
-        LocalDate date = this.datePicker.getValue();
-        LocalTime begin = DateConverter.convertStringToLocalTime(textFieldBegin.getText());
-        LocalTime end = DateConverter.convertStringToLocalTime(textFieldEnd.getText());
-        String description = textFieldDescription.getText();
-        String remarks = textAreaRemarks.getText();
-        Treatment treatment = new Treatment(patient.getPid(), date, begin, end, description, remarks, patient, assignedEmployee, "in Bearbeitung");
-        createTreatment(treatment);
-        controller.readAllAndShowInTableView();
-        stage.close();
+        try {
+            String selectedEmployee = this.comboBoxEmployeeSelection.getSelectionModel().getSelectedItem();
+            Employee employee = searchInList(selectedEmployee);
+            LocalDate date = this.datePicker.getValue();
+            LocalTime begin = DateConverter.convertStringToLocalTime(textFieldBegin.getText());
+            LocalTime end = DateConverter.convertStringToLocalTime(textFieldEnd.getText());
+            String description = textFieldDescription.getText();
+            String remarks = textAreaRemarks.getText();
+            Treatment treatment = new Treatment(date, begin, end, description, remarks, patient, employee, "in Bearbeitung");
+            createTreatment(treatment);
+            controller.readAllAndShowInTableView();
+            stage.close();
+        } catch(NullPointerException exception){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information");
+            alert.setHeaderText("Pflegekraft für die Behandlung fehlt!");
+            alert.setContentText("Wählen Sie über die Combobox eine Pflegekraft aus!");
+            alert.showAndWait();
+        }
     }
 
     private void createTreatment(Treatment treatment) {
@@ -152,8 +160,8 @@ public class NewTreatmentController {
 //            }
 //        }
 //
-        Employee employee = searchInList(selectedEmployee);
-        assignedEmployee = employee;
+        Employee searchedEmployee = searchInList(selectedEmployee);
+        this.employee = searchedEmployee;
 //        if (employee !=null) {
 //            try {
 //                this.treatments.addAll(this.dao.readTreatmentsByPid(patient.getPid()));

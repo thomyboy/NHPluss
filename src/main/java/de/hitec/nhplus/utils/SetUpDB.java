@@ -89,12 +89,12 @@ public class SetUpDB {
     private static void setUpTableTreatment(Connection connection) {
         final String SQL = "CREATE TABLE IF NOT EXISTS treatment (" +
                 "   treatmentID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "   patientID INTEGER NOT NULL, " +
                 "   treatment_date DATE NOT NULL, " +
                 "   begin TEXT NOT NULL, " +
                 "   end TEXT NOT NULL, " +
                 "   description TEXT NOT NULL, " +
                 "   remark TEXT NOT NULL, " +
+                "   patientID INTEGER NOT NULL, " +
                 "   employeeID INTEGER NOT NULL, " +
                 "   state TEXT NOT NULL, " +
                 "   FOREIGN KEY (patientID) REFERENCES patient (patientID) ON DELETE CASCADE, " +
