@@ -59,7 +59,7 @@ public class PatientDao extends DaoImp<Patient> {
     protected PreparedStatement getReadByIDStatement(long pid) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "SELECT * FROM patient WHERE patientID = ?";
+            final String SQL = "SELECT * FROM patient WHERE patientID = ? ";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setLong(1, pid);
         } catch (SQLException exception) {

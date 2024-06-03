@@ -50,7 +50,7 @@ public class AllTreatmentController {
     private Button buttonDelete;
 
     private final ObservableList<Treatment> treatments = FXCollections.observableArrayList();
-    private TreatmentDao dao;
+    private TreatmentDao dao = DaoFactory.getDaoFactory().createTreatmentDao();
     private final ObservableList<String> patientSelection = FXCollections.observableArrayList();
     private ArrayList<Patient> patientList;
 
