@@ -109,7 +109,7 @@ public class AllEmployeeController {
 
     @FXML
     public void handleOnEditRole(TableColumn.CellEditEvent<Employee, String> event) {
-        event.getRowValue().setrole(event.getNewValue());
+        event.getRowValue().setRole(event.getNewValue());
         this.doUpdate(event);
     }
 
@@ -157,7 +157,7 @@ public class AllEmployeeController {
         String role = this.textFieldRole.getText();
         String status = this.textFieldStatus.getText();
         try {
-            this.dao.create(new Employee(0, name, surname, "Sith Lo- I mean DOCTOR", "im Urlaub")); // employeeID is auto-generated
+            this.dao.create(new Employee( name, surname, role, status)); // employeeID is auto-generated
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

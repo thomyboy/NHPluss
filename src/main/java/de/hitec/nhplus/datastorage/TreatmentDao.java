@@ -1,5 +1,7 @@
 package de.hitec.nhplus.datastorage;
 
+import de.hitec.nhplus.model.Employee;
+import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.model.Treatment;
 import de.hitec.nhplus.utils.DateConverter;
 
@@ -222,4 +224,16 @@ public class TreatmentDao extends DaoImp<Treatment> {
         }
         return preparedStatement;
     }
+
+    public Patient executeGetPatientFullName(long patientID) throws SQLException{
+        ResultSet result = patientDao.getPatientNameByID(patientID).executeQuery();
+        return patientDao.getInstanceFromResultSet(result);
+    }
+    public Employee executeEmployeeGetFullName(long employeeID) throws SQLException{
+        ResultSet result = employeeDao.getEmployeeNameByID(employeeID).executeQuery();
+        return employeeDao.getInstanceFromResultSet(result);
+    }
+
+
+
 }

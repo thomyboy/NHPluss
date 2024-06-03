@@ -63,6 +63,7 @@ public class AllTreatmentController {
 
     public void initialize() {
         readAllAndShowInTableView();
+        this.createComboBoxData();
         comboBoxPatientSelection.setItems(patientSelection);
         comboBoxPatientSelection.getSelectionModel().select(0);
 
@@ -81,7 +82,7 @@ public class AllTreatmentController {
                 (observableValue, oldTreatment, newTreatment) ->
                         AllTreatmentController.this.buttonDelete.setDisable(newTreatment == null));
 
-        this.createComboBoxData();
+
     }
 
     public void readAllAndShowInTableView() {

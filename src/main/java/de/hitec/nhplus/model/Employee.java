@@ -1,15 +1,13 @@
 package de.hitec.nhplus.model;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
-
-import javax.print.DocFlavor;
 
 public class Employee extends Person{
     private SimpleLongProperty employeeID;
     private SimpleStringProperty role;
     private SimpleStringProperty status;
+    private SimpleStringProperty callNumber;
     private String fullName = getSurname() + ", " + getFirstName();
 
 
@@ -32,33 +30,21 @@ public class Employee extends Person{
     public long getEmployeeID() {
         return employeeID.get();
     }
-    public SimpleLongProperty employeeIDProperty() {
-        return employeeID;
-    }
 
-    public void setEmployeeID(int employeeID) { this.employeeID.set(employeeID);}
-    public String getrole() {
+    public String getRole() {
         return role.get();
     }
 
-    public SimpleStringProperty roleProperty() {
-        return role;
-    }
-
-    public void setrole(String role) {
+    public void setRole(String role) {
         this.role.set(role);
     }
 
-    public String getstatus() {
+    public String getStatus() {
         return status.get();
     }
 
-    public SimpleStringProperty statusProperty() {
-        return status;
-    }
-
-    public void setStatus(String roomNumber) {
-        this.status.set(roomNumber);
+    public void setStatus(String status) {
+        this.status.set(status);
     }
 
    public String getFullName(){

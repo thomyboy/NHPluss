@@ -102,6 +102,18 @@ public class PatientDao extends DaoImp<Patient> {
         return statement;
     }
 
+    public PreparedStatement getPatientNameByID(long patientID) {
+        PreparedStatement statement = null;
+        try {
+            final String SQL = "SELECT surname + ', ' + firstname FROM patient WHERE patientID = ?";
+            statement = this.connection.prepareStatement(SQL);
+            statement.setLong(1, patientID);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return statement;
+    }
+
     /**
      * Maps a <code>ResultSet</code> of all patients to an <code>ArrayList</code> of <code>Patient</code> objects.
      *

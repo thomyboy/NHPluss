@@ -34,8 +34,8 @@ public class EmployeeDao extends DaoImp<Employee> {
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setString(1, employee.getFirstName());
             preparedStatement.setString(2, employee.getSurname());
-            preparedStatement.setString(3, employee.getrole());
-            preparedStatement.setString(4, employee.getstatus());
+            preparedStatement.setString(3, employee.getRole());
+            preparedStatement.setString(4, employee.getStatus());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -94,6 +94,19 @@ public class EmployeeDao extends DaoImp<Employee> {
         return statement;
     }
 
+    public PreparedStatement getEmployeeNameByID(long employeeID) {
+        PreparedStatement statement = null;
+        try {
+            final String SQL = "SELECT surname + ', ' + firstname FROM employee WHERE employeeID = ?";
+            statement = this.connection.prepareStatement(SQL);
+            statement.setLong(1, employeeID);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return statement;
+    }
+
+
     /**
      * Maps a <code>ResultSet</code> of all employees to an <code>ArrayList</code> of <code>Employee</code> objects.
      *
@@ -137,8 +150,8 @@ public class EmployeeDao extends DaoImp<Employee> {
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setString(1, employee.getFirstName());
             preparedStatement.setString(2, employee.getSurname());
-            preparedStatement.setString(3, employee.getrole());
-            preparedStatement.setString(4, employee.getstatus());
+            preparedStatement.setString(3, employee.getRole());
+            preparedStatement.setString(4, employee.getStatus());
             preparedStatement.setLong(5, employee.getEmployeeID());
         } catch (SQLException exception) {
             exception.printStackTrace();

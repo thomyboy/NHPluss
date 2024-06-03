@@ -14,6 +14,9 @@ public class Treatment {
     private String remarks;
     private Patient patient;
     private Employee employee;
+    private long patientID;
+    private long employeeID;
+    private String employeeName;
 
 
     private String state;
@@ -30,7 +33,7 @@ public class Treatment {
      * @param remarks Remarks to the treatment.
      */
     public Treatment(LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, Patient patient,Employee employee, String state) {
+                     LocalTime end, String description, String remarks, Patient patient, Employee employee, String state) {
         this.patient = patient;
         this.date = date;
         this.begin = begin;
@@ -63,6 +66,20 @@ public class Treatment {
         this.remarks = remarks;
         this.patient = patient;
         this.employee = employee;
+        this.state = state;
+    }
+
+    public Treatment(long treatmentID, LocalDate date, LocalTime begin,
+                     LocalTime end, String description, String remarks, long patientID, long employeeID, String employeeName,  String state) {
+        this.treatmentID = treatmentID;
+        this.date = date;
+        this.begin = begin;
+        this.end = end;
+        this.description = description;
+        this.remarks = remarks;
+        this.patientID = patient.getPid();
+        this.employeeID = employee.getEmployeeID();
+        this.employeeName = employee.getFullName();
         this.state = state;
     }
 
