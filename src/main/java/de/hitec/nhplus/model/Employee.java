@@ -8,7 +8,7 @@ public class Employee extends Person{
     private SimpleStringProperty role;
     private SimpleStringProperty status;
     private SimpleStringProperty callNumber;
-    private String fullName = getSurname() + ", " + getFirstName();
+    private SimpleStringProperty fullName;
 
 
     public Employee(long employeeID, String name, String surname, String role, String status) {
@@ -16,7 +16,7 @@ public class Employee extends Person{
         this.employeeID = new SimpleLongProperty(employeeID);
         this.role = new SimpleStringProperty(role);
         this.status = new SimpleStringProperty(status);
-        this.fullName = getFullName();
+        this.fullName = new SimpleStringProperty(name + surname);
 
     }
 
@@ -24,7 +24,7 @@ public class Employee extends Person{
         super(name, surname);
         this.role = new SimpleStringProperty(role);
         this.status = new SimpleStringProperty(status);
-        this.fullName = getFullName();
+        this.fullName = new SimpleStringProperty(name + surname);
     }
 //MOIN
     public long getEmployeeID() {
@@ -47,8 +47,8 @@ public class Employee extends Person{
         this.status.set(status);
     }
 
-   public String getFullName(){
-        return fullName;
-   }
+    public String getFullName(){
+            return fullName.get();
+    }
 
 }
