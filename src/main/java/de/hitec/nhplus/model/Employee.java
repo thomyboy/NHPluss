@@ -16,7 +16,7 @@ public class Employee extends Person{
         this.employeeID = new SimpleLongProperty(employeeID);
         this.role = new SimpleStringProperty(role);
         this.status = new SimpleStringProperty(status);
-        this.fullName = new SimpleStringProperty(name + surname);
+        this.fullName = new SimpleStringProperty(surname + ", " + name);
 
     }
 
