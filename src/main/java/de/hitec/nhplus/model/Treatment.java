@@ -20,10 +20,6 @@ public class Treatment {
     private PatientDao patientDao;
     private String employeeName;
     private String patientName;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
     //TODO: umschreiben, ich bin zu fertig mit dem scheiß hier.
 
@@ -50,7 +46,6 @@ public class Treatment {
         this.remarks = remarks;
         this.employee= employee;
         this.state = state;
-<<<<<<< Updated upstream
         this.employeeID = employee.getEmployeeID();
         this.patientID = patient.getPid();
     }
@@ -67,11 +62,9 @@ public class Treatment {
         this.state = state;
         this.employeeName = empployeeName;
         this.patientName = patientName;
-=======
         this.patientID = patient.getPid();
         this.employeeName = employee.getFullName();
         this.patientName = patient.getFullName();
->>>>>>> Stashed changes
     }
 
     /**
@@ -97,10 +90,8 @@ public class Treatment {
         this.patient = patient;
         this.employee = employee;
         this.state = state;
-<<<<<<< Updated upstream
         this.employeeID = employee.getEmployeeID();
         this.patientID = patient.getPid();
-=======
         this.patientID = patient.getPid();
         this.employeeName = employee.getFullName();
         this.patientName = patient.getFullName();
@@ -122,7 +113,6 @@ public class Treatment {
         this.patientID = patient.getPid();
         this.employeeName = employee.getFullName();
         this.patientName = patient.getFullName();
->>>>>>> Stashed changes
     }
 
     public long getTreatmentID() {

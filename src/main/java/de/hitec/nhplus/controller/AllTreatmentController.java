@@ -30,11 +30,7 @@ public class AllTreatmentController {
     private TableColumn<Treatment, Integer> columnId;
 
     @FXML
-<<<<<<< Updated upstream
-    private TableColumn<Treatment, Integer> columnPatientName;
-=======
     private TableColumn<Treatment, String> columnPatientName;
->>>>>>> Stashed changes
 
     @FXML
     private TableColumn<Treatment, String> columnDate;
@@ -49,7 +45,7 @@ public class AllTreatmentController {
     private TableColumn<Treatment, String> columnDescription;
 
     @FXML
-    private TableColumn<Treatment, String> columnEmployeeName;
+    private TableColumn<Treatment, String> columnAssignedEmployee;
 
     @FXML
     private ComboBox<String> comboBoxPatientSelection;
@@ -71,21 +67,14 @@ public class AllTreatmentController {
         comboBoxPatientSelection.getSelectionModel().select(0);
 
         this.columnId.setCellValueFactory(new PropertyValueFactory<>("treatmentID"));
-<<<<<<< Updated upstream
+
         this.columnPatientName.setCellValueFactory(new PropertyValueFactory<>("patientID"));
-=======
         this.columnPatientName.setCellValueFactory(new PropertyValueFactory<>("patientName"));
->>>>>>> Stashed changes
         this.columnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         this.columnBegin.setCellValueFactory(new PropertyValueFactory<>("begin"));
         this.columnEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
         this.columnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-<<<<<<< Updated upstream
-        this.columnEmployeeName.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
-
-=======
         this.columnAssignedEmployee.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
->>>>>>> Stashed changes
 
         this.tableView.setItems(this.treatments);
 
