@@ -97,6 +97,7 @@ public class SetUpDB {
                 "   description TEXT NOT NULL, " +
                 "   remark TEXT NOT NULL, " +
                 "   state TEXT NOT NULL, " +
+                "phoneNumber TEXT NOT NULL , " +
                 "   FOREIGN KEY (patientID) REFERENCES patient (patientID) ON DELETE CASCADE, " +
                 "   FOREIGN KEY (employeeID) REFERENCES employee (employeeID) ON DELETE CASCADE " +
                 " " +
@@ -115,7 +116,8 @@ public class SetUpDB {
                 "   firstname TEXT NOT NULL, " +
                 "   surname TEXT NOT NULL, " +
                 "   role TEXT NOT NULL, " +
-                "   status TEXT NOT NULL" +
+                "   status TEXT NOT NULL, " +
+                " phoneNumber TEXT NOT NULL" +
                 " " +
                 ");";
         try (Statement statement = connection.createStatement()) {
@@ -143,7 +145,7 @@ public class SetUpDB {
     private static void setUpEmployees() {
         try {
             EmployeeDao dao = DaoFactory.getDaoFactory().createEmployeeDAO();
-            dao.create(new Employee(1,"Darius", "Vader","Pfleger","aktiv"));
+            dao.create(new Employee(1,"Darius", "Vader","Pfleger","aktiv","0421 5168387"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

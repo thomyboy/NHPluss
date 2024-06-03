@@ -31,13 +31,14 @@ public class EmployeeDao extends DaoImp<Employee> {
     protected PreparedStatement getCreateStatement(Employee employee) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "INSERT INTO Employee (employeeID, firstname, surname, role, status) VALUES (?, ?, ?, ?, ?)";
+            final String SQL = "INSERT INTO Employee (employeeID, firstname, surname, role, status, phonenumber) VALUES (?, ?, ?, ?, ?,?)";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setInt(1, employee.getemployeeID());
             preparedStatement.setString(2, employee.getFirstName());
             preparedStatement.setString(3, employee.getSurname());
             preparedStatement.setString(4, employee.getrole());
             preparedStatement.setString(5, employee.getstatus());
+            preparedStatement.setString(6, employee.getPhonenumber());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -76,7 +77,8 @@ public class EmployeeDao extends DaoImp<Employee> {
                 result.getString(2),
                 result.getString(3),
                 result.getString(4),
-                result.getString(5));
+                result.getString(5),
+                result.getString(6)  );
     }
 
     /**
@@ -112,7 +114,8 @@ public class EmployeeDao extends DaoImp<Employee> {
                     result.getString(2),
                     result.getString(3),
                     result.getString(4),
-                    result.getString(5));
+                    result.getString(5),
+                    result.getString(6));
             list.add(employee);
         }
         return list;
@@ -135,13 +138,15 @@ public class EmployeeDao extends DaoImp<Employee> {
                             "surname = ?, " +
                             "role = ?, " +
                             "status = ? " +
-                            "WHERE employeeID = ?";
+                            "WHERE employeeID = ?" +
+                            "phonenumber = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setString(1, employee.getFirstName());
             preparedStatement.setString(2, employee.getSurname());
             preparedStatement.setString(3, employee.getrole());
             preparedStatement.setString(4, employee.getstatus());
             preparedStatement.setInt(5, employee.getemployeeID());
+            preparedStatement.setString(6, employee.getPhonenumber());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

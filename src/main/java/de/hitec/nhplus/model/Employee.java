@@ -8,12 +8,29 @@ public class Employee extends Person{
     private SimpleStringProperty role;
     private SimpleStringProperty status;
 
+    private SimpleStringProperty phonenumber;
 
-    public Employee(int employeeID, String name, String surname, String role, String status) {
+    public String getPhonenumber() {
+        return phonenumber.get();
+    }
+
+    public SimpleStringProperty phonenumberProperty() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber.set(phonenumber);
+    }
+
+
+
+
+    public Employee(int employeeID, String name, String surname, String role, String status, String phonenumber) {
         super(name, surname);
         this.employeeID = new SimpleIntegerProperty(employeeID);
         this.role = new SimpleStringProperty(role);
         this.status = new SimpleStringProperty(status);
+        this.phonenumber = new SimpleStringProperty(phonenumber);
 
     }
 //MOIN
@@ -49,4 +66,7 @@ public class Employee extends Person{
         this.status.set(roomNumber);
     }
 
+
+
 }
+

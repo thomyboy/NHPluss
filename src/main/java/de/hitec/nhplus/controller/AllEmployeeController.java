@@ -1,5 +1,6 @@
 package de.hitec.nhplus.controller;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -40,6 +41,9 @@ public class AllEmployeeController {
     private TableColumn<Employee, String> columnStatus;
 
     @FXML
+    private TableColumn<Employee, String> columnPhoneNumber;
+
+    @FXML
     private Button buttonDelete;
 
     @FXML
@@ -56,6 +60,9 @@ public class AllEmployeeController {
 
     @FXML
     private TextField textFieldStatus;
+
+    @FXML
+    private TextField textFieldPhoneNumber;
 
     private final ObservableList<Employee> employees = FXCollections.observableArrayList();
     private EmployeeDao dao;
@@ -76,6 +83,9 @@ public class AllEmployeeController {
         this.columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         this.columnStatus.setCellFactory(TextFieldTableCell.forTableColumn());
 
+        this.columnStatus.setCellValueFactory(new PropertyValueFactory<>("phonenumber"));
+        this.columnStatus.setCellFactory(TextFieldTableCell.forTableColumn());
+
         this.tableView.setItems(this.employees);
 
         this.buttonDelete.setDisable(true);
@@ -93,6 +103,7 @@ public class AllEmployeeController {
         this.textFieldSurname.textProperty().addListener(inputNewEmployeeListener);
         this.textFieldRole.textProperty().addListener(inputNewEmployeeListener);
         this.textFieldStatus.textProperty().addListener(inputNewEmployeeListener);
+        this.textFieldPhoneNumber.textProperty().addListener(inputNewEmployeeListener);
     }
 
     @FXML
@@ -118,6 +129,11 @@ public class AllEmployeeController {
         event.getRowValue().setStatus(event.getNewValue());
         this.doUpdate(event);
     }
+   // @FXML
+    //public void handleOnEditPhoneNumber(TableColumn.CellEditEvent<Employee, SimpleStringProperty> event) {
+      //  event.getRowValue().setPhoneNumber(event.getNewValue());
+        //this.doUpdate(event);
+    //}
 
     private void doUpdate(TableColumn.CellEditEvent<Employee, String> event) {
         try {
@@ -156,8 +172,9 @@ public class AllEmployeeController {
         String surname = this.textFieldSurname.getText();
         String role = this.textFieldRole.getText();
         String status = this.textFieldStatus.getText();
+        String phonenumber = this.textFieldPhoneNumber.getText();
         try {
-            this.dao.create(new Employee(0, name, surname, "Sith Lo- I mean DOCTOR", "im Urlaub")); // employeeID is auto-generated
+            this.dao.create(new Employee(0, name, surname, "Sith Lo- I mean DOCTOR", "im Urlaub","0421 42069")); // employeeID is auto-generated
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -170,13 +187,15 @@ public class AllEmployeeController {
         this.textFieldSurname.clear();
        this.textFieldRole.clear();
        this.textFieldStatus.clear();
+       this.textFieldPhoneNumber.clear();
     }
 
     private boolean areInputDataValid() {
         return !this.textFieldName.getText().isBlank() &&
                 !this.textFieldSurname.getText().isBlank() &&
                 !this.textFieldRole.getText().isBlank() &&
-                !this.textFieldStatus.getText().isBlank();
+                !this.textFieldStatus.getText().isBlank() &&
+                !this.textFieldPhoneNumber.getText().isBlank();
     }
 }
 
