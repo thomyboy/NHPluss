@@ -151,6 +151,7 @@ public class SetUpDB {
     private static void setUpEmployees() {
         try {
             EmployeeDao dao = DaoFactory.getDaoFactory().createEmployeeDAO();
+
             dao.create(new Employee("Darius",   "Vader",  "ChefArtzt",EMPTY, "active", "042188774422"));
             dao.create(new Employee("Darius2",  "Vader2", "Pflegerin",EMPTY, "active", "042156442145"));
             dao.create(new Employee("Darius5",  "Vadder", "Pflegerinnnen",EMPTY, "active", "042166642069"));

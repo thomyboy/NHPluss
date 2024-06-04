@@ -39,7 +39,7 @@ public class EmployeeDao extends DaoImp<Employee> {
             preparedStatement.setString(3, employee.getrole());
             preparedStatement.setString(4, String.valueOf(employee.getLockDateInTenYears()));
             preparedStatement.setString(5, employee.getstatus());
-            preparedStatement.setString(6, employee.getphoneNumber());
+            preparedStatement.setString(6, employee.getPhoneNumber());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -76,6 +76,7 @@ public class EmployeeDao extends DaoImp<Employee> {
     @Override
     protected Employee getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new Employee(
+
                 result.getLong(1),
                 result.getString(2),
                 result.getString(3),
@@ -142,14 +143,19 @@ public class EmployeeDao extends DaoImp<Employee> {
                             "firstname = ?, " +
                             "surname = ?, " +
                             "role = ?, " +
-                            "status = ? " +
+                            "lockDateInTenYears = ?, " +
+                            "status = ?, " +
+                            "phoneNumber = ? " +
                             "WHERE employeeID = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setString(1, employee.getFirstName());
             preparedStatement.setString(2, employee.getSurname());
             preparedStatement.setString(3, employee.getrole());
-            preparedStatement.setString(4, employee.getstatus());
-            preparedStatement.setLong(5, employee.getemployeeID());
+            preparedStatement.setString(4, String.valueOf(employee.getLockDateInTenYears()));
+            preparedStatement.setString(5, employee.getstatus());
+            preparedStatement.setString(6, employee.getPhoneNumber());
+            preparedStatement.setInt(7, employee.getemployeeID());
+
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

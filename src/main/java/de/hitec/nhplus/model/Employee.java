@@ -11,14 +11,18 @@ import java.util.List;
  */
 
 public class Employee extends Person{
+
     private SimpleLongProperty employeeID;
+
     private SimpleStringProperty role;
     private String status;
     private String phoneNumber;
 
     private String fullName = getSurname() + ", " + getFirstName();
-    private  SimpleStringProperty lockDateInTenYears;
-/* evtl alt und kann weg
+    private SimpleStringProperty lockDateInTenYears;
+
+
+    /* evtl alt und kann weg
     public Employee( int id, String name, String surname, String role, String status, String lockDateInTenYears, String phoneNumber) {
         super(name, surname);
         this.employeeID = id;
@@ -26,7 +30,7 @@ public class Employee extends Person{
         this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
         this.status = status;
     }
-*/
+    */
 
     /**
      * Constructs a new Employee with the specified details, excluding the employee ID.
@@ -105,6 +109,7 @@ public class Employee extends Person{
      *
      * @return the employee ID
      */
+
 
     public long getemployeeID() {
         return employeeID.get();
@@ -205,7 +210,7 @@ public class Employee extends Person{
      * @return the phone number of the employee
      */
 
-    public String getphoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 }

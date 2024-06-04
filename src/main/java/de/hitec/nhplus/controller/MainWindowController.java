@@ -75,6 +75,9 @@ public class MainWindowController {
     }
     @FXML
     public void handleTryLogin() throws SQLException {
+        System.out.println("Passwort richtig");
+        vBox_Left.setVisible(true);
+        gp_Login.setVisible(false);
 
         String userNameInput = this.txtField_userName.getText();
         String userPasswordInput = this.txtField_userPassword.getText();
