@@ -67,64 +67,126 @@ public class Patient extends Person {
         System.out.println("Use old patient");
     }
 
+    /**
+     * Retrieves the lock date in ten years.
+     *
+     * @return The lock date in ten years as a SimpleStringProperty.
+     */
     public SimpleStringProperty getLockDateInTenYears()
     {
         return lockDateInTenYears;
     }
 
+    /**
+     * Sets the lock date in ten years with the specified input.
+     *
+     * @param input The input string to set as the lock date in ten years.
+     */
     public void setLockDateInTenYears(String input)
     {
         this.lockDateInTenYears.set(input);
     }
 
+    /**
+     * Retrieves the patient ID.
+     *
+     * @return The patient ID as a long value.
+     */
     public long getPatientID() {
         return patientID.get();
     }
 
+    /**
+     * Retrieves the property representing the patient ID.
+     *
+     * @return The property representing the patient ID as a SimpleLongProperty.
+     */
     public SimpleLongProperty patientIDProperty() {
         return patientID;
     }
 
+    /**
+     * Retrieves the date of birth of the patient.
+     *
+     * @return The date of birth of the patient as a string.
+     */
     public String getDateOfBirth() {
         return dateOfBirth.get();
     }
 
+    /**
+     * Retrieves the property representing the date of birth of the patient.
+     *
+     * @return The property representing the date of birth of the patient as a SimpleStringProperty.
+     */
     public SimpleStringProperty dateOfBirthProperty() {
         return dateOfBirth;
     }
 
+    /**
+     * Retrieves the name of the room associated with the patient.
+     *
+     * @return The name of the room associated with the patient as a string.
+     */
     public String getRoomName(){
         return roomName;
     }
 
+
     /**
-     * Stores the given string as new <code>birthOfDate</code>.
+     * Sets the date of birth of the patient.
      *
-     * @param dateOfBirth as string in the following format: YYYY-MM-DD.
+     * @param dateOfBirth The date of birth to set for the patient as a string.
      */
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth.set(dateOfBirth);
     }
 
+    /**
+     * Retrieves the care level of the patient.
+     *
+     * @return The care level of the patient as a string.
+     */
     public String getCareLevel() {
         return careLevel.get();
     }
 
+    /**
+     * Retrieves the property representing the care level of the patient.
+     *
+     * @return The property representing the care level of the patient as a SimpleStringProperty.
+     */
     public SimpleStringProperty careLevelProperty() {
         return careLevel;
     }
 
+    /**
+     * Sets the care level of the patient.
+     *
+     * @param careLevel The care level to set for the patient.
+     */
     public void setCareLevel(String careLevel) {
         this.careLevel.set(careLevel);
     }
 
+    /**
+     * Retrieves the room associated with the patient.
+     *
+     * @return The room associated with the patient.
+     */
     public Room getRoom() {
         return room;
     }
 
+    /**
+     * Retrieves the full name of the patient.
+     *
+     * @return The full name of the patient as a string.
+     */
     public String getFullName(){
         return fullName;
     }
+
 
     /**
      * Adds a treatment to the list of treatments, if the list does not already contain the treatment.

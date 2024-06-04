@@ -66,7 +66,7 @@ public class TreatmentDao extends DaoImp<Treatment> {
     protected PreparedStatement getReadByIDStatement(long tid) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "SELECT * FROM treatment WHERE tid = ?";
+            final String SQL = "SELECT * FROM treatment WHERE treatmentID = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setLong(1, tid);
         } catch (SQLException exception) {
@@ -87,6 +87,7 @@ public class TreatmentDao extends DaoImp<Treatment> {
         LocalTime begin = DateConverter.convertStringToLocalTime(result.getString("begin"));
         LocalTime end = DateConverter.convertStringToLocalTime(result.getString("end"));
         return new Treatment(
+                result.getLong("treatmentID"),
                 patientDao.read(result.getLong("patientID")),
                 employeeDao.read(result.getLong("employeeID")),
                 date, begin, end,

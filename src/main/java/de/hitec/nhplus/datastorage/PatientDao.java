@@ -45,7 +45,6 @@ public class PatientDao extends DaoImp<Patient> {
             preparedStatement.setString(3, patient.getSurname());
             preparedStatement.setString(4, patient.getDateOfBirth());
             preparedStatement.setString(5, patient.getCareLevel());
-
             preparedStatement.setString(6, String.valueOf(patient.getLockDateInTenYears()));
             preparedStatement.setString(7, patient.getStatus());
         }
