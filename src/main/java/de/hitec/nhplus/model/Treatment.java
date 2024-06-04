@@ -49,22 +49,7 @@ public class Treatment {
         this.patientID = patient.getPatientID();
         this.patient = patient;
     }
-
-    public Treatment(LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, String empployeeName, String patientName, String state) {
-        this.date = date;
-        this.begin = begin;
-        this.end = end;
-        this.description = description;
-        this.remarks = remarks;
-        this.employee= employee;
-        this.state = state;
-        this.employeeName = empployeeName;
-        this.patientName = patientName;
-        this.patientID = patient.getPatientID();
-        this.employeeName = employee.getFullName();
-        this.patientName = patient.getFullName();
-    }
+    
 
     /**
      * Constructor to initiate an object of class <code>Treatment</code> with the given parameter. Use this constructor
@@ -79,18 +64,19 @@ public class Treatment {
 
     public Treatment(Patient patient, Employee employee, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks, String state) {
+        this.patient = patient;
+        this.employee = employee;
         this.date = date;
         this.begin = begin;
         this.end = end;
         this.description = description;
         this.remarks = remarks;
+        this.state = state;
         this.patientID = patient.getPatientID();
         this.employeeID = employee.getemployeeID();
         this.employeeName = employee.getFullName();
-        this.state = state;
         this.patientName = patient.getFullName();
-        this.patient = patient;
-        this.employee = employee;
+
     }
     /**
     public Treatment(long treatmentID, LocalDate date, LocalTime begin,

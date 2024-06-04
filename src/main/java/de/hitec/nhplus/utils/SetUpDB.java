@@ -122,7 +122,8 @@ public class SetUpDB {
                 "   surname TEXT NOT NULL, " +
                 "   role TEXT NOT NULL, " +
                 "   lockDateInTenYears TEXT, "+
-                "   status TEXT NOT NULL" +
+                "   status TEXT NOT NULL, " +
+                "   phoneNumber TEXT NOT NULL" +
                 " " +
                 ");";
         try (Statement statement = connection.createStatement()) {
@@ -150,9 +151,9 @@ public class SetUpDB {
     private static void setUpEmployees() {
         try {
             EmployeeDao dao = DaoFactory.getDaoFactory().createEmployeeDAO();
-            dao.create(new Employee(1,"Darius",   "Vader",  "ChefArtzt","active", "yes", "042188774422"));
-            dao.create(new Employee(2,"Darius2",  "Vader2", "Pflegerin","active", "yes", "042156442145"));
-            dao.create(new Employee(3,"Darius5",  "Vadder", "Pflegerinnnen","notActive", "yes", "042166642069"));
+            dao.create(new Employee("Darius",   "Vader",  "ChefArtzt","active", "yes", "042188774422"));
+            dao.create(new Employee("Darius2",  "Vader2", "Pflegerin","active", "yes", "042156442145"));
+            dao.create(new Employee("Darius5",  "Vadder", "Pflegerinnnen","notActive", "yes", "042166642069"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -174,10 +175,11 @@ public class SetUpDB {
     private static void setUpUsers() {
         try {
             UserDao dao = DaoFactory.getDaoFactory().createUserDAO();
-            dao.create(new User(1, 1,"Admin","AdminPasswort"));
-            dao.create(new User(2, 1,"User1","PasswortUser1"));
-            dao.create(new User(3, 2,"User2","PasswortUser2"));
-            dao.create(new User(4, 3,"User3","PasswortUser3"));
+            EmployeeDao employeedao = DaoFactory.getDaoFactory().createEmployeeDAO();
+            dao.create(new User( employeedao.read(1),"Admin","AdminPasswort"));
+            dao.create(new User( employeedao.read(1),"User1","PasswortUser1"));
+            dao.create(new User( employeedao.read(2),"User2","PasswortUser2"));
+            dao.create(new User( employeedao.read(3),"User3","PasswortUser3"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -203,6 +205,7 @@ public class SetUpDB {
             TreatmentDao dao = DaoFactory.getDaoFactory().createTreatmentDao();
             PatientDao patientdao = DaoFactory.getDaoFactory().createPatientDAO();
             EmployeeDao employeedao = DaoFactory.getDaoFactory().createEmployeeDAO();
+
             dao.create(new Treatment(patientdao.read(1),employeedao.read(1), convertStringToLocalDate("2023-06-03"), convertStringToLocalTime("11:00"), convertStringToLocalTime("15:00"), "Gespräch",          "Der Patient hat enorme Angstgefühle und glaubt, er sei überfallen worden. Ihm seien alle Wertsachen gestohlen worden.\nPatient beruhigt sich erst, als alle Wertsachen im Zimmer gefunden worden sind.",   "in Bearbeitung"));
             dao.create(new Treatment(patientdao.read(2),employeedao.read(1), convertStringToLocalDate("2023-06-05"), convertStringToLocalTime("11:00"), convertStringToLocalTime("12:30"), "Gespräch",          "Patient irrt auf der Suche nach gestohlenen Wertsachen durch die Etage und bezichtigt andere Bewohner des Diebstahls.\nPatient wird in seinen Raum zurückbegleitet und erhält Beruhigungsmittel.",         "in Bearbeitung"));
             dao.create(new Treatment(patientdao.read(3),employeedao.read(1), convertStringToLocalDate("2023-06-04"), convertStringToLocalTime("07:30"), convertStringToLocalTime("08:00"), "Waschen",           "Patient mit Waschlappen gewaschen und frisch angezogen. Patient gewendet.",                                                                                                                                "in Bearbeitung"));

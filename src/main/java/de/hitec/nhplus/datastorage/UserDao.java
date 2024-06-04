@@ -1,12 +1,17 @@
 package de.hitec.nhplus.datastorage;
 
 
+import de.hitec.nhplus.model.Employee;
+import de.hitec.nhplus.model.Treatment;
 import de.hitec.nhplus.model.User;
+import de.hitec.nhplus.utils.DateConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
@@ -15,13 +20,16 @@ import java.util.ArrayList;
  */
 public class UserDao extends DaoImp<User> {
 
+    private final EmployeeDao employeeDao;
     /**
      * The constructor initiates an object of <code>UserDao</code> and passes the connection to its super class.
      *
      * @param connection Object of <code>Connection</code> to execute the SQL-statements.
      */
-    public UserDao(Connection connection) {
+    public UserDao(Connection connection, EmployeeDao employeeDao) {
+
         super(connection);
+        this.employeeDao = employeeDao;
     }
 
     /**
@@ -88,10 +96,10 @@ public class UserDao extends DaoImp<User> {
     @Override
     protected User getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new User(
-            result.getInt(1),
-            result.getInt(2),
-            result.getString(3),
-            result.getString(4));
+                result.getInt("userId"),
+                employeeDao.read(result.getLong("employeeID")),
+                result.getString("userName"),
+                result.getString("userPassword"));
     }
 
 
@@ -124,12 +132,8 @@ public class UserDao extends DaoImp<User> {
     protected ArrayList<User> getListFromResultSet(ResultSet result) throws SQLException {
         ArrayList<User> list = new ArrayList<>();
         while (result.next()) {
-            User User = new User(
-                    result.getInt(1),
-                    result.getInt(2),
-                    result.getString(3),
-                    result.getString(4));
-            list.add(User);
+            User user = getInstanceFromResultSet(result);
+            list.add(user);
         }
         return list;
     }

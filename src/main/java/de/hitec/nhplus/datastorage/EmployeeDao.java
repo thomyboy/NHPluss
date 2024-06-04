@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 import de.hitec.nhplus.model.Employee;
 import javafx.beans.property.SimpleStringProperty;
-// Hello there
+
 /**
  * Implements the Interface <code>DaoImp</code>. Overrides methods to generate specific <code>PreparedStatements</code>,
- * to execute the specific SQL Statements.
+ * to execute the specific SQL statements.
  */
 public class EmployeeDao extends DaoImp<Employee> {
 
@@ -69,17 +69,18 @@ public class EmployeeDao extends DaoImp<Employee> {
      *
      * @param result ResultSet with a single row. Columns will be mapped to an object of class <code>Employee</code>.
      * @return Object of class <code>Employee</code> with the data from the resultSet.
+     * @throws SQLException if a database access error occurs
      */
+
     @Override
     protected Employee getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new Employee(
-
-                result.getInt(1),
                 result.getString(2),
                 result.getString(3),
                 result.getString(4),
                 result.getString(5),
-                result.getString(6));
+                result.getString(6),
+                result.getString(7));
     }
 
     /**
@@ -103,27 +104,28 @@ public class EmployeeDao extends DaoImp<Employee> {
      * Maps a <code>ResultSet</code> of all employees to an <code>ArrayList</code> of <code>Employee</code> objects.
      *
      * @param result ResultSet with all rows. The Columns will be mapped to objects of class <code>Employee</code>.
-     * @return <code>ArrayList</code> with objects of class <code>Employee</code> of all rows in the
-     * <code>ResultSet</code>.
+     * @return <code>ArrayList</code> with objects of class <code>Employee</code> of all rows in the <code>ResultSet</code>.
+     * @throws SQLException if a database access error occurs
      */
     @Override
     protected ArrayList<Employee> getListFromResultSet(ResultSet result) throws SQLException {
         ArrayList<Employee> list = new ArrayList<>();
         while (result.next()) {
             Employee employee = new Employee(
-                    result.getString(1),
+                    result.getInt(1),
                     result.getString(2),
                     result.getString(3),
                     result.getString(4),
-                    result.getString(5));
+                    result.getString(5),
+                    result.getString(6),
+                    result.getString(7));
             list.add(employee);
         }
         return list;
     }
 
     /**
-     * Generates a <code>PreparedStatement</code> to update the given employee, identified
-     * by the id of the employee (employeeID).
+     * Generates a <code>PreparedStatement</code> to update the given employee, identified by the id of the employee (employeeID).
      *
      * @param employee Employee object to update.
      * @return <code>PreparedStatement</code> to update the given employee.
@@ -150,7 +152,7 @@ public class EmployeeDao extends DaoImp<Employee> {
         }
         return preparedStatement;
     }
-//MOIN
+
     /**
      * Generates a <code>PreparedStatement</code> to delete an employee with the given id.
      *

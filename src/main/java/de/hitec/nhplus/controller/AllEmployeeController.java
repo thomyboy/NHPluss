@@ -18,7 +18,8 @@ import de.hitec.nhplus.datastorage.EmployeeDao;
 import de.hitec.nhplus.model.Employee;
 
 /**
- * The <code>AllEmployeeController</code> cgontains the entire logic of the employee view. It determines which data is displayed and how to react to events.
+ * The <code>AllEmployeeController</code> contains the entire logic of the employee view.
+ * It determines which data is displayed and how to react to events.
  */
 public class AllEmployeeController {
 
@@ -65,6 +66,12 @@ public class AllEmployeeController {
     private EmployeeDao dao;
 
     private static final String EMPTY = "9999";
+
+    /**
+     * Initializes the controller class. This method is automatically called after the FXML file has been loaded.
+     * It sets up the table view, columns, and listeners for user interaction.
+     */
+
     public void initialize() {
         this.readAllAndShowInTableView();
 
@@ -103,31 +110,51 @@ public class AllEmployeeController {
         this.textFieldStatus.textProperty().addListener(inputNewEmployeeListener);
 
     }
-
+    /**
+     * Handles editing of the employee's first name directly in the table view.
+     *
+     * @param event the edit event triggered by changing the first name
+     */
     @FXML
     public void handleOnEditName(TableColumn.CellEditEvent<Employee, String> event) {
         event.getRowValue().setFirstName(event.getNewValue());
         this.doUpdate(event);
     }
-
+    /**
+     * Handles editing of the employee's surname directly in the table view.
+     *
+     * @param event the edit event triggered by changing the surname
+     */
     @FXML
     public void handleOnEditSurname(TableColumn.CellEditEvent<Employee, String> event) {
         event.getRowValue().setSurname(event.getNewValue());
         this.doUpdate(event);
     }
-
+    /**
+     * Handles editing of the employee's role directly in the table view.
+     *
+     * @param event the edit event triggered by changing the role
+     */
     @FXML
     public void handleOnEditRole(TableColumn.CellEditEvent<Employee, String> event) {
         event.getRowValue().setrole(event.getNewValue());
         this.doUpdate(event);
     }
-
+    /**
+     * Handles editing of the employee's status directly in the table view.
+     *
+     * @param event the edit event triggered by changing the status
+     */
     @FXML
     public void handleOnEditStatus(TableColumn.CellEditEvent<Employee, String> event) {
         event.getRowValue().setStatus(event.getNewValue());
         this.doUpdate(event);
     }
-
+    /**
+     * Updates the employee information in the data source.
+     *
+     * @param event the edit event containing the new data
+     */
     private void doUpdate(TableColumn.CellEditEvent<Employee, String> event) {
         try {
             this.dao.update(event.getRowValue());
@@ -135,7 +162,9 @@ public class AllEmployeeController {
             exception.printStackTrace();
         }
     }
-
+    /**
+     * Reads all employees from the data source and displays them in the table view.
+     */
     private void readAllAndShowInTableView() {
         this.employees.clear();
         this.dao = DaoFactory.getDaoFactory().createEmployeeDAO();
@@ -145,7 +174,9 @@ public class AllEmployeeController {
             exception.printStackTrace();
         }
     }
-
+    /**
+     * Handles the deletion of the selected employee from the table view and the data source.
+     */
     @FXML
     public void handleDelete() {
         Employee selectedItem = this.tableView.getSelectionModel().getSelectedItem();
@@ -158,7 +189,9 @@ public class AllEmployeeController {
             }
         }
     }
-
+    /**
+     * Handles the addition of a new employee using the data entered in the text fields.
+     */
     @FXML
     public void handleAdd() {
         String name = this.textFieldName.getText();
@@ -166,21 +199,27 @@ public class AllEmployeeController {
         String role = this.textFieldRole.getText();
         String status = this.textFieldStatus.getText();
         try {
-            this.dao.create(new Employee( name, surname, role,EMPTY, status)); // employeeID is auto-generated
+            this.dao.create(new Employee( name, surname, role, EMPTY, status,"PhoneNumber123")); // employeeID is auto-generated
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
         readAllAndShowInTableView();
         clearTextFields();
     }
-
+    /**
+     * Clears the text fields after an operation.
+     */
     private void clearTextFields() {
         this.textFieldName.clear();
         this.textFieldSurname.clear();
        this.textFieldRole.clear();
        this.textFieldStatus.clear();
     }
-
+    /**
+     * Validates if the input data for adding a new employee is valid.
+     *
+     * @return true if all required text fields are not blank, false otherwise
+     */
     private boolean areInputDataValid() {
         return !this.textFieldName.getText().isBlank() &&
                 !this.textFieldSurname.getText().isBlank() &&

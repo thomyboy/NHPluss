@@ -4,13 +4,19 @@ package de.hitec.nhplus.model;
 public class User {
 
     private int userID;
-    private int employeeID;
+    private Employee employee;
     private String userName;
     private String userPassword;
 
-    public User(int userID, int employeeID, String userName, String userPassword) {
+    public User(int userID, Employee employee, String userName, String userPassword) {
         this.userID = userID;
-        this.employeeID = employeeID;
+        this.employee = employee;
+        this.userName = userName;
+        this.userPassword = userPassword;
+    }
+
+    public User( Employee employee, String userName, String userPassword) {
+        this.employee = employee;
         this.userName = userName;
         this.userPassword = userPassword;
     }
@@ -23,9 +29,8 @@ public class User {
         this.userID = userID;
     }
 
-    public int getemployeeID() {return employeeID;}
+    public int getemployeeID() {return employee.getemployeeID();}
 
-    public void setemployeeID(int employeeID) {this.employeeID = employeeID;}
 
     public String getUserName() {
         return userName;
