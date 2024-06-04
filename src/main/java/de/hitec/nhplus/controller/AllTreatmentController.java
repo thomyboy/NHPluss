@@ -57,6 +57,7 @@ public class AllTreatmentController {
     private TreatmentDao treatmentDao;
     private Patient patient;
     private Employee employee;
+
     private final ObservableList<String> patientSelection = FXCollections.observableArrayList();
     private ArrayList<Patient> patientList;
 

@@ -51,6 +51,7 @@ public abstract class DaoImp<T> implements Dao<T> {
 
     protected abstract PreparedStatement getReadAllStatement();
 
+
     protected abstract PreparedStatement getUpdateStatement(T t);
 
     protected abstract PreparedStatement getDeleteStatement(long key);

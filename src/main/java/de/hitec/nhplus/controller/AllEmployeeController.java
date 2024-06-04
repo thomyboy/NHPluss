@@ -17,7 +17,7 @@ import de.hitec.nhplus.datastorage.EmployeeDao;
 import de.hitec.nhplus.model.Employee;
 
 /**
- * The <code>AllEmployeeController</code> contains the entire logic of the employee view. It determines which data is displayed and how to react to events.
+ * The <code>AllEmployeeController</code> cgontains the entire logic of the employee view. It determines which data is displayed and how to react to events.
  */
 public class AllEmployeeController {
 
