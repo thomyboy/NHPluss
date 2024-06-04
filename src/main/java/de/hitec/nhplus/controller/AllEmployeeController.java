@@ -33,11 +33,11 @@ public class AllEmployeeController {
     @FXML
     private TableColumn<Employee, String> columnSurname;
 
-//    @FXML
-//    private TableColumn<Employee, String> columnRole;
-//
-//    @FXML
-//    private TableColumn<Employee, String> columnStatus;
+    @FXML
+   private TableColumn<Employee, String> columnRole;
+
+    @FXML
+    private TableColumn<Employee, String> columnStatus;
 
     @FXML
     private Button buttonDelete;
@@ -51,11 +51,11 @@ public class AllEmployeeController {
     @FXML
     private TextField textFieldSurname;
 
-//    @FXML
-//    private TextField textFieldRole;
-//
-//    @FXML
-//    private TextField textFieldStatus;
+    @FXML
+    private TextField textFieldRole;
+
+    @FXML
+    private TextField textFieldStatus;
 
     private final ObservableList<Employee> employees = FXCollections.observableArrayList();
     private EmployeeDao dao;
@@ -64,17 +64,17 @@ public class AllEmployeeController {
         this.readAllAndShowInTableView();
 
         this.columnId.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
-        this.columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        this.columnName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         this.columnName.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.columnSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
         this.columnSurname.setCellFactory(TextFieldTableCell.forTableColumn());
 
-//        this.columnRole.setCellValueFactory(new PropertyValueFactory<>("role"));
-//        this.columnRole.setCellFactory(TextFieldTableCell.forTableColumn());
-//
-//        this.columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-//        this.columnStatus.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.columnRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+        this.columnRole.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        this.columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        this.columnStatus.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.tableView.setItems(this.employees);
 
@@ -91,8 +91,8 @@ public class AllEmployeeController {
                 AllEmployeeController.this.buttonAdd.setDisable(!AllEmployeeController.this.areInputDataValid());
         this.textFieldName.textProperty().addListener(inputNewEmployeeListener);
         this.textFieldSurname.textProperty().addListener(inputNewEmployeeListener);
-//        this.textFieldRole.textProperty().addListener(inputNewEmployeeListener);
-//        this.textFieldStatus.textProperty().addListener(inputNewEmployeeListener);
+        this.textFieldRole.textProperty().addListener(inputNewEmployeeListener);
+        this.textFieldStatus.textProperty().addListener(inputNewEmployeeListener);
     }
 
     @FXML
@@ -109,7 +109,7 @@ public class AllEmployeeController {
 
     @FXML
     public void handleOnEditRole(TableColumn.CellEditEvent<Employee, String> event) {
-        event.getRowValue().setrole(event.getNewValue());
+        event.getRowValue().setRole(event.getNewValue());
         this.doUpdate(event);
     }
 
@@ -142,7 +142,7 @@ public class AllEmployeeController {
         Employee selectedItem = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             try {
-                DaoFactory.getDaoFactory().createEmployeeDAO().deleteById(selectedItem.getemployeeID());
+                DaoFactory.getDaoFactory().createEmployeeDAO().deleteById(selectedItem.getEmployeeID());
                 this.tableView.getItems().remove(selectedItem);
             } catch (SQLException exception) {
                 exception.printStackTrace();
@@ -154,10 +154,10 @@ public class AllEmployeeController {
     public void handleAdd() {
         String name = this.textFieldName.getText();
         String surname = this.textFieldSurname.getText();
-//        String role = this.textFieldRole.getText();
-//        String status = this.textFieldStatus.getText();
+        String role = this.textFieldRole.getText();
+        String status = this.textFieldStatus.getText();
         try {
-            this.dao.create(new Employee(0, name, surname, "Sith Lo- I mean DOCTOR", "im Urlaub")); // employeeID is auto-generated
+            this.dao.create(new Employee( name, surname, role, status)); // employeeID is auto-generated
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -168,15 +168,15 @@ public class AllEmployeeController {
     private void clearTextFields() {
         this.textFieldName.clear();
         this.textFieldSurname.clear();
-//        this.textFieldRole.clear();
-//        this.textFieldStatus.clear();
+       this.textFieldRole.clear();
+       this.textFieldStatus.clear();
     }
 
     private boolean areInputDataValid() {
         return !this.textFieldName.getText().isBlank() &&
-                !this.textFieldSurname.getText().isBlank() ;
-//                !this.textFieldRole.getText().isBlank() &&
-//                !this.textFieldStatus.getText().isBlank();
+                !this.textFieldSurname.getText().isBlank() &&
+                !this.textFieldRole.getText().isBlank() &&
+                !this.textFieldStatus.getText().isBlank();
     }
 }
 

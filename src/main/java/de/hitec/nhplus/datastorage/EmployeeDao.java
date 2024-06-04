@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import de.hitec.nhplus.model.Employee;
-import javafx.beans.property.SimpleStringProperty;
 
 /**
  * Implements the Interface <code>DaoImp</code>. Overrides methods to generate specific <code>PreparedStatements</code>,
@@ -31,13 +30,12 @@ public class EmployeeDao extends DaoImp<Employee> {
     protected PreparedStatement getCreateStatement(Employee employee) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "INSERT INTO Employee (employeeID, firstname, surname, role, status) VALUES (?, ?, ?, ?, ?)";
+            final String SQL = "INSERT INTO Employee (firstname, surname, role, status) VALUES (?, ?, ?, ?)";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, employee.getemployeeID());
-            preparedStatement.setString(2, employee.getFirstName());
-            preparedStatement.setString(3, employee.getSurname());
-            preparedStatement.setString(4, employee.getrole());
-            preparedStatement.setString(5, employee.getstatus());
+            preparedStatement.setString(1, employee.getFirstName());
+            preparedStatement.setString(2, employee.getSurname());
+            preparedStatement.setString(3, employee.getRole());
+            preparedStatement.setString(4, employee.getStatus());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -72,11 +70,11 @@ public class EmployeeDao extends DaoImp<Employee> {
     @Override
     protected Employee getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new Employee(
-                result.getInt(1),
-                result.getString(2),
-                result.getString(3),
-                result.getString(4),
-                result.getString(5));
+                result.getLong("employeeID"),
+                result.getString("firstname"),
+                result.getString("surname"),
+                result.getString("role"),
+                result.getString("status"));
     }
 
     /**
@@ -88,13 +86,26 @@ public class EmployeeDao extends DaoImp<Employee> {
     protected PreparedStatement getReadAllStatement() {
         PreparedStatement statement = null;
         try {
-            final String SQL = "SELECT * FROM employee";
+            final String SQL = "SELECT * FROM Employee";
             statement = this.connection.prepareStatement(SQL);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
         return statement;
     }
+
+    public PreparedStatement getEmployeeNameByID(long employeeID) {
+        PreparedStatement statement = null;
+        try {
+            final String SQL = "SELECT surname + ', ' + firstname FROM employee WHERE employeeID = ?";
+            statement = this.connection.prepareStatement(SQL);
+            statement.setLong(1, employeeID);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return statement;
+    }
+
 
     /**
      * Maps a <code>ResultSet</code> of all employees to an <code>ArrayList</code> of <code>Employee</code> objects.
@@ -108,11 +119,11 @@ public class EmployeeDao extends DaoImp<Employee> {
         ArrayList<Employee> list = new ArrayList<>();
         while (result.next()) {
             Employee employee = new Employee(
-                    result.getInt(1),
-                    result.getString(2),
-                    result.getString(3),
-                    result.getString(4),
-                    result.getString(5));
+                    result.getLong("employeeID"),
+                    result.getString("firstname"),
+                    result.getString("surname"),
+                    result.getString("role"),
+                    result.getString("status"));
             list.add(employee);
         }
         return list;
@@ -139,9 +150,9 @@ public class EmployeeDao extends DaoImp<Employee> {
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setString(1, employee.getFirstName());
             preparedStatement.setString(2, employee.getSurname());
-            preparedStatement.setString(3, employee.getrole());
-            preparedStatement.setString(4, employee.getstatus());
-            preparedStatement.setInt(5, employee.getemployeeID());
+            preparedStatement.setString(3, employee.getRole());
+            preparedStatement.setString(4, employee.getStatus());
+            preparedStatement.setLong(5, employee.getEmployeeID());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

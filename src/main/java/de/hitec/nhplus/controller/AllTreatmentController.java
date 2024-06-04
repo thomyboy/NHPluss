@@ -4,6 +4,7 @@ import de.hitec.nhplus.Main;
 import de.hitec.nhplus.datastorage.DaoFactory;
 import de.hitec.nhplus.datastorage.PatientDao;
 import de.hitec.nhplus.datastorage.TreatmentDao;
+import de.hitec.nhplus.model.Employee;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,7 +30,7 @@ public class AllTreatmentController {
     private TableColumn<Treatment, Integer> columnId;
 
     @FXML
-    private TableColumn<Treatment, Integer> columnPid;
+    private TableColumn<Treatment, String> columnPatientName;
 
     @FXML
     private TableColumn<Treatment, String> columnDate;
@@ -44,27 +45,38 @@ public class AllTreatmentController {
     private TableColumn<Treatment, String> columnDescription;
 
     @FXML
+    private TableColumn<Treatment, String> columnAssignedEmployee;
+
+    @FXML
     private ComboBox<String> comboBoxPatientSelection;
 
     @FXML
     private Button buttonDelete;
 
     private final ObservableList<Treatment> treatments = FXCollections.observableArrayList();
-    private TreatmentDao dao = DaoFactory.getDaoFactory().createTreatmentDao();
+    private TreatmentDao treatmentDao;
+    private Patient patient;
+    private Employee employee;
+
     private final ObservableList<String> patientSelection = FXCollections.observableArrayList();
     private ArrayList<Patient> patientList;
 
     public void initialize() {
         readAllAndShowInTableView();
+        this.createComboBoxData();
         comboBoxPatientSelection.setItems(patientSelection);
         comboBoxPatientSelection.getSelectionModel().select(0);
 
-        this.columnId.setCellValueFactory(new PropertyValueFactory<>("tid"));
-        this.columnPid.setCellValueFactory(new PropertyValueFactory<>("pid"));
+        this.columnId.setCellValueFactory(new PropertyValueFactory<>("treatmentID"));
+
+        this.columnPatientName.setCellValueFactory(new PropertyValueFactory<>("patientID"));
+        this.columnPatientName.setCellValueFactory(new PropertyValueFactory<>("patientName"));
         this.columnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         this.columnBegin.setCellValueFactory(new PropertyValueFactory<>("begin"));
         this.columnEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
         this.columnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        this.columnAssignedEmployee.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
+
         this.tableView.setItems(this.treatments);
 
         // Disabling the button to delete treatments as long, as no treatment was selected.
@@ -73,15 +85,24 @@ public class AllTreatmentController {
                 (observableValue, oldTreatment, newTreatment) ->
                         AllTreatmentController.this.buttonDelete.setDisable(newTreatment == null));
 
-        this.createComboBoxData();
+
     }
+
+    /*
+    Methode xy
+        ->Column befüllen mit
+            -> Empoyee obj fragen was name
+                -> rückgabe
+
+     */
 
     public void readAllAndShowInTableView() {
         comboBoxPatientSelection.getSelectionModel().select(0);
         this.treatments.clear();
-        this.dao = DaoFactory.getDaoFactory().createTreatmentDao();
+        this.treatmentDao = DaoFactory.getDaoFactory().createTreatmentDao();
         try {
-            this.treatments.addAll(dao.readAll());
+            this.treatments.addAll(treatmentDao.readAll());
+            String yesH="asfdhj";
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -93,7 +114,7 @@ public class AllTreatmentController {
             patientList = (ArrayList<Patient>) dao.readAll();
             this.patientSelection.add("alle");
             for (Patient patient: patientList) {
-                this.patientSelection.add(patient.getSurname());
+                this.patientSelection.add(patient.getFullName());
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -105,11 +126,11 @@ public class AllTreatmentController {
     public void handleComboBox() {
         String selectedPatient = this.comboBoxPatientSelection.getSelectionModel().getSelectedItem();
         this.treatments.clear();
-        this.dao = DaoFactory.getDaoFactory().createTreatmentDao();
+        this.treatmentDao = DaoFactory.getDaoFactory().createTreatmentDao();
 
         if (selectedPatient.equals("alle")) {
             try {
-                this.treatments.addAll(this.dao.readAll());
+                this.treatments.addAll(this.treatmentDao.readAll());
             } catch (SQLException exception) {
                 exception.printStackTrace();
             }
@@ -118,16 +139,16 @@ public class AllTreatmentController {
         Patient patient = searchInList(selectedPatient);
         if (patient !=null) {
             try {
-                this.treatments.addAll(this.dao.readTreatmentsByPid(patient.getPid()));
+                this.treatments.addAll(this.treatmentDao.readTreatmentsByPid(patient.getPid()));
             } catch (SQLException exception) {
                 exception.printStackTrace();
             }
         }
     }
 
-    private Patient searchInList(String surname) {
+    private Patient searchInList(String fullName) {
         for (Patient patient : this.patientList) {
-            if (patient.getSurname().equals(surname)) {
+            if (patient.getFullName().equals(fullName)) {
                 return patient;
             }
         }
@@ -140,7 +161,7 @@ public class AllTreatmentController {
         Treatment t = this.treatments.remove(index);
         TreatmentDao dao = DaoFactory.getDaoFactory().createTreatmentDao();
         try {
-            dao.deleteById(t.getTid());
+            dao.deleteById(t.getTreatmentID());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -180,7 +201,6 @@ public class AllTreatmentController {
 
             // the primary stage should stay in the background
             Stage stage = new Stage();
-
             NewTreatmentController controller = loader.getController();
             controller.initialize(this, stage, patient);
 

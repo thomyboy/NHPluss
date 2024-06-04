@@ -44,9 +44,6 @@ public class AllPatientController {
     @FXML
     private TableColumn<Patient, String> columnRoomName;
 
-//    @FXML
-//    private TableColumn<Patient, String> columnAssets;
-
     @FXML
     private Button buttonDelete;
 
@@ -68,11 +65,9 @@ public class AllPatientController {
     @FXML
     private ChoiceBox<Room> choiceBoxRoom;
 
-    @FXML
-    private TextField textFieldAssets;
-
     private final ObservableList<Patient> patients = FXCollections.observableArrayList();
     private PatientDao dao;
+    private Patient patient;
 
     /**
      * When <code>initialize()</code> gets called, all fields are already initialized. For example from the FXMLLoader
@@ -100,9 +95,6 @@ public class AllPatientController {
 
         this.columnRoomName.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
         this.columnRoomName.setCellFactory(TextFieldTableCell.forTableColumn());
-
-//        this.columnAssets.setCellValueFactory(new PropertyValueFactory<>("assets"));
-//        this.columnAssets.setCellFactory(TextFieldTableCell.forTableColumn());
 
         //Anzeigen der Daten
         this.tableView.setItems(this.patients);

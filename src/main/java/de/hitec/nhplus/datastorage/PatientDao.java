@@ -42,7 +42,7 @@ public class PatientDao extends DaoImp<Patient> {
             preparedStatement.setString(2, patient.getSurname());
             preparedStatement.setString(3, patient.getDateOfBirth());
             preparedStatement.setString(4, patient.getCareLevel());
-            preparedStatement.setInt(5, patient.getRoom().getRoomID());
+            preparedStatement.setLong(5, patient.getRoom().getRoomID());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -96,6 +96,18 @@ public class PatientDao extends DaoImp<Patient> {
         try {
             final String SQL = "SELECT * FROM patient";
             statement = this.connection.prepareStatement(SQL);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return statement;
+    }
+
+    public PreparedStatement getPatientNameByID(long patientID) {
+        PreparedStatement statement = null;
+        try {
+            final String SQL = "SELECT surname + ', ' + firstname FROM patient WHERE patientID = ?";
+            statement = this.connection.prepareStatement(SQL);
+            statement.setLong(1, patientID);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

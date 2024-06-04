@@ -1,5 +1,7 @@
 package de.hitec.nhplus.datastorage;
 
+import de.hitec.nhplus.model.Employee;
+import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.model.Treatment;
 import de.hitec.nhplus.utils.DateConverter;
 
@@ -15,13 +17,17 @@ import java.util.List;
  */
 public class TreatmentDao extends DaoImp<Treatment> {
 
+    private final PatientDao patientDao;
+    private final EmployeeDao employeeDao;
     /**
      * The constructor initiates an object of <code>TreatmentDao</code> and passes the connection to its super class.
      *
      * @param connection Object of <code>Connection</code> to execute the SQL-statements.
      */
-    public TreatmentDao(Connection connection) {
+    public TreatmentDao(Connection connection, PatientDao patientDao, EmployeeDao employeeDao) {
         super(connection);
+        this.employeeDao = employeeDao;
+        this.patientDao = patientDao;
     }
 
     /**
@@ -34,18 +40,17 @@ public class TreatmentDao extends DaoImp<Treatment> {
     protected PreparedStatement getCreateStatement(Treatment treatment) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "INSERT INTO treatment (patientID, treatment_date, begin, end, description, remark,treatmentID, employeeID, state ) " +
-                    "VALUES (?, ?, ?, ?, ?, ?,?,?,? )";
+            final String SQL = "INSERT INTO treatment (treatment_date, begin, end, description, remark, patientID, employeeID, state ) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ? )";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setLong(1, treatment.getPid());
-            preparedStatement.setString(2, treatment.getDate());
-            preparedStatement.setString(3, treatment.getBegin());
-            preparedStatement.setString(4, treatment.getEnd());
-            preparedStatement.setString(5, treatment.getDescription());
-            preparedStatement.setString(6, treatment.getRemarks());
-            preparedStatement.setLong(7, treatment.getTid());
-            preparedStatement.setLong(8, treatment.getEmployeeID());
-            preparedStatement.setString(9, treatment.getState());
+            preparedStatement.setString(1, treatment.getDate());
+            preparedStatement.setString(2, treatment.getBegin());
+            preparedStatement.setString(3, treatment.getEnd());
+            preparedStatement.setString(4, treatment.getDescription());
+            preparedStatement.setString(5, treatment.getRemarks());
+            preparedStatement.setLong(6, treatment.getPatient().getPid());
+            preparedStatement.setLong(7, treatment.getEmployee().getEmployeeID());
+            preparedStatement.setString(8, treatment.getState());
 
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -85,12 +90,15 @@ public class TreatmentDao extends DaoImp<Treatment> {
         LocalTime end = DateConverter.convertStringToLocalTime(result.getString("end"));
         return new Treatment(
                 result.getLong("treatmentID"),
-                result.getLong("patientID"),
                 date, begin, end,
                 result.getString("description"),
                 result.getString("remark"),
-                result.getLong("employeeID"),
+                patientDao.read(result.getLong("patientID")),
+                employeeDao.read(result.getLong("employeeID")),
                 result.getString("state"));
+
+        //roomDao.read(result.getInt("roomID")));
+
     }
 
     /**
@@ -172,21 +180,25 @@ public class TreatmentDao extends DaoImp<Treatment> {
         try {
             final String SQL =
                     "UPDATE treatment SET " +
-                            "patientID = ?, " +
                             "treatment_date = ?, " +
                             "begin = ?, " +
                             "end = ?, " +
                             "description = ?, " +
-                            "remark = ? " +
-                            "WHERE tid = ?";
+                            "remark = ?, " +
+                            "patientID = ?, " +
+                            "employeeID = ?, " +
+                            "state = ?, " +
+                            "WHERE treatmentID = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setLong(1, treatment.getPid());
-            preparedStatement.setString(2, treatment.getDate());
-            preparedStatement.setString(3, treatment.getBegin());
-            preparedStatement.setString(4, treatment.getEnd());
-            preparedStatement.setString(5, treatment.getDescription());
-            preparedStatement.setString(6, treatment.getRemarks());
-            preparedStatement.setLong(7, treatment.getTid());
+            preparedStatement.setString(1, treatment.getDate());
+            preparedStatement.setString(2, treatment.getBegin());
+            preparedStatement.setString(3, treatment.getEnd());
+            preparedStatement.setString(4, treatment.getDescription());
+            preparedStatement.setString(5, treatment.getRemarks());
+            preparedStatement.setLong(6, treatment.getPatient().getPid());
+            preparedStatement.setLong(7, treatment.getEmployee().getEmployeeID());
+            preparedStatement.setString(8, treatment.getState());
+            preparedStatement.setLong(9, treatment.getTreatmentID());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -212,4 +224,16 @@ public class TreatmentDao extends DaoImp<Treatment> {
         }
         return preparedStatement;
     }
+
+    public Patient executeGetPatientFullName(long patientID) throws SQLException{
+        ResultSet result = patientDao.getPatientNameByID(patientID).executeQuery();
+        return patientDao.getInstanceFromResultSet(result);
+    }
+    public Employee executeEmployeeGetFullName(long employeeID) throws SQLException{
+        ResultSet result = employeeDao.getEmployeeNameByID(employeeID).executeQuery();
+        return employeeDao.getInstanceFromResultSet(result);
+    }
+
+
+
 }

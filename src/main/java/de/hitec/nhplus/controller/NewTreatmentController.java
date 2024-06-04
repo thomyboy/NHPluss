@@ -1,8 +1,12 @@
 package de.hitec.nhplus.controller;
 
 import de.hitec.nhplus.datastorage.DaoFactory;
+import de.hitec.nhplus.datastorage.EmployeeDao;
 import de.hitec.nhplus.datastorage.TreatmentDao;
+import de.hitec.nhplus.model.Employee;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -14,6 +18,7 @@ import javafx.util.StringConverter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class NewTreatmentController {
 
@@ -41,17 +46,32 @@ public class NewTreatmentController {
     @FXML
     private Button buttonAdd;
 
+    @FXML
+    private ComboBox<String> comboBoxEmployeeSelection;
+
     private AllTreatmentController controller;
     private Patient patient;
     private Stage stage;
+    private Employee employee;
+    private EmployeeDao dao;
+    private ArrayList<Employee> employeeList;
+    private final ObservableList<String> employeeSelection = FXCollections.observableArrayList();
+    private final ObservableList<Treatment> treatments = FXCollections.observableArrayList();
+
+
+
 
     public void initialize(AllTreatmentController controller, Stage stage, Patient patient) {
         this.controller= controller;
         this.patient = patient;
         this.stage = stage;
+        comboBoxEmployeeSelection.setItems(employeeSelection);
+        comboBoxEmployeeSelection.getSelectionModel().select(0);
 
         this.buttonAdd.setDisable(true);
         ChangeListener<String> inputNewPatientListener = (observableValue, oldText, newText) ->
+                NewTreatmentController.this.buttonAdd.setDisable(NewTreatmentController.this.areInputDataInvalid());
+        ChangeListener<String> inputNewEmployeeListener = (observableValue, oldText, newText) ->
                 NewTreatmentController.this.buttonAdd.setDisable(NewTreatmentController.this.areInputDataInvalid());
         this.textFieldBegin.textProperty().addListener(inputNewPatientListener);
         this.textFieldEnd.textProperty().addListener(inputNewPatientListener);
@@ -70,6 +90,7 @@ public class NewTreatmentController {
             }
         });
         this.showPatientData();
+        this.createComboBoxData();
     }
 
     private void showPatientData(){
@@ -79,15 +100,25 @@ public class NewTreatmentController {
 
     @FXML
     public void handleAdd(){
-        LocalDate date = this.datePicker.getValue();
-        LocalTime begin = DateConverter.convertStringToLocalTime(textFieldBegin.getText());
-        LocalTime end = DateConverter.convertStringToLocalTime(textFieldEnd.getText());
-        String description = textFieldDescription.getText();
-        String remarks = textAreaRemarks.getText();
-        Treatment treatment = new Treatment(patient.getPid(), date, begin, end, description, remarks,1,"in Bearbeitung");
-        createTreatment(treatment);
-        controller.readAllAndShowInTableView();
-        stage.close();
+        try {
+            String selectedEmployee = this.comboBoxEmployeeSelection.getSelectionModel().getSelectedItem();
+            Employee employee = searchInList(selectedEmployee);
+            LocalDate date = this.datePicker.getValue();
+            LocalTime begin = DateConverter.convertStringToLocalTime(textFieldBegin.getText());
+            LocalTime end = DateConverter.convertStringToLocalTime(textFieldEnd.getText());
+            String description = textFieldDescription.getText();
+            String remarks = textAreaRemarks.getText();
+            Treatment treatment = new Treatment(date, begin, end, description, remarks, patient, employee, "in Bearbeitung");
+            createTreatment(treatment);
+            controller.readAllAndShowInTableView();
+            stage.close();
+        } catch(NullPointerException exception){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information");
+            alert.setHeaderText("Pflegekraft für die Behandlung fehlt!");
+            alert.setContentText("Wählen Sie über die Combobox eine Pflegekraft aus!");
+            alert.showAndWait();
+        }
     }
 
     private void createTreatment(Treatment treatment) {
@@ -97,6 +128,56 @@ public class NewTreatmentController {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+    }
+
+
+
+    private void createComboBoxData() {
+        EmployeeDao dao = DaoFactory.getDaoFactory().createEmployeeDAO();
+        try {
+            employeeList = (ArrayList<Employee>) dao.readAll();
+            for (Employee employee: employeeList) {
+                if (employee.getStatus().toLowerCase().equals("aktiv")){
+                    this.employeeSelection.add(employee.getFullName());
+                }
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    public void handleComboBox() {
+        String selectedEmployee = this.comboBoxEmployeeSelection.getSelectionModel().getSelectedItem();
+        this.dao = DaoFactory.getDaoFactory().createEmployeeDAO();
+//
+//        if (selectedEmployee.equals("alle")) {
+//            try {
+//                this.treatments.addAll(this.dao.readAll());
+//            } catch (SQLException exception) {
+//                exception.printStackTrace();
+//            }
+//        }
+//
+        Employee searchedEmployee = searchInList(selectedEmployee);
+        this.employee = searchedEmployee;
+//        if (employee !=null) {
+//            try {
+//                this.treatments.addAll(this.dao.readTreatmentsByPid(patient.getPid()));
+//            } catch (SQLException exception) {
+//                exception.printStackTrace();
+//            }
+//        }
+    }
+
+    private Employee searchInList(String employeeFullName) {
+        for (Employee employee : this.employeeList) {
+            if (employee.getFullName().equals(employeeFullName)) {
+                return employee;
+            }
+        }
+        return null;
     }
 
     @FXML

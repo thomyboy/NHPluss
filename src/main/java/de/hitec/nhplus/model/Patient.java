@@ -15,6 +15,7 @@ public class Patient extends Person {
     private SimpleLongProperty pid;
     private final SimpleStringProperty dateOfBirth;
     private final SimpleStringProperty careLevel;
+    private String fullName = getSurname() + ", " + getFirstName();
     private final Room room;
     private final List<Treatment> allTreatments = new ArrayList<>();
 
@@ -93,6 +94,10 @@ public class Patient extends Person {
 
     public Room getRoom() {
         return room;
+    }
+
+    public String getFullName(){
+        return fullName;
     }
 
     /**
