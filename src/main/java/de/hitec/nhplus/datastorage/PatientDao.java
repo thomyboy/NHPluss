@@ -4,7 +4,6 @@ import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.utils.DateConverter;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -32,22 +31,30 @@ public class PatientDao extends DaoImp<Patient> {
      * @return <code>PreparedStatement</code> to insert the given patient.
      */
     @Override
-    protected PreparedStatement getCreateStatement(Patient patient) {
+    protected PreparedStatement getCreateStatement(Patient patient)
+    {
         PreparedStatement preparedStatement = null;
-        try {
-            final String SQL = "INSERT INTO patient (firstname, surname, dateOfBirth, carelevel, roomid) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+        var getPatientRoomID = patient.getRoom().getRoomID();
+        try
+        {
+            final String SQL = "INSERT INTO patient (firstname, surname, dateOfBirth, carelevel, roomid, lockDateInTenYears) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setString(1, patient.getFirstName());
             preparedStatement.setString(2, patient.getSurname());
             preparedStatement.setString(3, patient.getDateOfBirth());
             preparedStatement.setString(4, patient.getCareLevel());
-            preparedStatement.setInt(5, patient.getRoom().getRoomID());
-        } catch (SQLException exception) {
+            preparedStatement.setInt(5, getPatientRoomID);
+            preparedStatement.setString(6, String.valueOf(patient.getLockDateInTenYears()));
+        }
+        catch (SQLException exception)
+        {
             exception.printStackTrace();
         }
         return preparedStatement;
     }
+
+
 
     /**
      * Generates a <code>PreparedStatement</code> to query a patient by a given patient id (pid).
@@ -82,6 +89,7 @@ public class PatientDao extends DaoImp<Patient> {
                 result.getString("surname"),
                 DateConverter.convertStringToLocalDate(result.getString("dateOfBirth")),
                 result.getString("carelevel"),
+                result.getString("lockingArrayDates"),
                 roomDao.read(result.getInt("roomID")));
     }
 
@@ -119,6 +127,7 @@ public class PatientDao extends DaoImp<Patient> {
                     result.getString("surname"),
                     DateConverter.convertStringToLocalDate(result.getString("dateOfBirth")),
                     result.getString("carelevel"),
+                    result.getString("lockDateInTenYears"),
                     roomDao.read(result.getInt("roomID")));
             list.add(patient);
         }

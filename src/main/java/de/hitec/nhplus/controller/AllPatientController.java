@@ -13,16 +13,22 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.utils.DateConverter;
+import de.hitec.nhplus.utils.LockingObjects;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Calendar;
 
 
 /**
  * The <code>AllPatientController</code> contains the entire logic of the patient view. It determines which data is displayed and how to react to events.
  */
-public class AllPatientController {
+public class AllPatientController extends LockingObjects{
 
+    private static final int TEN_YEARS = 10;
+    private static final int FIRST_POSITION_IN_ARRAY = 0;
+    private static final int SECOND_POSITION_IN_ARRAY = 1;
+    private PatientDao dao;
     @FXML
     private TableView<Patient> tableView;
 
@@ -64,6 +70,7 @@ public class AllPatientController {
 
     @FXML
     private TextField textFieldCareLevel;
+    private TextField textFieldlockingArrayDates;
 
     @FXML
     private ChoiceBox<Room> choiceBoxRoom;
@@ -71,8 +78,8 @@ public class AllPatientController {
     @FXML
     private TextField textFieldAssets;
 
-    private final ObservableList<Patient> patients = FXCollections.observableArrayList();
-    private PatientDao dao;
+    private final ObservableList<Patient> arrayPatients = FXCollections.observableArrayList();
+
 
     /**
      * When <code>initialize()</code> gets called, all fields are already initialized. For example from the FXMLLoader
@@ -105,13 +112,12 @@ public class AllPatientController {
 //        this.columnAssets.setCellFactory(TextFieldTableCell.forTableColumn());
 
         //Anzeigen der Daten
-        this.tableView.setItems(this.patients);
+        this.tableView.setItems(this.arrayPatients);
 
         this.buttonDelete.setDisable(true);
         this.tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Patient>() {
             @Override
             public void changed(ObservableValue<? extends Patient> observableValue, Patient oldPatient, Patient newPatient) {
-                ;
                 AllPatientController.this.buttonDelete.setDisable(newPatient == null);
             }
         });
@@ -132,7 +138,21 @@ public class AllPatientController {
      * @param event Event including the changed object and the change.
      */
     @FXML
-    public void handleOnEditFirstname(TableColumn.CellEditEvent<Patient, String> event) {
+    public void handleOnEditFirstname(TableColumn.CellEditEvent<Patient, String> event)
+    {
+        /** Checks if the selected Patient was locked / is locked */
+        if (isObjectLocked())
+        {
+            return;
+        }
+        else
+        {
+            editFirstName(event);
+        }
+    }
+
+    private void editFirstName(TableColumn.CellEditEvent<Patient, String> event)
+    {
         event.getRowValue().setFirstName(event.getNewValue());
         this.doUpdate(event);
     }
@@ -143,7 +163,21 @@ public class AllPatientController {
      * @param event Event including the changed object and the change.
      */
     @FXML
-    public void handleOnEditSurname(TableColumn.CellEditEvent<Patient, String> event) {
+    public void handleOnEditSurname(TableColumn.CellEditEvent<Patient, String> event)
+    {
+        /** Checks if the selected Patient was locked / is locked */
+        if (isObjectLocked())
+        {
+            return;
+        }
+        else
+        {
+            editSurname(event);
+        }
+    }
+
+    private void editSurname(TableColumn.CellEditEvent<Patient, String> event)
+    {
         event.getRowValue().setSurname(event.getNewValue());
         this.doUpdate(event);
     }
@@ -154,7 +188,21 @@ public class AllPatientController {
      * @param event Event including the changed object and the change.
      */
     @FXML
-    public void handleOnEditDateOfBirth(TableColumn.CellEditEvent<Patient, String> event) {
+    public void handleOnEditDateOfBirth(TableColumn.CellEditEvent<Patient, String> event)
+    {
+        /** Checks if the selected Patient was locked / is locked */
+        if (isObjectLocked())
+        {
+            return;
+        }
+        else
+        {
+            editDateOfBirth(event);
+        }
+    }
+
+    private void editDateOfBirth(TableColumn.CellEditEvent<Patient, String> event)
+    {
         event.getRowValue().setDateOfBirth(event.getNewValue());
         this.doUpdate(event);
     }
@@ -165,11 +213,25 @@ public class AllPatientController {
      * @param event Event including the changed object and the change.
      */
     @FXML
-    public void handleOnEditCareLevel(TableColumn.CellEditEvent<Patient, String> event) {
+    public void handleOnEditCareLevel(TableColumn.CellEditEvent<Patient, String> event)
+    {
+        /** Checks if the selected Patient was locked / is locked */
+        if (isObjectLocked())
+        {
+            return;
+        }
+        /** If Patient is NOT locked / was NOT locked before */
+        else
+        {
+            editCareLevel(event);
+        }
+    }
+
+    private void editCareLevel(TableColumn.CellEditEvent<Patient, String> event)
+    {
         event.getRowValue().setCareLevel(event.getNewValue());
         this.doUpdate(event);
     }
-
 
 
     /**
@@ -190,10 +252,11 @@ public class AllPatientController {
      * patients, delivered by {@link PatientDao}.
      */
     private void readAllAndShowInTableView() {
-        this.patients.clear();
+        arrayPatients.clear();
+
         this.dao = DaoFactory.getDaoFactory().createPatientDAO();
         try {
-            this.patients.addAll(this.dao.readAll());
+            this.arrayPatients.addAll(this.dao.readAll());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -205,30 +268,68 @@ public class AllPatientController {
      * <code>TableView</code>.
      */
     @FXML
-    public void handleDelete() {
-        if (Patient.isLocked()) {
-            System.out.println("Patientendaten sind gesperrt und können nicht gelöscht werden.");
+    public void handleDelete()
+    {
+        /** pulls the selected patient out of the tableView */
+        final Patient currentSelectedPatient = tableView.getSelectionModel().getSelectedItem();
+
+        /** Checks if the selected Patient was locked / is locked */
+        if (isObjectLocked())
+        {
+            /** Checks if current Date is above/equal the mandatory date to legally delete the patient */
+            if (checkIfAboveLegalLockDate())
+            {
+                deletePatient(currentSelectedPatient);
+            }
+            /** The patient is not deleted if the current date is before the pre-determined date in 10 years */
+            else
+            {
+                return;
+            }
+        }
+        /** if patient is NOT locked */
+        else
+        {
             return;
         }
-        Patient selectedItem = this.tableView.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            try {
-                DaoFactory.getDaoFactory().createPatientDAO().deleteById(selectedItem.getPid());
-                this.tableView.getItems().remove(selectedItem);
-            } catch (SQLException exception) {
+    }
+
+    private void deletePatient(Patient currentSelectedPatient)
+    {
+        if (currentSelectedPatient != null)
+        {
+            try
+            {
+                /** deletes the selected patient from the database */
+                DaoFactory.getDaoFactory().createPatientDAO().deleteById(currentSelectedPatient.getPid());
+
+                /** deletes the selected patient from the tableView */
+                this.tableView.getItems().remove(currentSelectedPatient);
+            }
+            catch (SQLException exception)
+            {
                 exception.printStackTrace();
             }
         }
     }
 
-    public void handleLock() {
-        Patient.setLocked(true);
-        try {
-            this.dao.update();
-        } catch (SQLException exception) {
+    public void handleLock()
+    {
+        final Patient currentSelectedPatient = tableView.getSelectionModel().getSelectedItem();
+
+        try
+        {
+            this.dao.update(currentSelectedPatient);
+
+            /** the locked Patient gets the two major dates (current Date and current Date but 10 years later
+             * assigned */
+            calculateLockDateInTenYears(currentSelectedPatient);
+//            archiveObject();
+        }
+        catch (SQLException exception)
+        {
             exception.printStackTrace();
         }
-        readAllAndShowInTableView();
     }
 
     /**
@@ -238,14 +339,15 @@ public class AllPatientController {
      */
     @FXML
     public void handleAdd() {
-        String surname = this.textFieldSurname.getText();
-        String firstName = this.textFieldFirstName.getText();
-        String birthday = this.textFieldDateOfBirth.getText();
+        String surname   =  this.textFieldSurname    .getText();
+        String firstName =  this.textFieldFirstName  .getText();
+        String birthday  =  this.textFieldDateOfBirth.getText();
+        String careLevel =  this.textFieldCareLevel  .getText();
+        String lockingArrayDates = this.textFieldlockingArrayDates.getText();
+        Room room        =  this.choiceBoxRoom      .getValue();
         LocalDate date = DateConverter.convertStringToLocalDate(birthday);
-        String careLevel = this.textFieldCareLevel.getText();
-        Room room = this.choiceBoxRoom.getValue();
         try {
-            this.dao.create(new Patient(firstName, surname, date, careLevel, room));
+            this.dao.create(new Patient(firstName, surname, date, careLevel, lockingArrayDates,  room));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -257,18 +359,22 @@ public class AllPatientController {
      * Clears all contents from all <code>TextField</code>s.
      */
     private void clearTextfields() {
-        this.textFieldFirstName.clear();
-        this.textFieldSurname.clear();
+        this.textFieldFirstName  .clear();
+        this.textFieldSurname    .clear();
         this.textFieldDateOfBirth.clear();
-        this.textFieldCareLevel.clear();
+        this.textFieldCareLevel  .clear();
         this.choiceBoxRoom.setValue(null);
     }
 
-    private boolean areInputDataValid() {
-        if (!this.textFieldDateOfBirth.getText().isBlank()) {
-            try {
+    private boolean areInputDataValid()
+    {
+        if (!this.textFieldDateOfBirth.getText().isBlank())
+        {
+            try
+            {
                 DateConverter.convertStringToLocalDate(this.textFieldDateOfBirth.getText());
-            } catch (Exception exception) {
+            } catch (Exception exception)
+            {
                 return false;
             }
         }
@@ -278,5 +384,84 @@ public class AllPatientController {
 
                 this.choiceBoxRoom.getValue() != null;
 
+    }
+
+
+    @Override
+    protected Calendar getCurrentDate()
+    {
+        /** Saves and extracts the current Date */
+        return Calendar.getInstance();
+    }
+
+    protected String getActualDateInTenYears()
+    {
+        /** extracts the current selected Patient from the tableView */
+        final Patient currentSelectedPatient = tableView.getSelectionModel().getSelectedItem();
+
+        /** Saves the current Date AND adds 10 years onto it */
+        Calendar DateInTenYears = calculateLockDateInTenYears(currentSelectedPatient);
+
+
+        /** returns the DateInTenYears as a String */
+        return DateInTenYears.toString();
+    }
+
+    /**
+     * This method calculates the date ten years from the current date and sets it as the lock date for the selected patient in the application.
+     * it returns the updated Calendar object.
+     * @param patient
+     * @return DateInTenYears
+     */
+    private Calendar calculateLockDateInTenYears(Patient patient)
+    {
+        Calendar DateInTenYears = getCurrentDate();
+        DateInTenYears.add(Calendar.YEAR, TEN_YEARS);
+        patient.setLockDateInTenYears(DateInTenYears.toString());
+
+        return DateInTenYears;
+    }
+
+    @Override
+    protected boolean checkIfAboveLegalLockDate()
+    {
+        /** Checks if the current Date is within the legal patients' lock date */
+        Patient currentSelectedPatient = tableView.getSelectionModel().getSelectedItem();
+
+        if (getCurrentDate().equals(calculateLockDateInTenYears(currentSelectedPatient))
+                || getCurrentDate().after(calculateLockDateInTenYears(currentSelectedPatient)))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @Override
+    /** Checks if a patient is locked or not and therefore return TRUE or FALSE */
+    protected boolean isObjectLocked()
+    {
+        final Patient currentSelectedPatient = tableView.getSelectionModel().getSelectedItem();
+
+        /** if the Patient doesn't contain lock dates: return false */
+        String compare = currentSelectedPatient.getLockDateInTenYears().get();
+        if (compare.equals("StringProperty [value: 999]"))
+        {
+            return false;
+        }
+        /** if the Patient containts lock dates: return true */
+        else
+        {
+            return true;
+        }
+    }
+
+    @Override
+    protected void archiveObject()
+    {
+//        final Patient currentSelectedPatient = tableView.getSelectionModel().getSelectedItem();
+//        tableView.getItems().remove(currentSelectedPatient);
     }
 }

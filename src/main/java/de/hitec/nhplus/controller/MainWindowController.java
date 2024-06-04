@@ -37,6 +37,7 @@ public class MainWindowController {
     @FXML
     public void handleSetUpAllEmployees(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/AllCaregiverView.fxml"));
+//        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/de/hitec/nhplus/EmployeesView.fxml"));
         try{
             mainBorderPane.setCenter(loader.load());
         } catch (IOException exception) {

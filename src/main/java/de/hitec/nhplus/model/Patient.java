@@ -6,19 +6,23 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
  * Patients live in a NURSING home and are treated by nurses.
  */
 public class Patient extends Person {
+    private static final int FIRST_POSITION_IN_ARRAY = 0;
+    private static final int SECOND_POSITION_IN_ARRAY = 1;
     private SimpleLongProperty pid;
     private final SimpleStringProperty dateOfBirth;
     private final SimpleStringProperty careLevel;
     private final Room room;
-    private final List<Treatment> allTreatments = new ArrayList<>();
-    private boolean locked;
-    /**
+    private final List<Treatment> arrayAllTreatments = new ArrayList<>();
+    private final SimpleStringProperty lockDateInTenYears;
+
+     /**
      * Constructor to initiate an object of class <code>Patient</code> with the given parameter. Use this constructor
      * to initiate objects, which are not persisted yet, because it will not have a patient id (pid).
      *
@@ -28,14 +32,13 @@ public class Patient extends Person {
      * @param careLevel Care level of the patient.
      * @param room Room number of the patient.
      */
-    public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, Room room) {
+    public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel,
+                   String lockDateInTenYears, Room room) {
         super(firstName, surname);
         this.dateOfBirth = new SimpleStringProperty(DateConverter.convertLocalDateToString(dateOfBirth));
         this.careLevel = new SimpleStringProperty(careLevel);
+        this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
         this.room = room;
-
-        this.locked = locked;
-
     }
 
     /**
@@ -49,22 +52,25 @@ public class Patient extends Person {
      * @param careLevel Care level of the patient.
      * @param room Room number of the patient.
      */
-    public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel, Room room) {
+    public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel,
+                   String lockDateInTenYears, Room room) {
         super(firstName, surname);
         this.pid = new SimpleLongProperty(pid);
         this.dateOfBirth = new SimpleStringProperty(DateConverter.convertLocalDateToString(dateOfBirth));
         this.careLevel = new SimpleStringProperty(careLevel);
+        this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
         this.room = room;
 
     }
 
-    public boolean isLocked() {
-        return locked;
+    public SimpleStringProperty getLockDateInTenYears()
+    {
+        return lockDateInTenYears;
     }
 
-    public void setLocked(boolean locked) {
-        this.locked = locked;
-
+    public void setLockDateInTenYears(String input)
+    {
+        this.lockDateInTenYears.set(input);
     }
 
     public long getPid() {
@@ -115,10 +121,10 @@ public class Patient extends Person {
      * @return False, if the treatment was already part of the list, else true.
      */
     public boolean add(Treatment treatment) {
-        if (this.allTreatments.contains(treatment)) {
+        if (this.arrayAllTreatments.contains(treatment)) {
             return false;
         }
-        this.allTreatments.add(treatment);
+        this.arrayAllTreatments.add(treatment);
         return true;
     }
 
