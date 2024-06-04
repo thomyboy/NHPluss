@@ -39,7 +39,7 @@ public class Patient extends Person {
         this.careLevel = new SimpleStringProperty(careLevel);
         this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
         this.room = room;
-        this.roomName = room.getRoomName();
+        this.roomName =room.getRoomName();
         this.status = status;
     }
 
@@ -89,6 +89,10 @@ public class Patient extends Person {
 
     public SimpleStringProperty dateOfBirthProperty() {
         return dateOfBirth;
+    }
+
+    public String getRoomName(){
+        return roomName;
     }
 
     /**

@@ -48,9 +48,6 @@ public class AllPatientController extends LockingObjects{
     @FXML
     private TableColumn<Patient, String> columnRoomName;
 
-//    @FXML
-//    private TableColumn<Patient, String> columnAssets;
-
     @FXML
     private Button buttonDelete;
 
@@ -89,7 +86,7 @@ public class AllPatientController extends LockingObjects{
     public void initialize() {
         this.readAllAndShowInTableView();
 
-        this.columnId.setCellValueFactory(new PropertyValueFactory<>("pid"));
+        this.columnId.setCellValueFactory(new PropertyValueFactory<>("patientID"));
 
         // CellValueFactory to show property values in TableView
         this.columnFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -105,8 +102,7 @@ public class AllPatientController extends LockingObjects{
         this.columnCareLevel.setCellValueFactory(new PropertyValueFactory<>("careLevel"));
         this.columnCareLevel.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.columnRoomName.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
-        this.columnRoomName.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.columnRoomName.setCellValueFactory(new PropertyValueFactory<>("roomName"));
 
 //        this.columnAssets.setCellValueFactory(new PropertyValueFactory<>("assets"));
 //        this.columnAssets.setCellFactory(TextFieldTableCell.forTableColumn());
