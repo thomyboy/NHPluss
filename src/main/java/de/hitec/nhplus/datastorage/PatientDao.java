@@ -37,15 +37,17 @@ public class PatientDao extends DaoImp<Patient> {
         var getPatientRoomID = patient.getRoom().getRoomID();
         try
         {
-            final String SQL = "INSERT INTO patient (firstname, surname, dateOfBirth, carelevel, roomid, lockDateInTenYears) " +
-                    "VALUES (?, ?, ?, ?, ?, ?)";
+            final String SQL = "INSERT INTO patient (roomid, firstname, surname, dateOfBirth, carelevel,  lockDateInTenYears,status ) " +
+                    "VALUES (?, ?, ?, ?, ?, ?,?)";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setString(1, patient.getFirstName());
-            preparedStatement.setString(2, patient.getSurname());
-            preparedStatement.setString(3, patient.getDateOfBirth());
-            preparedStatement.setString(4, patient.getCareLevel());
-            preparedStatement.setInt(5, getPatientRoomID);
+            preparedStatement.setInt(1, getPatientRoomID);
+            preparedStatement.setString(2, patient.getFirstName());
+            preparedStatement.setString(3, patient.getSurname());
+            preparedStatement.setString(4, patient.getDateOfBirth());
+            preparedStatement.setString(5, patient.getCareLevel());
+
             preparedStatement.setString(6, String.valueOf(patient.getLockDateInTenYears()));
+            preparedStatement.setString(7, patient.getStatus());
         }
         catch (SQLException exception)
         {
@@ -89,7 +91,7 @@ public class PatientDao extends DaoImp<Patient> {
                 result.getString("surname"),
                 DateConverter.convertStringToLocalDate(result.getString("dateOfBirth")),
                 result.getString("carelevel"),
-                result.getString("lockingArrayDates"),
+                result.getString("lockDateInTenYears"),
                 roomDao.read(result.getInt("roomID")));
     }
 
@@ -162,7 +164,7 @@ public class PatientDao extends DaoImp<Patient> {
             preparedStatement.setInt(5, patient.getRoom().getRoomID());
             preparedStatement.setString(6, patient.getLockDateInTenYears().toString());
 
-            preparedStatement.setLong(7, patient.getPid());
+            preparedStatement.setLong(7, patient.getPatientID());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package de.hitec.nhplus.controller;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -60,6 +61,7 @@ public class AllEmployeeController {
     private final ObservableList<Employee> employees = FXCollections.observableArrayList();
     private EmployeeDao dao;
 
+    private static final String EMPTY = "9999";
     public void initialize() {
         this.readAllAndShowInTableView();
 
@@ -157,7 +159,7 @@ public class AllEmployeeController {
         String role = this.textFieldRole.getText();
         String status = this.textFieldStatus.getText();
         try {
-            this.dao.create(new Employee( 1,name, surname, role, status)); // employeeID is auto-generated
+            this.dao.create(new Employee( name, surname, role,EMPTY, status)); // employeeID is auto-generated
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

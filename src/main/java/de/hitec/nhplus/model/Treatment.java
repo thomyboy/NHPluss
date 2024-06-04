@@ -29,7 +29,6 @@ public class Treatment {
      * Constructor to initiate an object of class <code>Treatment</code> with the given parameter. Use this constructor
      * to initiate objects, which are not persisted yet, because it will not have a treatment id (tid).
      *
-     * @param patientID Id of the treated patient.
      * @param date Date of the Treatment.
      * @param begin Time of the start of the treatment in format "hh:MM"
      * @param end Time of the end of the treatment in format "hh:MM".
@@ -47,12 +46,12 @@ public class Treatment {
         this.employee= employee;
         this.state = state;
         this.employeeID = employee.getemployeeID();
-        this.patientID = patient.getPid();
+        this.patientID = patient.getPatientID();
+        this.patient = patient;
     }
 
     public Treatment(LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks, String empployeeName, String patientName, String state) {
-        this.patient = patient;
         this.date = date;
         this.begin = begin;
         this.end = end;
@@ -62,7 +61,7 @@ public class Treatment {
         this.state = state;
         this.employeeName = empployeeName;
         this.patientName = patientName;
-        this.patientID = patient.getPid();
+        this.patientID = patient.getPatientID();
         this.employeeName = employee.getFullName();
         this.patientName = patient.getFullName();
     }
@@ -71,14 +70,29 @@ public class Treatment {
      * Constructor to initiate an object of class <code>Treatment</code> with the given parameter. Use this constructor
      * to initiate objects, which are already persisted and have a treatment id (tid).
      *
-     * @param treatmentID Id of the treatment.
-     * @param patientID Id of the treated patient.
      * @param date Date of the Treatment.
      * @param begin Time of the start of the treatment in format "hh:MM"
      * @param end Time of the end of the treatment in format "hh:MM".
      * @param description Description of the treatment.
      * @param remarks Remarks to the treatment.
      */
+
+    public Treatment(Patient patient, Employee employee, LocalDate date, LocalTime begin,
+                     LocalTime end, String description, String remarks, String state) {
+        this.date = date;
+        this.begin = begin;
+        this.end = end;
+        this.description = description;
+        this.remarks = remarks;
+        this.patientID = patient.getPatientID();
+        this.employeeID = employee.getemployeeID();
+        this.employeeName = employee.getFullName();
+        this.state = state;
+        this.patientName = patient.getFullName();
+        this.patient = patient;
+        this.employee = employee;
+    }
+    /**
     public Treatment(long treatmentID, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks, Patient patient, Employee employee,  String state) {
         this.treatmentID = treatmentID;
@@ -97,23 +111,8 @@ public class Treatment {
         this.patientName = patient.getFullName();
 
     }
+    **/
 
-    public Treatment(long treatmentID, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, long patientID, long employeeID, String employeeName,  String state) {
-        this.treatmentID = treatmentID;
-        this.date = date;
-        this.begin = begin;
-        this.end = end;
-        this.description = description;
-        this.remarks = remarks;
-        this.patientID = patient.getPid();
-        this.employeeID = employee.getemployeeID();
-        this.employeeName = employee.getFullName();
-        this.state = state;
-        this.patientID = patient.getPid();
-        this.employeeName = employee.getFullName();
-        this.patientName = patient.getFullName();
-    }
 
     public long getTreatmentID() {
         return treatmentID;
@@ -171,7 +170,7 @@ public class Treatment {
 
     public String toString() {
         return "\nBehandlung" + "\nTID: " + this.treatmentID +
-                "\nPID: " + this.patient.getPid() +
+                "\nPID: " + this.patient.getPatientID() +
                 "\nDate: " + this.date +
                 "\nBegin: " + this.begin +
                 "\nEnd: " + this.end +

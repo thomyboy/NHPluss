@@ -10,14 +10,29 @@ public class Employee extends Person{
     private SimpleStringProperty status;
 
     private String fullName = getSurname() + ", " + getFirstName();
+    private  SimpleStringProperty lockDateInTenYears;
 
-    public Employee(int employeeID, String name, String surname, String role, String status) {
+    public Employee( String name, String surname, String role,String lockDateInTenYears, String status) {
         super(name, surname);
-        this.employeeID = employeeID;
         this.role = new SimpleStringProperty(role);
+        this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
         this.status = new SimpleStringProperty(status);
     }
 
+    public SimpleStringProperty getLockDateInTenYears()
+    {
+        return lockDateInTenYears;
+    }
+
+    public SimpleStringProperty getLockDateInTenYearsAsString()
+    {
+        return lockDateInTenYears;
+    }
+
+    public void setLockDateInTenYears(String input)
+    {
+        this.lockDateInTenYears.set(input);
+    }
     public int getemployeeID() {
         return employeeID;
     }

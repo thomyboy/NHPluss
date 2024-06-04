@@ -78,6 +78,8 @@ public class AllPatientController extends LockingObjects{
 
     private final ObservableList<Patient> arrayPatients = FXCollections.observableArrayList();
 
+    private static final String EMPTY = "9999";
+
 
     /**
      * When <code>initialize()</code> gets called, all fields are already initialized. For example from the FXMLLoader
@@ -299,7 +301,7 @@ public class AllPatientController extends LockingObjects{
             try
             {
                 /** deletes the selected patient from the database */
-                DaoFactory.getDaoFactory().createPatientDAO().deleteById(currentSelectedPatient.getPid());
+                DaoFactory.getDaoFactory().createPatientDAO().deleteById(currentSelectedPatient.getPatientID());
 
                 /** deletes the selected patient from the tableView */
                 this.tableView.getItems().remove(currentSelectedPatient);
@@ -336,17 +338,20 @@ public class AllPatientController extends LockingObjects{
      * <code>TextField</code>s, creates an object of class <code>Patient</code> of it and passes the object to
      * {@link PatientDao} to persist the data.
      */
+
+
+
     @FXML
     public void handleAdd() {
+
         String surname   =  this.textFieldSurname    .getText();
         String firstName =  this.textFieldFirstName  .getText();
         String birthday  =  this.textFieldDateOfBirth.getText();
         String careLevel =  this.textFieldCareLevel  .getText();
-        String lockingArrayDates = this.textFieldlockingArrayDates.getText();
         Room room        =  this.choiceBoxRoom      .getValue();
         LocalDate date = DateConverter.convertStringToLocalDate(birthday);
         try {
-            this.dao.create(new Patient(firstName, surname, date, careLevel, lockingArrayDates,  room));
+            this.dao.create(new Patient(firstName, surname, date, careLevel, EMPTY,  room,"active"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

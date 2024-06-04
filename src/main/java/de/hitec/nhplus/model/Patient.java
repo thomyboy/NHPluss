@@ -6,14 +6,13 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
  * Patients live in a NURSING home and are treated by nurses.
  */
 public class Patient extends Person {
-    private SimpleLongProperty pid;
+    private SimpleLongProperty patientID;
     private final SimpleStringProperty dateOfBirth;
     private final SimpleStringProperty careLevel;
     private String fullName = getSurname() + ", " + getFirstName();
@@ -21,6 +20,7 @@ public class Patient extends Person {
     private String roomName;
     private final List<Treatment> arrayAllTreatments = new ArrayList<>();
     private final SimpleStringProperty lockDateInTenYears;
+    private String status;
 
      /**
      * Constructor to initiate an object of class <code>Patient</code> with the given parameter. Use this constructor
@@ -33,30 +33,31 @@ public class Patient extends Person {
      * @param room Room number of the patient.
      */
     public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel,
-                   String lockDateInTenYears, Room room) {
+                   String lockDateInTenYears, Room room, String status) {
         super(firstName, surname);
         this.dateOfBirth = new SimpleStringProperty(DateConverter.convertLocalDateToString(dateOfBirth));
         this.careLevel = new SimpleStringProperty(careLevel);
         this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
         this.room = room;
         this.roomName = room.getRoomName();
+        this.status = status;
     }
 
     /**
      * Constructor to initiate an object of class <code>Patient</code> with the given parameter. Use this constructor
      * to initiate objects, which are already persisted and have a patient id (pid).
      *
-     * @param pid Patient id.
+     * @param patientID Patient id.
      * @param firstName First name of the patient.
      * @param surname Last name of the patient.
      * @param dateOfBirth Date of birth of the patient.
      * @param careLevel Care level of the patient.
      * @param room Room number of the patient.
      */
-    public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel,
+    public Patient(long patientID, String firstName, String surname, LocalDate dateOfBirth, String careLevel,
                    String lockDateInTenYears, Room room) {
         super(firstName, surname);
-        this.pid = new SimpleLongProperty(pid);
+        this.patientID = new SimpleLongProperty(patientID);
         this.dateOfBirth = new SimpleStringProperty(DateConverter.convertLocalDateToString(dateOfBirth));
         this.careLevel = new SimpleStringProperty(careLevel);
         this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
@@ -74,12 +75,12 @@ public class Patient extends Person {
         this.lockDateInTenYears.set(input);
     }
 
-    public long getPid() {
-        return pid.get();
+    public long getPatientID() {
+        return patientID.get();
     }
 
-    public SimpleLongProperty pidProperty() {
-        return pid;
+    public SimpleLongProperty patientIDProperty() {
+        return patientID;
     }
 
     public String getDateOfBirth() {
@@ -134,12 +135,15 @@ public class Patient extends Person {
     }
 
     public String toString() {
-        return "Patient" + "\nMNID: " + this.pid +
+        return "Patient" + "\nMNID: " + this.patientID +
                 "\nFirstname: " + this.getFirstName() +
                 "\nSurname: " + this.getSurname() +
                 "\nBirthday: " + this.dateOfBirth +
                 "\nCarelevel: " + this.careLevel +
                 "\nRoom: " + this.room +
                 "\n";
+    }
+
+    public String getStatus() { return  status;
     }
 }

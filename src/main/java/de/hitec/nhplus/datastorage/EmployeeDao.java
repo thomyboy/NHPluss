@@ -31,12 +31,12 @@ public class EmployeeDao extends DaoImp<Employee> {
     protected PreparedStatement getCreateStatement(Employee employee) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "INSERT INTO Employee (employeeID, firstname, surname, role, status) VALUES (?, ?, ?, ?, ?)";
+            final String SQL = "INSERT INTO Employee (firstname, surname, role,lockDateInTenYears, status) VALUES ( ?, ?, ?, ?,?)";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, employee.getemployeeID());
-            preparedStatement.setString(2, employee.getFirstName());
-            preparedStatement.setString(3, employee.getSurname());
-            preparedStatement.setString(4, employee.getrole());
+            preparedStatement.setString(1, employee.getFirstName());
+            preparedStatement.setString(2, employee.getSurname());
+            preparedStatement.setString(3, employee.getrole());
+            preparedStatement.setString(4, String.valueOf(employee.getLockDateInTenYears()));
             preparedStatement.setString(5, employee.getstatus());
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -72,7 +72,7 @@ public class EmployeeDao extends DaoImp<Employee> {
     @Override
     protected Employee getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new Employee(
-                result.getInt(1),
+                result.getString(1),
                 result.getString(2),
                 result.getString(3),
                 result.getString(4),
@@ -108,7 +108,7 @@ public class EmployeeDao extends DaoImp<Employee> {
         ArrayList<Employee> list = new ArrayList<>();
         while (result.next()) {
             Employee employee = new Employee(
-                    result.getInt(1),
+                    result.getString(1),
                     result.getString(2),
                     result.getString(3),
                     result.getString(4),

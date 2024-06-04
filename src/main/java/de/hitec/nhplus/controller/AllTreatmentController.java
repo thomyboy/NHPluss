@@ -139,7 +139,7 @@ public class AllTreatmentController {
         Patient patient = searchInList(selectedPatient);
         if (patient !=null) {
             try {
-                this.treatments.addAll(this.treatmentDao.readTreatmentsByPid(patient.getPid()));
+                this.treatments.addAll(this.treatmentDao.readTreatmentsByPid(patient.getPatientID()));
             } catch (SQLException exception) {
                 exception.printStackTrace();
             }

@@ -1,7 +1,5 @@
 package de.hitec.nhplus.datastorage;
 
-import de.hitec.nhplus.model.Employee;
-import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.model.Treatment;
 import de.hitec.nhplus.utils.DateConverter;
 
@@ -48,7 +46,7 @@ public class TreatmentDao extends DaoImp<Treatment> {
             preparedStatement.setString(3, treatment.getEnd());
             preparedStatement.setString(4, treatment.getDescription());
             preparedStatement.setString(5, treatment.getRemarks());
-            preparedStatement.setLong(6, treatment.getPatient().getPid());
+            preparedStatement.setLong(6, treatment.getPatient().getPatientID());
             preparedStatement.setLong(7, treatment.getEmployee().getemployeeID());
             preparedStatement.setString(8, treatment.getState());
 
@@ -89,12 +87,11 @@ public class TreatmentDao extends DaoImp<Treatment> {
         LocalTime begin = DateConverter.convertStringToLocalTime(result.getString("begin"));
         LocalTime end = DateConverter.convertStringToLocalTime(result.getString("end"));
         return new Treatment(
-                result.getLong("treatmentID"),
+                patientDao.read(result.getLong("patientID")),
+                employeeDao.read(result.getLong("employeeID")),
                 date, begin, end,
                 result.getString("description"),
                 result.getString("remark"),
-                patientDao.read(result.getLong("patientID")),
-                employeeDao.read(result.getLong("employeeID")),
                 result.getString("state"));
 
         //roomDao.read(result.getInt("roomID")));
@@ -195,7 +192,7 @@ public class TreatmentDao extends DaoImp<Treatment> {
             preparedStatement.setString(3, treatment.getEnd());
             preparedStatement.setString(4, treatment.getDescription());
             preparedStatement.setString(5, treatment.getRemarks());
-            preparedStatement.setLong(6, treatment.getPatient().getPid());
+            preparedStatement.setLong(6, treatment.getPatient().getPatientID());
             preparedStatement.setLong(7, treatment.getEmployee().getemployeeID());
             preparedStatement.setString(8, treatment.getState());
             preparedStatement.setLong(9, treatment.getTreatmentID());
