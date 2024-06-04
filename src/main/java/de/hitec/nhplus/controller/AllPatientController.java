@@ -319,11 +319,12 @@ public class AllPatientController extends LockingObjects{
 
         try
         {
-            this.dao.update(currentSelectedPatient);
 
             /** the locked Patient gets the two major dates (current Date and current Date but 10 years later
              * assigned */
             calculateLockDateInTenYears(currentSelectedPatient);
+
+            this.dao.update(currentSelectedPatient);
 //            archiveObject();
         }
         catch (SQLException exception)
@@ -417,7 +418,11 @@ public class AllPatientController extends LockingObjects{
     {
         Calendar DateInTenYears = getCurrentDate();
         DateInTenYears.add(Calendar.YEAR, TEN_YEARS);
-        patient.setLockDateInTenYears(DateInTenYears.toString());
+
+        /** Date where the patients lock will end */
+        int TenYearLockYear = DateInTenYears.get(Calendar.YEAR);
+
+        patient.setLockDateInTenYears(String.valueOf(TenYearLockYear));
 
         return DateInTenYears;
     }
@@ -428,8 +433,10 @@ public class AllPatientController extends LockingObjects{
         /** Checks if the current Date is within the legal patients' lock date */
         Patient currentSelectedPatient = tableView.getSelectionModel().getSelectedItem();
 
-        if (getCurrentDate().equals(calculateLockDateInTenYears(currentSelectedPatient))
-                || getCurrentDate().after(calculateLockDateInTenYears(currentSelectedPatient)))
+        int currentYear = getCurrentDate().get(Calendar.YEAR);
+        int InTenYears = Integer.parseInt(String.valueOf(currentSelectedPatient.getLockDateInTenYears()));
+
+        if (currentYear == InTenYears || currentYear > InTenYears)
         {
             return true;
         }
@@ -447,7 +454,7 @@ public class AllPatientController extends LockingObjects{
 
         /** if the Patient doesn't contain lock dates: return false */
         String compare = currentSelectedPatient.getLockDateInTenYears().get();
-        if (compare.equals("StringProperty [value: 999]"))
+        if (compare.equals("StringProperty [value: 9999]"))
         {
             return false;
         }

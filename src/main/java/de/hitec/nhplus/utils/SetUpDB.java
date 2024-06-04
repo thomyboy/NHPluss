@@ -168,12 +168,12 @@ public class SetUpDB {
         try {
             PatientDao dao = DaoFactory.getDaoFactory().createPatientDAO();
             RoomDao roomdao = DaoFactory.getDaoFactory().createRoomDAO();
-            dao.create(new Patient("Seppl", "Herberger", convertStringToLocalDate("1945-12-01"), "4","999" , roomdao.read(1)));
-            dao.create(new Patient("Martina", "Gerdsen", convertStringToLocalDate("1954-08-12"), "5", "999" ,roomdao.read(2)));
-            dao.create(new Patient("Gertrud", "Franzen", convertStringToLocalDate("1949-04-16"), "3", "999" , roomdao.read(3)));
-            dao.create(new Patient("Ahmet", "Yilmaz", convertStringToLocalDate("1941-02-22"), "3", "999" , roomdao.read(4)));
-            dao.create(new Patient("Hans", "Neumann", convertStringToLocalDate("1955-12-12"), "2", "999" , roomdao.read(5)));
-            dao.create(new Patient("Elisabeth", "Müller", convertStringToLocalDate("1958-03-07"), "5", "999" ,roomdao.read(6)));
+            dao.create(new Patient("Seppl", "Herberger", convertStringToLocalDate("1945-12-01"), "4","9999" , roomdao.read(1)));
+            dao.create(new Patient("Martina", "Gerdsen", convertStringToLocalDate("1954-08-12"), "5", "9999" ,roomdao.read(2)));
+            dao.create(new Patient("Gertrud", "Franzen", convertStringToLocalDate("1949-04-16"), "3", "9999" , roomdao.read(3)));
+            dao.create(new Patient("Ahmet", "Yilmaz", convertStringToLocalDate("1941-02-22"), "3", "9999" , roomdao.read(4)));
+            dao.create(new Patient("Hans", "Neumann", convertStringToLocalDate("1955-12-12"), "2", "9999" , roomdao.read(5)));
+            dao.create(new Patient("Elisabeth", "Müller", convertStringToLocalDate("1958-03-07"), "5", "9999" ,roomdao.read(6)));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
