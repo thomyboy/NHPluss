@@ -1,77 +1,126 @@
 package de.hitec.nhplus.model;
 
+import de.hitec.nhplus.datastorage.PatientDao;
 import de.hitec.nhplus.utils.DateConverter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Treatment {
-    private long tid;
-    private final long pid;
+    private long treatmentID;
     private LocalDate date;
     private LocalTime begin;
     private LocalTime end;
     private String description;
     private String remarks;
-
+    private Patient patient;
+    private Employee employee;
+    private long patientID;
     private long employeeID;
+    private PatientDao patientDao;
+    private String employeeName;
+    private String patientName;
+
+    //TODO: umschreiben, ich bin zu fertig mit dem scheiß hier.
+
     private String state;
 
     /**
      * Constructor to initiate an object of class <code>Treatment</code> with the given parameter. Use this constructor
      * to initiate objects, which are not persisted yet, because it will not have a treatment id (tid).
      *
-     * @param pid Id of the treated patient.
+     * @param patientID Id of the treated patient.
      * @param date Date of the Treatment.
      * @param begin Time of the start of the treatment in format "hh:MM"
      * @param end Time of the end of the treatment in format "hh:MM".
      * @param description Description of the treatment.
      * @param remarks Remarks to the treatment.
      */
-    public Treatment(long pid, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, long employeeID, String state) {
-        this.pid = pid;
+    public Treatment(LocalDate date, LocalTime begin,
+                     LocalTime end, String description, String remarks, Patient patient, Employee employee, String state) {
+        this.patient = patient;
         this.date = date;
         this.begin = begin;
         this.end = end;
         this.description = description;
         this.remarks = remarks;
-        this.employeeID = employeeID;
+        this.employee= employee;
         this.state = state;
+        this.employeeID = employee.getEmployeeID();
+        this.patientID = patient.getPid();
+    }
+
+    public Treatment(LocalDate date, LocalTime begin,
+                     LocalTime end, String description, String remarks, String empployeeName, String patientName, String state) {
+        this.patient = patient;
+        this.date = date;
+        this.begin = begin;
+        this.end = end;
+        this.description = description;
+        this.remarks = remarks;
+        this.employee= employee;
+        this.state = state;
+        this.employeeName = empployeeName;
+        this.patientName = patientName;
+        this.patientID = patient.getPid();
+        this.employeeName = employee.getFullName();
+        this.patientName = patient.getFullName();
     }
 
     /**
      * Constructor to initiate an object of class <code>Treatment</code> with the given parameter. Use this constructor
      * to initiate objects, which are already persisted and have a treatment id (tid).
      *
-     * @param tid Id of the treatment.
-     * @param pid Id of the treated patient.
+     * @param treatmentID Id of the treatment.
+     * @param patientID Id of the treated patient.
      * @param date Date of the Treatment.
      * @param begin Time of the start of the treatment in format "hh:MM"
      * @param end Time of the end of the treatment in format "hh:MM".
      * @param description Description of the treatment.
      * @param remarks Remarks to the treatment.
      */
-    public Treatment(long tid, long pid, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, long employeeID, String state) {
-        this.tid = tid;
-        this.pid = pid;
+    public Treatment(long treatmentID, LocalDate date, LocalTime begin,
+                     LocalTime end, String description, String remarks, Patient patient, Employee employee,  String state) {
+        this.treatmentID = treatmentID;
         this.date = date;
         this.begin = begin;
         this.end = end;
         this.description = description;
         this.remarks = remarks;
-        this.employeeID = employeeID;
-
+        this.patient = patient;
+        this.employee = employee;
         this.state = state;
+        this.employeeID = employee.getEmployeeID();
+        this.patientID = patient.getPid();
+        this.patientID = patient.getPid();
+        this.employeeName = employee.getFullName();
+        this.patientName = patient.getFullName();
+
     }
 
-    public long getTid() {
-        return tid;
+    public Treatment(long treatmentID, LocalDate date, LocalTime begin,
+                     LocalTime end, String description, String remarks, long patientID, long employeeID, String employeeName,  String state) {
+        this.treatmentID = treatmentID;
+        this.date = date;
+        this.begin = begin;
+        this.end = end;
+        this.description = description;
+        this.remarks = remarks;
+        this.patientID = patient.getPid();
+        this.employeeID = employee.getEmployeeID();
+        this.employeeName = employee.getFullName();
+        this.state = state;
+        this.patientID = patient.getPid();
+        this.employeeName = employee.getFullName();
+        this.patientName = patient.getFullName();
     }
 
-    public long getPid() {
-        return this.pid;
+    public long getTreatmentID() {
+        return treatmentID;
+    }
+
+    public Patient getPatient() {
+        return this.patient;
     }
 
     public String getDate() {
@@ -85,6 +134,12 @@ public class Treatment {
     public String getEnd() {
         return end.toString();
     }
+
+    public String getEmployeeName(){return employeeName;}
+
+    public String getPatientName(){return patientName;}
+
+    public long getE(){return employeeID;}
 
     public void setDate(String date) {
         this.date = DateConverter.convertStringToLocalDate(date);
@@ -115,8 +170,8 @@ public class Treatment {
     }
 
     public String toString() {
-        return "\nBehandlung" + "\nTID: " + this.tid +
-                "\nPID: " + this.pid +
+        return "\nBehandlung" + "\nTID: " + this.treatmentID +
+                "\nPID: " + this.patient.getPid() +
                 "\nDate: " + this.date +
                 "\nBegin: " + this.begin +
                 "\nEnd: " + this.end +
@@ -124,12 +179,8 @@ public class Treatment {
                 "\nRemarks: " + this.remarks + "\n";
     }
 
-    public long getEmployeeID() {
-        return employeeID;
-    }
-
-    public void setEmployeeID(long employeeID) {
-        this.employeeID = employeeID;
+    public Employee getEmployee() {
+        return employee;
     }
 
     public String getState() {
