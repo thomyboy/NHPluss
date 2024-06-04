@@ -1,54 +1,54 @@
 package de.hitec.nhplus.model;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.List;
+
 public class Employee extends Person{
-    private SimpleLongProperty employeeID;
+    private int employeeID;
     private SimpleStringProperty role;
     private SimpleStringProperty status;
-    private SimpleStringProperty callNumber;
-    private SimpleStringProperty fullName;
 
 
-    public Employee(long employeeID, String name, String surname, String role, String status) {
+    public Employee(int employeeID, String name, String surname, String role, String status) {
         super(name, surname);
-        this.employeeID = new SimpleLongProperty(employeeID);
+        this.employeeID = employeeID;
         this.role = new SimpleStringProperty(role);
         this.status = new SimpleStringProperty(status);
-        this.fullName = new SimpleStringProperty(surname + ", " + name);
-
+    }
+    //MOIN
+    public int getemployeeID() {
+        return employeeID;
+    }
+    public int employeeIDProperty() {
+        return employeeID;
     }
 
-    public Employee(String name, String surname, String role, String status) {
-        super(name, surname);
-        this.role = new SimpleStringProperty(role);
-        this.status = new SimpleStringProperty(status);
-        this.fullName = new SimpleStringProperty(name + surname);
+    public void employeeID(int employeeID) {
+        this.employeeID = employeeID;
     }
-//MOIN
-    public long getEmployeeID() {
-        return employeeID.get();
-    }
-
-    public String getRole() {
+    public String getrole() {
         return role.get();
     }
 
-    public void setRole(String role) {
+    public SimpleStringProperty roleProperty() {
+        return role;
+    }
+
+    public void setrole(String role) {
         this.role.set(role);
     }
 
-    public String getStatus() {
+    public String getstatus() {
         return status.get();
     }
 
-    public void setStatus(String status) {
-        this.status.set(status);
+    public SimpleStringProperty statusProperty() {
+        return status;
     }
 
-    public String getFullName(){
-            return fullName.get();
+    public void setStatus(String roomNumber) {
+        this.status.set(roomNumber);
     }
 
 }

@@ -2,6 +2,7 @@ package de.hitec.nhplus;
 
 import de.hitec.nhplus.datastorage.ConnectionBuilder;
 
+import de.hitec.nhplus.utils.SetUpDB;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
