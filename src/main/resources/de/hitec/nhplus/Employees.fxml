@@ -12,7 +12,7 @@
                 <TableColumn fx:id="columnId" maxWidth="-1.0" minWidth="40.0" prefWidth="50.0" text="ID" />
                 <TableColumn fx:id="columnPid" maxWidth="-1.0" minWidth="100.0" prefWidth="120.0" text="Nachname" />
                 <TableColumn fx:id="columnDate" maxWidth="-1.0" minWidth="140.0" prefWidth="150.0" text="Vorname" />
-                <TableColumn fx:id="columnBegin" maxWidth="-1.0" minWidth="140.0" prefWidth="150.0" text="Telefonnummer" />
+                <TableColumn fx:id="columnPhone" maxWidth="-1.0" minWidth="140.0" prefWidth="150.0" text="Telefonnummer" />
                 <TableColumn fx:id="columnEnd" maxWidth="-1.0" minWidth="140.0" prefWidth="150.0" text="fller1" />
                 <TableColumn fx:id="columnDescription" maxWidth="-1.0" minWidth="200.0" prefWidth="300.0" text="filler2" />
             </columns>

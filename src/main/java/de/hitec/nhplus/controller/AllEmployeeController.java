@@ -11,7 +11,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+
 import java.sql.SQLException;
+
 import de.hitec.nhplus.datastorage.DaoFactory;
 import de.hitec.nhplus.datastorage.EmployeeDao;
 import de.hitec.nhplus.model.Employee;
@@ -33,11 +35,15 @@ public class AllEmployeeController {
     @FXML
     private TableColumn<Employee, String> columnSurname;
 
-//    @FXML
-//    private TableColumn<Employee, String> columnRole;
-//
-//    @FXML
-//    private TableColumn<Employee, String> columnStatus;
+    @FXML
+    private TableColumn<Employee, String> columnRole;
+
+    @FXML
+    private TableColumn<Employee, String> columnStatus;
+
+    @FXML
+    private TableColumn<Employee, String> columnPhoneNumber;
+
 
     @FXML
     private Button buttonDelete;
@@ -64,17 +70,21 @@ public class AllEmployeeController {
         this.readAllAndShowInTableView();
 
         this.columnId.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
+
         this.columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         this.columnName.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.columnSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
         this.columnSurname.setCellFactory(TextFieldTableCell.forTableColumn());
 
-//        this.columnRole.setCellValueFactory(new PropertyValueFactory<>("role"));
-//        this.columnRole.setCellFactory(TextFieldTableCell.forTableColumn());
-//
-//        this.columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-//        this.columnStatus.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.columnRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+        this.columnRole.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        this.columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        this.columnStatus.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        this.columnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phonenumber"));
+        this.columnPhoneNumber.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.tableView.setItems(this.employees);
 
@@ -149,7 +159,8 @@ public class AllEmployeeController {
             }
         }
     }
-//MOIN
+
+    //MOIN
     @FXML
     public void handleAdd() {
         String name = this.textFieldName.getText();
@@ -157,7 +168,7 @@ public class AllEmployeeController {
 //        String role = this.textFieldRole.getText();
 //        String status = this.textFieldStatus.getText();
         try {
-            this.dao.create(new Employee(0, name, surname, "Sith Lo- I mean DOCTOR", "im Urlaub")); // employeeID is auto-generated
+            this.dao.create(new Employee(0, name, surname, "Sith Lo- I mean DOCTOR", "im Urlaub", "LEL")); // employeeID is auto-generated
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -174,7 +185,7 @@ public class AllEmployeeController {
 
     private boolean areInputDataValid() {
         return !this.textFieldName.getText().isBlank() &&
-                !this.textFieldSurname.getText().isBlank() ;
+                !this.textFieldSurname.getText().isBlank();
 //                !this.textFieldRole.getText().isBlank() &&
 //                !this.textFieldStatus.getText().isBlank();
     }
