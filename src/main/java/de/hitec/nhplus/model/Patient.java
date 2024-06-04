@@ -41,6 +41,7 @@ public class Patient extends Person {
         this.room = room;
         this.roomName =room.getRoomName();
         this.status = status;
+        System.out.println("Use new patient");
     }
 
     /**
@@ -63,6 +64,7 @@ public class Patient extends Person {
         this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
         this.room = room;
         this.roomName = room.getRoomName();
+        System.out.println("Use old patient");
     }
 
     public SimpleStringProperty getLockDateInTenYears()

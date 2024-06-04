@@ -72,11 +72,13 @@ public class EmployeeDao extends DaoImp<Employee> {
     @Override
     protected Employee getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new Employee(
-                result.getString(1),
+
+                result.getInt(1),
                 result.getString(2),
                 result.getString(3),
                 result.getString(4),
-                result.getString(5));
+                result.getString(5),
+                result.getString(6));
     }
 
     /**

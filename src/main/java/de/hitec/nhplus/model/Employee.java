@@ -18,6 +18,13 @@ public class Employee extends Person{
         this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
         this.status = new SimpleStringProperty(status);
     }
+    public Employee(int employeeID, String name, String surname, String role,String lockDateInTenYears, String status) {
+        super(name, surname);
+        this.employeeID = employeeID;
+        this.role = new SimpleStringProperty(role);
+        this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
+        this.status = new SimpleStringProperty(status);
+    }
 
     public SimpleStringProperty getLockDateInTenYears()
     {

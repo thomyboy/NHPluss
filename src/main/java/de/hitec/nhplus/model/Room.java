@@ -1,21 +1,23 @@
 package de.hitec.nhplus.model;
 
+import javafx.beans.property.SimpleLongProperty;
+
 public class Room {
-    private int roomID;
+    private SimpleLongProperty roomID;
     private String roomName;
 
-    public Room(int roomID, String roomName) {
-        this.roomID = roomID;
+    public Room(long roomID, String roomName) {
+        this.roomID = new SimpleLongProperty(roomID);
+        this.roomName = roomName;
+    }
+    public Room( String roomName) {
         this.roomName = roomName;
     }
 
-    public int getRoomID() {
-        return roomID;
+    public long getRoomID() {
+        return roomID.get();
     }
 
-    public void setRoomID(int roomID) {
-        this.roomID = roomID;
-    }
 
     public String getRoomName() {
         return roomName;

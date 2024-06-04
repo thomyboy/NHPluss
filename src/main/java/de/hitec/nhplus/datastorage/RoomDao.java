@@ -33,10 +33,9 @@ public class RoomDao extends DaoImp<Room> {
     protected PreparedStatement getCreateStatement(Room room) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "INSERT INTO Room (roomID, roomName) VALUES (?, ?)";
+            final String SQL = "INSERT INTO Room ( roomName) VALUES ( ?)";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, room.getRoomID());
-            preparedStatement.setString(2, room.getRoomName());
+            preparedStatement.setString(1, room.getRoomName());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -128,7 +127,7 @@ public class RoomDao extends DaoImp<Room> {
                             "WHERE roomID = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setString(1, room.getRoomName());
-            preparedStatement.setInt(2, room.getRoomID());
+            preparedStatement.setLong(2, room.getRoomID());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

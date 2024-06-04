@@ -160,12 +160,12 @@ public class SetUpDB {
     private static void setUpRooms() {
         try {
             RoomDao dao = DaoFactory.getDaoFactory().createRoomDAO();
-            dao.create(new Room(1, "202"));
-            dao.create(new Room(2, "010"));
-            dao.create(new Room(3, "002"));
-            dao.create(new Room(4, "013"));
-            dao.create(new Room(5, "001"));
-            dao.create(new Room(6, "110"));
+            dao.create(new Room("202"));
+            dao.create(new Room("010"));
+            dao.create(new Room("002"));
+            dao.create(new Room("013"));
+            dao.create(new Room("001"));
+            dao.create(new Room("110"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
