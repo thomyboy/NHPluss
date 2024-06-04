@@ -1,36 +1,39 @@
 package de.hitec.nhplus.model;
 
 
+import javafx.beans.property.SimpleLongProperty;
+
 public class User {
 
-    private int userID;
+    private SimpleLongProperty userID;
     private Employee employee;
     private String userName;
     private String userPassword;
+    private  long employeeID;
 
-    public User(int userID, Employee employee, String userName, String userPassword) {
-        this.userID = userID;
+    public User(long userID, Employee employee, String userName, String userPassword) {
+        this.userID = new SimpleLongProperty(userID);
         this.employee = employee;
         this.userName = userName;
         this.userPassword = userPassword;
+        this.employeeID = employee.getemployeeID();
     }
 
     public User( Employee employee, String userName, String userPassword) {
         this.employee = employee;
         this.userName = userName;
         this.userPassword = userPassword;
+        this.employeeID = employee.getemployeeID();
     }
 
-    public int getUserID() {
-        return userID;
+    public long getUserID() {
+        return userID.get();
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
 
-    public int getemployeeID() {return employee.getemployeeID();}
 
+    public long getemployeeID() {return employeeID;}
+    public Employee getemployee(){return  employee;}
 
     public String getUserName() {
         return userName;

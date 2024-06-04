@@ -2,6 +2,7 @@ package de.hitec.nhplus.datastorage;
 
 
 import de.hitec.nhplus.model.Employee;
+import de.hitec.nhplus.model.Patient;
 import de.hitec.nhplus.model.Treatment;
 import de.hitec.nhplus.model.User;
 import de.hitec.nhplus.utils.DateConverter;
@@ -41,13 +42,13 @@ public class UserDao extends DaoImp<User> {
     @Override
     protected PreparedStatement getCreateStatement(User user) {
         PreparedStatement preparedStatement = null;
+        var getemployeeID = user.getemployee().getemployeeID();
         try {
-            final String SQL = "INSERT INTO user (UserID, employeeID, UserName, UserPassword) VALUES (?,?,?,?)";
+            final String SQL = "INSERT INTO user (employeeID, userName, userPassword) VALUES (?,?,?)";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, user.getUserID());
-            preparedStatement.setInt(2, user.getemployeeID());
-            preparedStatement.setString(3, user.getUserName());
-            preparedStatement.setString(4, user.getUserPassword());
+            preparedStatement.setLong(1, getemployeeID);
+            preparedStatement.setString(2, user.getUserName());
+            preparedStatement.setString(3, user.getUserPassword());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -64,7 +65,7 @@ public class UserDao extends DaoImp<User> {
     protected PreparedStatement getReadByIDStatement(long userID) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "SELECT userName FROM user WHERE UserID = ?";
+            final String SQL = "SELECT userName FROM user WHERE userID = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setLong(1, userID);
         } catch (SQLException exception) {
@@ -75,7 +76,7 @@ public class UserDao extends DaoImp<User> {
 
 
     public PreparedStatement getPasswordFromUsername(String userName) {
-        System.out.println("TestDAO1");
+
         PreparedStatement preparedStatement = null;
         try {
             final String SQL = "SELECT * FROM user WHERE userName = ?";
@@ -128,11 +129,28 @@ public class UserDao extends DaoImp<User> {
      * @return <code>ArrayList</code> with objects of class <code>User</code> of all rows in the
      * <code>ResultSet</code>.
      */
+
+    /*
     @Override
     protected ArrayList<User> getListFromResultSet(ResultSet result) throws SQLException {
         ArrayList<User> list = new ArrayList<>();
         while (result.next()) {
             User user = getInstanceFromResultSet(result);
+            list.add(user);
+        }
+        return list;
+    }
+    */
+
+    @Override
+    protected ArrayList<User> getListFromResultSet(ResultSet result) throws SQLException {
+        ArrayList<User> list = new ArrayList<>();
+        while (result.next()) {
+            User user = new User(
+                    result.getInt("userID"),
+                    employeeDao.read(result.getInt("employeeID")),
+                    result.getString("userName"),
+                    result.getString("userPassword"));
             list.add(user);
         }
         return list;
@@ -154,11 +172,12 @@ public class UserDao extends DaoImp<User> {
                             "employeeID = ?," +
                             "userName = ?," +
                             "userPassword = ?" +
-                            "WHERE UserID = ?";
+                            "WHERE userID = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, user.getemployeeID());
+            preparedStatement.setLong(1, user.getemployeeID());
             preparedStatement.setString(2, user.getUserName());
             preparedStatement.setString(3, user.getUserPassword());
+            preparedStatement.setLong(4, user.getUserID());
 
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -176,7 +195,7 @@ public class UserDao extends DaoImp<User> {
     protected PreparedStatement getDeleteStatement(long UserID) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "DELETE FROM user WHERE UserID = ?";
+            final String SQL = "DELETE FROM user WHERE userID = ?";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setLong(1, UserID);
         } catch (SQLException exception) {

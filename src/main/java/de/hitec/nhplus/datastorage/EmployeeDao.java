@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import de.hitec.nhplus.model.Employee;
+import de.hitec.nhplus.model.User;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -75,6 +76,7 @@ public class EmployeeDao extends DaoImp<Employee> {
     @Override
     protected Employee getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new Employee(
+                result.getLong(1),
                 result.getString(2),
                 result.getString(3),
                 result.getString(4),
@@ -112,17 +114,18 @@ public class EmployeeDao extends DaoImp<Employee> {
         ArrayList<Employee> list = new ArrayList<>();
         while (result.next()) {
             Employee employee = new Employee(
-                    result.getInt(1),
-                    result.getString(2),
-                    result.getString(3),
-                    result.getString(4),
-                    result.getString(5),
-                    result.getString(6),
-                    result.getString(7));
+                    result.getInt("employeeID"),
+                    result.getString("firstName"),
+                    result.getString("surname"),
+                    result.getString("role"),
+                    result.getString("lockDateInTenYears"),
+                    result.getString("status"),
+                    result.getString("phoneNumber"));
             list.add(employee);
         }
         return list;
     }
+
 
     /**
      * Generates a <code>PreparedStatement</code> to update the given employee, identified by the id of the employee (employeeID).
@@ -146,7 +149,7 @@ public class EmployeeDao extends DaoImp<Employee> {
             preparedStatement.setString(2, employee.getSurname());
             preparedStatement.setString(3, employee.getrole());
             preparedStatement.setString(4, employee.getstatus());
-            preparedStatement.setInt(5, employee.getemployeeID());
+            preparedStatement.setLong(5, employee.getemployeeID());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

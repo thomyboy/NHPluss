@@ -70,7 +70,7 @@ public class RoomDao extends DaoImp<Room> {
     @Override
     protected Room getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new Room(
-                result.getInt(1),
+                result.getLong(1),
                 result.getString(2));
     }
 

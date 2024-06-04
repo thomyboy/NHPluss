@@ -1,5 +1,6 @@
 package de.hitec.nhplus.model;
 
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  */
 
 public class Employee extends Person{
-    private int employeeID;
+    private SimpleLongProperty employeeID;
     private SimpleStringProperty role;
     private String status;
     private String phoneNumber;
@@ -57,9 +58,9 @@ public class Employee extends Person{
      * @param phoneNumber the phone number of the employee
      */
 
-    public Employee(int employeeID, String name, String surname, String role,String lockDateInTenYears, String status, String phoneNumber) {
+    public Employee(long employeeID, String name, String surname, String role,String lockDateInTenYears, String status, String phoneNumber) {
         super(name, surname);
-        this.employeeID = employeeID;
+        this.employeeID = new SimpleLongProperty(employeeID);
         this.role = new SimpleStringProperty(role);
         this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
         this.status = status;
@@ -105,8 +106,8 @@ public class Employee extends Person{
      * @return the employee ID
      */
 
-    public int getemployeeID() {
-        return employeeID;
+    public long getemployeeID() {
+        return employeeID.get();
     }
 
     /**
@@ -115,8 +116,8 @@ public class Employee extends Person{
      * @return the employee ID as a property
      */
 
-    public int employeeIDProperty() {
-        return employeeID;
+    public long employeeIDProperty() {
+        return employeeID.get();
     }
 
     /**
@@ -126,7 +127,7 @@ public class Employee extends Person{
      */
 
     public void employeeID(int employeeID) {
-        this.employeeID = employeeID;
+        this.employeeID = new SimpleLongProperty(employeeID);
     }
 
     /**

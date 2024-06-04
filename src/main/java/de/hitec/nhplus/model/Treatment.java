@@ -78,7 +78,7 @@ public class Treatment {
         this.patientName = patient.getFullName();
 
     }
-    /**
+
     public Treatment(long treatmentID, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks, Patient patient, Employee employee,  String state) {
         this.treatmentID = treatmentID;
@@ -91,13 +91,31 @@ public class Treatment {
         this.employee = employee;
         this.state = state;
         this.employeeID = employee.getemployeeID();
-        this.patientID = patient.getPid();
-        this.patientID = patient.getPid();
+        this.patientID = patient.getPatientID();
+        this.employeeName = employee.getFullName();
+        this.patientName = patient.getFullName();
+    }
+
+
+
+
+    public Treatment(long treatmentID,Patient patient, Employee employee, LocalDate date, LocalTime begin,
+                     LocalTime end, String description, String remarks, String state) {
+        this.treatmentID = treatmentID;
+        this.patient = patient;
+        this.employee = employee;
+        this.date = date;
+        this.begin = begin;
+        this.end = end;
+        this.description = description;
+        this.remarks = remarks;
+        this.state = state;
+        this.patientID = patient.getPatientID();
+        this.employeeID = employee.getemployeeID();
         this.employeeName = employee.getFullName();
         this.patientName = patient.getFullName();
 
     }
-    **/
 
 
     public long getTreatmentID() {

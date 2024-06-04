@@ -9,20 +9,21 @@
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5a5b8be1-080b-4129-b89d-42f1ea832b90/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/nursingHome.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/nursingHome.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllEmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllEmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/DaoFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/DaoFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/EmployeeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/EmployeeDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/PatientDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/PatientDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/RoomDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/RoomDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/TreatmentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/TreatmentDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/UserDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Employee.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Treatment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Treatment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/SetUpDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/MainWindowView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/de/hitec/nhplus/MainWindowView.fxml" afterDir="false" />
     </list>
-    <list id="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" name="Changes by BlackHawk" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllEmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllEmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/EmployeeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/EmployeeDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Employee.java" afterDir="false" />
+    <list id="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" name="Changes by BlackHawk" comment="" />
+    <list id="420119ba-bbe4-4715-87ee-44727140e5df" name="Changes by l.hassfurther" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/LockingObjects.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/utils/LockingObjects.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,65 +60,6 @@
       </UrlAndAccount>
     </option>
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Employee.java">
-      <ranges>
-        <range start1="5" end1="5" start2="5" end2="10" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="14" end1="15" start2="19" end2="20" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="22" end1="22" start2="27" end2="28" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="23" end1="24" start2="29" end2="40" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="28" end1="28" start2="44" end2="45" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="29" end1="30" start2="46" end2="60" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="34" end1="35" start2="64" end2="66" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="36" end1="36" start2="67" end2="73" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="42" end1="42" start2="79" end2="85" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="47" end1="47" start2="90" end2="96" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="51" end1="51" start2="100" end2="107" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="54" end1="54" start2="110" end2="117" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="58" end1="58" start2="121" end2="127" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="61" end1="61" start2="130" end2="137" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="64" end1="64" start2="140" end2="146" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="68" end1="68" start2="150" end2="156" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="73" end1="73" start2="161" end2="167" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="77" end1="77" start2="171" end2="177" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="81" end1="81" start2="181" end2="186" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="84" end1="84" start2="189" end2="196" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="88" end1="88" start2="200" end2="205" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllEmployeeController.java">
-      <ranges>
-        <range start1="20" end1="21" start2="20" end2="22" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="67" end1="67" start2="68" end2="74" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="105" end1="106" start2="112" end2="117" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="111" end1="112" start2="122" end2="127" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="117" end1="118" start2="132" end2="137" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="123" end1="124" start2="142" end2="147" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="129" end1="130" start2="152" end2="157" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="137" end1="138" start2="164" end2="167" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="147" end1="148" start2="176" end2="179" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="160" end1="161" start2="191" end2="194" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="168" end1="169" start2="201" end2="202" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="175" end1="176" start2="208" end2="211" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="182" end1="183" start2="217" end2="222" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/EmployeeDao.java">
-      <ranges>
-        <range start1="7" end1="8" start2="7" end2="8" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="10" end1="11" start2="10" end2="11" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="71" end1="71" start2="71" end2="72" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="72" end1="72" start2="73" end2="74" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="75" end1="77" start2="77" end2="77" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="81" end1="82" start2="81" end2="83" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="105" end1="107" start2="106" end2="108" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="113" end1="114" start2="114" end2="115" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="117" end1="118" start2="118" end2="121" changelist="a34ff0ce-7744-41f9-a83e-ef9c348ef1da" />
-        <range start1="124" end1="126" start2="127" end2="128" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-        <range start1="152" end1="153" start2="154" end2="155" changelist="923aff5a-c019-4b6e-a3a1-4a66e57c2a75" />
-      </ranges>
-    </file>
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -132,42 +74,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.HelloApplication.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.SetUpDB.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
-    "database.data.extractors.current.id": "Comma-separated (CSV)_id",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/NHPluss",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.44712645",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SetUpDB.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
+    &quot;database.data.extractors.current.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/NHPluss&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.44712645&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\T.Thiel\Documents\23\FA23E\LF05\NHPlus\NHPlus\src\main\resources\de\hitec\nhplus" />
@@ -181,7 +123,7 @@
       <recent name="de.hitec.nhplus.utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SetUpDB">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.hitec.nhplus.Main" />
       <module name="NHPlus" />
@@ -210,8 +152,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SetUpDB" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.SetUpDB" />
       </list>
     </recent_temporary>
   </component>
@@ -251,6 +193,8 @@
       <workItem from="1717518148565" duration="26000" />
       <workItem from="1717518217177" duration="2581000" />
       <workItem from="1717523221527" duration="4277000" />
+      <workItem from="1717527784717" duration="6376000" />
+      <workItem from="1717534221942" duration="69000" />
     </task>
     <task id="LOCAL-00001" summary="- Abstrakte Klasse &quot;LockingObjects&quot; eingeführt&#10;- abstrakte Methoden in &quot;AllPatientController&quot; überschrieben (override)&#10;- Membervariable &quot;lockDateInTenYears&quot; in als hidden variable Patient eingeführt&#10;- für neue Membervariable Datenbankkommunikation eingeführt">
       <option name="closed" value="true" />
@@ -290,59 +234,29 @@
           <option name="timeStamp" value="22" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java</url>
-          <line>214</line>
-          <option name="timeStamp" value="49" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java</url>
-          <line>164</line>
-          <option name="timeStamp" value="50" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java</url>
-          <line>139</line>
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java</url>
-          <line>272</line>
-          <option name="timeStamp" value="53" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java</url>
-          <line>417</line>
-          <option name="timeStamp" value="55" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java</url>
-          <line>399</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java</url>
-          <line>393</line>
-          <option name="timeStamp" value="57" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java</url>
-          <line>451</line>
-          <option name="timeStamp" value="58" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Patient.java</url>
-          <line>70</line>
-          <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/controller/AllPatientController.java</url>
-          <line>322</line>
-          <option name="timeStamp" value="62" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/PatientDao.java</url>
-          <line>149</line>
+          <line>148</line>
           <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/datastorage/UserDao.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/User.java</url>
+          <line>18</line>
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/User.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="70" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/de/hitec/nhplus/model/Employee.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="71" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

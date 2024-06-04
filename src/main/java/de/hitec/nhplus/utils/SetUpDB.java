@@ -151,9 +151,9 @@ public class SetUpDB {
     private static void setUpEmployees() {
         try {
             EmployeeDao dao = DaoFactory.getDaoFactory().createEmployeeDAO();
-            dao.create(new Employee("Darius",   "Vader",  "ChefArtzt","active", "yes", "042188774422"));
-            dao.create(new Employee("Darius2",  "Vader2", "Pflegerin","active", "yes", "042156442145"));
-            dao.create(new Employee("Darius5",  "Vadder", "Pflegerinnnen","notActive", "yes", "042166642069"));
+            dao.create(new Employee("Darius",   "Vader",  "ChefArtzt",EMPTY, "active", "042188774422"));
+            dao.create(new Employee("Darius2",  "Vader2", "Pflegerin",EMPTY, "active", "042156442145"));
+            dao.create(new Employee("Darius5",  "Vadder", "Pflegerinnnen",EMPTY, "active", "042166642069"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -178,8 +178,8 @@ public class SetUpDB {
             EmployeeDao employeedao = DaoFactory.getDaoFactory().createEmployeeDAO();
             dao.create(new User( employeedao.read(1),"Admin","AdminPasswort"));
             dao.create(new User( employeedao.read(1),"User1","PasswortUser1"));
-            dao.create(new User( employeedao.read(2),"User2","PasswortUser2"));
-            dao.create(new User( employeedao.read(3),"User3","PasswortUser3"));
+            dao.create(new User( employeedao.read(1),"User2","PasswortUser2"));
+            dao.create(new User( employeedao.read(1),"User3","PasswortUser3"));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
