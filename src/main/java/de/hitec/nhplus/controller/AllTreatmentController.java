@@ -88,13 +88,7 @@ public class AllTreatmentController {
 
     }
 
-    /*
-    Methode xy
-        ->Column befüllen mit
-            -> Empoyee obj fragen was name
-                -> rückgabe
 
-     */
 
     public void readAllAndShowInTableView() {
         comboBoxPatientSelection.getSelectionModel().select(0);

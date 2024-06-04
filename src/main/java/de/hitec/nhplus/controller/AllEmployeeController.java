@@ -27,7 +27,7 @@ public class AllEmployeeController {
     private TableView<Employee> tableView;
 
     @FXML
-    private TableColumn<Employee, Integer> columnId;
+    private TableColumn<Employee, Long> columnID;
 
     @FXML
     private TableColumn<Employee, String> columnName;
@@ -77,7 +77,7 @@ public class AllEmployeeController {
     public void initialize() {
         this.readAllAndShowInTableView();
 
-        this.columnId.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
+        this.columnID.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
 
         this.columnName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         this.columnName.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -173,6 +173,7 @@ public class AllEmployeeController {
         this.dao = DaoFactory.getDaoFactory().createEmployeeDAO();
         try {
             this.employees.addAll(this.dao.readAll());
+            String mystring = null;
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

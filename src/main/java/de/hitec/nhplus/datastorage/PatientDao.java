@@ -85,7 +85,7 @@ public class PatientDao extends DaoImp<Patient> {
     @Override
     protected Patient getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new Patient(
-                result.getInt("patientID"),
+                result.getLong("patientID"),
                 result.getString("firstname"),
                 result.getString("surname"),
                 DateConverter.convertStringToLocalDate(result.getString("dateOfBirth")),

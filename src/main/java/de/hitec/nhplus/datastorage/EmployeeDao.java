@@ -32,7 +32,7 @@ public class EmployeeDao extends DaoImp<Employee> {
     protected PreparedStatement getCreateStatement(Employee employee) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "INSERT INTO Employee (firstname, surname, role,lockDateInTenYears, status, phoneNumber) VALUES ( ?, ?, ?, ?,?, ?)";
+            final String SQL = "INSERT INTO Employee (firstname, surname, role,lockDateInTenYears, status, phoneNumber) VALUES ( ?, ?, ?, ?, ?, ?)";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setString(1, employee.getFirstName());
             preparedStatement.setString(2, employee.getSurname());
@@ -77,13 +77,13 @@ public class EmployeeDao extends DaoImp<Employee> {
     protected Employee getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new Employee(
 
-                result.getLong(1),
-                result.getString(2),
-                result.getString(3),
-                result.getString(4),
-                result.getString(5),
-                result.getString(6),
-                result.getString(7));
+                result.getLong("employeeID"),
+                result.getString("firstname"),
+                result.getString("surname"),
+                result.getString("role"),
+                result.getString("lockDateInTenYears"),
+                result.getString("status"),
+                result.getString("phoneNumber"));
     }
 
     /**
@@ -115,7 +115,7 @@ public class EmployeeDao extends DaoImp<Employee> {
         ArrayList<Employee> list = new ArrayList<>();
         while (result.next()) {
             Employee employee = new Employee(
-                    result.getInt("employeeID"),
+                    result.getLong("employeeID"),
                     result.getString("firstName"),
                     result.getString("surname"),
                     result.getString("role"),
@@ -154,7 +154,7 @@ public class EmployeeDao extends DaoImp<Employee> {
             preparedStatement.setString(4, String.valueOf(employee.getLockDateInTenYears()));
             preparedStatement.setString(5, employee.getstatus());
             preparedStatement.setString(6, employee.getPhoneNumber());
-            preparedStatement.setInt(7, employee.getemployeeID());
+            preparedStatement.setLong(7, employee.getemployeeID());
 
         } catch (SQLException exception) {
             exception.printStackTrace();

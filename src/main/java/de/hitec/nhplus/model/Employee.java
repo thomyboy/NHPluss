@@ -22,16 +22,6 @@ public class Employee extends Person{
     private SimpleStringProperty lockDateInTenYears;
 
 
-    /* evtl alt und kann weg
-    public Employee( int id, String name, String surname, String role, String status, String lockDateInTenYears, String phoneNumber) {
-        super(name, surname);
-        this.employeeID = id;
-        this.role = new SimpleStringProperty(role);
-        this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
-        this.status = status;
-    }
-    */
-
     /**
      * Constructs a new Employee with the specified details, excluding the employee ID.
      *
@@ -114,25 +104,8 @@ public class Employee extends Person{
     public long getemployeeID() {
         return employeeID.get();
     }
-
-    /**
-     * Property accessor for employee ID.
-     *
-     * @return the employee ID as a property
-     */
-
-    public long employeeIDProperty() {
+    public long getEmployeeID() {
         return employeeID.get();
-    }
-
-    /**
-     * Sets the employee ID.
-     *
-     * @param employeeID the new employee ID
-     */
-
-    public void employeeID(int employeeID) {
-        this.employeeID = new SimpleLongProperty(employeeID);
     }
 
     /**

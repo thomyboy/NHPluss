@@ -31,7 +31,7 @@ public class AllPatientController extends LockingObjects{
     private TableView<Patient> tableView;
 
     @FXML
-    private TableColumn<Patient, Integer> columnId;
+    private TableColumn<Patient, Long> columnId;
 
     @FXML
     private TableColumn<Patient, String> columnFirstName;
