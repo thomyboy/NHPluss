@@ -41,6 +41,9 @@ public class AllEmployeeController {
     private TableColumn<Employee, String> columnStatus;
 
     @FXML
+    private TableColumn<Employee, String> columnPhoneNumber;
+
+    @FXML
     private Button buttonDelete;
 
     @FXML
@@ -65,7 +68,8 @@ public class AllEmployeeController {
     public void initialize() {
         this.readAllAndShowInTableView();
 
-        this.columnId.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
+        //this.columnId.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
+
         this.columnName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         this.columnName.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -77,6 +81,8 @@ public class AllEmployeeController {
 
         this.columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         this.columnStatus.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        this.columnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
         this.tableView.setItems(this.employees);
 
@@ -95,6 +101,7 @@ public class AllEmployeeController {
         this.textFieldSurname.textProperty().addListener(inputNewEmployeeListener);
         this.textFieldRole.textProperty().addListener(inputNewEmployeeListener);
         this.textFieldStatus.textProperty().addListener(inputNewEmployeeListener);
+
     }
 
     @FXML

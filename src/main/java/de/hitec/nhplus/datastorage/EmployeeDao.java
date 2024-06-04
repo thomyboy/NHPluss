@@ -31,13 +31,14 @@ public class EmployeeDao extends DaoImp<Employee> {
     protected PreparedStatement getCreateStatement(Employee employee) {
         PreparedStatement preparedStatement = null;
         try {
-            final String SQL = "INSERT INTO Employee (firstname, surname, role,lockDateInTenYears, status) VALUES ( ?, ?, ?, ?,?)";
+            final String SQL = "INSERT INTO Employee (firstname, surname, role,lockDateInTenYears, status, phoneNumber) VALUES ( ?, ?, ?, ?,?, ?)";
             preparedStatement = this.connection.prepareStatement(SQL);
             preparedStatement.setString(1, employee.getFirstName());
             preparedStatement.setString(2, employee.getSurname());
             preparedStatement.setString(3, employee.getrole());
             preparedStatement.setString(4, String.valueOf(employee.getLockDateInTenYears()));
             preparedStatement.setString(5, employee.getstatus());
+            preparedStatement.setString(6, employee.getphoneNumber());
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

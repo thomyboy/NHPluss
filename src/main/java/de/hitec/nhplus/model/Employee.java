@@ -7,16 +7,25 @@ import java.util.List;
 public class Employee extends Person{
     private int employeeID;
     private SimpleStringProperty role;
-    private SimpleStringProperty status;
+    private String status;
+    private String phoneNumber;
 
     private String fullName = getSurname() + ", " + getFirstName();
     private  SimpleStringProperty lockDateInTenYears;
 
-    public Employee( String name, String surname, String role,String lockDateInTenYears, String status) {
+    public Employee( int id, String name, String surname, String role, String status, String lockDateInTenYears, String phoneNumber) {
+        super(name, surname);
+        this.employeeID = id;
+        this.role = new SimpleStringProperty(role);
+        this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
+        this.status = status;
+    }
+
+    public Employee(String name, String surname, String role, String status, String lockDateInTenYears) {
         super(name, surname);
         this.role = new SimpleStringProperty(role);
         this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
-        this.status = new SimpleStringProperty(status);
+        this.status = status;
     }
     public Employee(int employeeID, String name, String surname, String role,String lockDateInTenYears, String status) {
         super(name, surname);
@@ -63,19 +72,22 @@ public class Employee extends Person{
     }
 
     public String getstatus() {
-        return status.get();
+        return status;
     }
 
-    public SimpleStringProperty statusProperty() {
+    public String getStatus(){
         return status;
     }
 
     public void setStatus(String roomNumber) {
-        this.status.set(roomNumber);
+        this.status = roomNumber;
     }
     public String getFullName(){
         return fullName;
     }
 
 
+    public String getphoneNumber() {
+        return phoneNumber;
+    }
 }
