@@ -109,7 +109,7 @@ public class AllEmployeeController {
 
     @FXML
     public void handleOnEditRole(TableColumn.CellEditEvent<Employee, String> event) {
-        event.getRowValue().setRole(event.getNewValue());
+        event.getRowValue().setrole(event.getNewValue());
         this.doUpdate(event);
     }
 
@@ -142,14 +142,14 @@ public class AllEmployeeController {
         Employee selectedItem = this.tableView.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             try {
-                DaoFactory.getDaoFactory().createEmployeeDAO().deleteById(selectedItem.getEmployeeID());
+                DaoFactory.getDaoFactory().createEmployeeDAO().deleteById(selectedItem.getemployeeID());
                 this.tableView.getItems().remove(selectedItem);
             } catch (SQLException exception) {
                 exception.printStackTrace();
             }
         }
     }
-    //MOIN
+
     @FXML
     public void handleAdd() {
         String name = this.textFieldName.getText();
@@ -157,7 +157,7 @@ public class AllEmployeeController {
         String role = this.textFieldRole.getText();
         String status = this.textFieldStatus.getText();
         try {
-            this.dao.create(new Employee( name, surname, role, status)); // employeeID is auto-generated
+            this.dao.create(new Employee( 1,name, surname, role, status)); // employeeID is auto-generated
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

@@ -26,8 +26,6 @@ import java.util.Calendar;
 public class AllPatientController extends LockingObjects{
 
     private static final int TEN_YEARS = 10;
-    private static final int FIRST_POSITION_IN_ARRAY = 0;
-    private static final int SECOND_POSITION_IN_ARRAY = 1;
     private PatientDao dao;
     @FXML
     private TableView<Patient> tableView;

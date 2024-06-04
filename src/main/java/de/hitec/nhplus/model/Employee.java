@@ -9,6 +9,7 @@ public class Employee extends Person{
     private SimpleStringProperty role;
     private SimpleStringProperty status;
 
+    private String fullName = getSurname() + ", " + getFirstName();
 
     public Employee(int employeeID, String name, String surname, String role, String status) {
         super(name, surname);
@@ -16,7 +17,7 @@ public class Employee extends Person{
         this.role = new SimpleStringProperty(role);
         this.status = new SimpleStringProperty(status);
     }
-    //MOIN
+
     public int getemployeeID() {
         return employeeID;
     }
@@ -50,5 +51,9 @@ public class Employee extends Person{
     public void setStatus(String roomNumber) {
         this.status.set(roomNumber);
     }
+    public String getFullName(){
+        return fullName;
+    }
+
 
 }

@@ -46,7 +46,7 @@ public class Treatment {
         this.remarks = remarks;
         this.employee= employee;
         this.state = state;
-        this.employeeID = employee.getEmployeeID();
+        this.employeeID = employee.getemployeeID();
         this.patientID = patient.getPid();
     }
 
@@ -90,7 +90,7 @@ public class Treatment {
         this.patient = patient;
         this.employee = employee;
         this.state = state;
-        this.employeeID = employee.getEmployeeID();
+        this.employeeID = employee.getemployeeID();
         this.patientID = patient.getPid();
         this.patientID = patient.getPid();
         this.employeeName = employee.getFullName();
@@ -107,7 +107,7 @@ public class Treatment {
         this.description = description;
         this.remarks = remarks;
         this.patientID = patient.getPid();
-        this.employeeID = employee.getEmployeeID();
+        this.employeeID = employee.getemployeeID();
         this.employeeName = employee.getFullName();
         this.state = state;
         this.patientID = patient.getPid();

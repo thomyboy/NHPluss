@@ -13,13 +13,12 @@ import java.util.List;
  * Patients live in a NURSING home and are treated by nurses.
  */
 public class Patient extends Person {
-    private static final int FIRST_POSITION_IN_ARRAY = 0;
-    private static final int SECOND_POSITION_IN_ARRAY = 1;
     private SimpleLongProperty pid;
     private final SimpleStringProperty dateOfBirth;
     private final SimpleStringProperty careLevel;
     private String fullName = getSurname() + ", " + getFirstName();
     private final Room room;
+    private String roomName;
     private final List<Treatment> arrayAllTreatments = new ArrayList<>();
     private final SimpleStringProperty lockDateInTenYears;
 
@@ -40,6 +39,7 @@ public class Patient extends Person {
         this.careLevel = new SimpleStringProperty(careLevel);
         this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
         this.room = room;
+        this.roomName = room.getRoomName();
     }
 
     /**
@@ -61,7 +61,7 @@ public class Patient extends Person {
         this.careLevel = new SimpleStringProperty(careLevel);
         this.lockDateInTenYears = new SimpleStringProperty(lockDateInTenYears);
         this.room = room;
-
+        this.roomName = room.getRoomName();
     }
 
     public SimpleStringProperty getLockDateInTenYears()

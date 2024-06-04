@@ -49,7 +49,7 @@ public class TreatmentDao extends DaoImp<Treatment> {
             preparedStatement.setString(4, treatment.getDescription());
             preparedStatement.setString(5, treatment.getRemarks());
             preparedStatement.setLong(6, treatment.getPatient().getPid());
-            preparedStatement.setLong(7, treatment.getEmployee().getEmployeeID());
+            preparedStatement.setLong(7, treatment.getEmployee().getemployeeID());
             preparedStatement.setString(8, treatment.getState());
 
         } catch (SQLException exception) {
@@ -196,7 +196,7 @@ public class TreatmentDao extends DaoImp<Treatment> {
             preparedStatement.setString(4, treatment.getDescription());
             preparedStatement.setString(5, treatment.getRemarks());
             preparedStatement.setLong(6, treatment.getPatient().getPid());
-            preparedStatement.setLong(7, treatment.getEmployee().getEmployeeID());
+            preparedStatement.setLong(7, treatment.getEmployee().getemployeeID());
             preparedStatement.setString(8, treatment.getState());
             preparedStatement.setLong(9, treatment.getTreatmentID());
         } catch (SQLException exception) {
@@ -224,7 +224,11 @@ public class TreatmentDao extends DaoImp<Treatment> {
         }
         return preparedStatement;
     }
-
+/**
+ *
+ * Evenntuell unnötig und aus alten Testes:
+ *
+ *
     public Patient executeGetPatientFullName(long patientID) throws SQLException{
         ResultSet result = patientDao.getPatientNameByID(patientID).executeQuery();
         return patientDao.getInstanceFromResultSet(result);
@@ -233,7 +237,7 @@ public class TreatmentDao extends DaoImp<Treatment> {
         ResultSet result = employeeDao.getEmployeeNameByID(employeeID).executeQuery();
         return employeeDao.getInstanceFromResultSet(result);
     }
-
+**/
 
 
 }

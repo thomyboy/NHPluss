@@ -137,7 +137,7 @@ public class NewTreatmentController {
         try {
             employeeList = (ArrayList<Employee>) dao.readAll();
             for (Employee employee: employeeList) {
-                if (employee.getStatus().toLowerCase().equals("aktiv")){
+                if (employee.getstatus().toLowerCase().equals("aktiv")){
                     this.employeeSelection.add(employee.getFullName());
                 }
             }
