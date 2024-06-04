@@ -61,6 +61,8 @@ public class AllEmployeeController {
 
     @FXML
     private TextField textFieldStatus;
+    @FXML
+    private TextField textFieldPhoneNumber;
 
     private final ObservableList<Employee> employees = FXCollections.observableArrayList();
     private EmployeeDao dao;
@@ -75,7 +77,7 @@ public class AllEmployeeController {
     public void initialize() {
         this.readAllAndShowInTableView();
 
-        //this.columnId.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
+        this.columnId.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
 
         this.columnName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         this.columnName.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -90,6 +92,7 @@ public class AllEmployeeController {
         this.columnStatus.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.columnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        this.columnStatus.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.tableView.setItems(this.employees);
 
@@ -108,7 +111,7 @@ public class AllEmployeeController {
         this.textFieldSurname.textProperty().addListener(inputNewEmployeeListener);
         this.textFieldRole.textProperty().addListener(inputNewEmployeeListener);
         this.textFieldStatus.textProperty().addListener(inputNewEmployeeListener);
-
+        this.textFieldPhoneNumber.textProperty().addListener(inputNewEmployeeListener);
     }
     /**
      * Handles editing of the employee's first name directly in the table view.
@@ -194,12 +197,13 @@ public class AllEmployeeController {
      */
     @FXML
     public void handleAdd() {
-        String name = this.textFieldName.getText();
-        String surname = this.textFieldSurname.getText();
-        String role = this.textFieldRole.getText();
-        String status = this.textFieldStatus.getText();
+        String name =        this.textFieldName.        getText();
+        String surname =     this.textFieldSurname.     getText();
+        String role =        this.textFieldRole.        getText();
+        String status =      this.textFieldStatus.      getText();
+        String phonenumber = this.textFieldPhoneNumber. getText();
         try {
-            this.dao.create(new Employee( name, surname, role, EMPTY, status,"PhoneNumber123")); // employeeID is auto-generated
+            this.dao.create(new Employee( name, surname, role, EMPTY, status, phonenumber)); // employeeID is auto-generated
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -214,6 +218,7 @@ public class AllEmployeeController {
         this.textFieldSurname.clear();
        this.textFieldRole.clear();
        this.textFieldStatus.clear();
+       this.textFieldPhoneNumber.clear();
     }
     /**
      * Validates if the input data for adding a new employee is valid.
@@ -224,7 +229,8 @@ public class AllEmployeeController {
         return !this.textFieldName.getText().isBlank() &&
                 !this.textFieldSurname.getText().isBlank() &&
                 !this.textFieldRole.getText().isBlank() &&
-                !this.textFieldStatus.getText().isBlank();
+                !this.textFieldStatus.getText().isBlank() &&
+                !this.textFieldPhoneNumber.getText().isBlank();
     }
 }
 

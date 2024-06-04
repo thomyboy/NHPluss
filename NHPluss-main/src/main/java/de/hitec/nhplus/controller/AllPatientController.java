@@ -103,9 +103,6 @@ public class AllPatientController {
         this.columnRoomNumber.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
         this.columnRoomNumber.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.columnAssets.setCellValueFactory(new PropertyValueFactory<>("assets"));
-        this.columnAssets.setCellFactory(TextFieldTableCell.forTableColumn());
-
         //Anzeigen der Daten
         this.tableView.setItems(this.patients);
 
